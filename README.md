@@ -10,12 +10,7 @@
 
 解决 Shadowsocks PAC 配置方式的痛点：
 - 配置不易同步
-- 默认 PAC 列表不全面
-
-## Feature
-- 简易的代理设置
-- 配置同步
-- 界面友好
+- 默认 PAC 列表不全面，修改用户规则繁琐
 
 ## License
 The code is available under the [MIT license](https://github.com/gh-0/oh-proxy/blob/master/LICENSE)
