@@ -6,8 +6,8 @@ module.exports = {
   mode: "production",
   entry: path.resolve("src/index.js"),
   output: {
-    filename: "bundle.js",
-    path: path.resolve("dist")
+    filename: "popup.js",
+    path: path.resolve("build")
   },
   module: {
     rules: [
