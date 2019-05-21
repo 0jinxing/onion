@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/gh-0/oh-proxy/master/docs/assets/oh-proxy.png)
+![logo](https://raw.githubusercontent.com/gh-0/oh-proxy/master/public/oh-proxy.png)
 
 # Oh proxy
 [![GitHub issues](https://img.shields.io/github/issues/gh-0/oh-proxy.svg)](https://github.com/gh-0/oh-proxy/issues)
