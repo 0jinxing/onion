@@ -3,24 +3,29 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "production",
-  entry: path.resolve("src/index.js"),
+  mode: "development",
+  entry: {
+    options: path.resolve("src/options.js")
+  },
   output: {
-    filename: "popup.js",
+    filename: "[name].js",
     path: path.resolve("build")
   },
+  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        use: { loader: "babel-loader" }
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: { loader: "file-loader" }
       }
     ]
   },
@@ -28,12 +33,15 @@ module.exports = {
     new CopyPlugin([
       {
         from: path.resolve("public"),
-        ignore: path.resolve("public/popup.html")
+        ignore: "template.html"
       }
     ]),
     new HtmlWebPackPlugin({
-      template: path.resolve("public/popup.html"),
-      filename: "popup.html",
+      template: path.resolve("public/template.html"),
+      filename: "options.html",
+      chunks: ["options"],
+      hash: true,
+      title: "Oh Proxy Options",
       minify: {
         collapseWhitespace: true,
         removeComments: true,

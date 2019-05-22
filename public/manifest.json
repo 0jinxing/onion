@@ -5,7 +5,10 @@
   "version": "1.0.0",
   "permissions": ["proxy", "storage"],
   "browser_action": {
-    "default_icon": "oh-proxy.png",
-    "default_popup": "popup.html"
-  }
+    "default_icon": "oh-proxy.png"
+  },
+  "icons": {
+    "200": "oh-proxy.png"
+  },
+  "options_page": "options.html"
 }
