@@ -1,9 +1,10 @@
 import React from "react";
+import classNames from "classnames";
 
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    const { value } = props;
+    const { value = "" } = props;
     this.state = { value };
   }
 
@@ -24,22 +25,28 @@ class Input extends React.Component {
   }
 
   render() {
+    const { ...rest } = this.props;
     const { value } = this.state;
     return (
       <>
-        <input className="input" onChange={this.handleChange} value={value} />
+        <input {...rest} onChange={this.handleChange} value={value} />
         <style jsx>{`
-          .input {
+          input {
             outline: none;
-            border: 1px solid #aaa;
-            padding: 6px 8px;
-            border-radius: 4px;
+            border: none;
+            padding: 6px 0;
+            border-bottom: 1px solid #aaa;
             box-shadow: none;
             transition: all 0.2s linear;
+            color: #222;
           }
-          .input:focus {
-            box-shadow: 0 0 3px #9055a2;
+          input:focus,
+          input:hover {
             border-color: #9055a2;
+            border-bottom-width: 1px;
+          }
+          :global(::-webkit-input-placeholder) {
+            color: #cccccc;
           }
         `}</style>
       </>

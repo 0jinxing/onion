@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import Switch from "../components/Switch";
 import ConfigForm from "../components/ConfigForm";
@@ -23,6 +22,9 @@ class Options extends React.Component {
           </main>
         </div>
         <style jsx>{`
+          .wrap :global(*) {
+            font-weight: 100;
+          }
           .wrap {
             max-width: 600px;
             margin: 64px auto;
@@ -38,7 +40,6 @@ class Options extends React.Component {
           }
           header h1 {
             display: inline;
-            font-weight: 100;
           }
           .switch-container {
             position: absolute;
@@ -46,7 +47,7 @@ class Options extends React.Component {
             right: 0;
           }
           .container {
-            margin: 16px 8px;
+            padding: 32px 0;
           }
         `}</style>
       </div>
