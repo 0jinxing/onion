@@ -726,10 +726,4 @@ CombinedMatcher.prototype = {
   }
 };
 
-var userrulesMatcher = new CombinedMatcher();
-var defaultMatcher = new CombinedMatcher();
-
-export default {
-  userrulesMatcher,
-  defaultMatcher
-};
+export default CombinedMatcher;

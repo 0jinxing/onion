@@ -10,5 +10,9 @@
   "icons": {
     "200": "oh-proxy.png"
   },
-  "options_page": "options.html"
+  "options_page": "index.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
 }

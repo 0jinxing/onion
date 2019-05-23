@@ -1,11 +1,11 @@
 import React from "react";
 
-import Switch from "../components/Switch";
-import ConfigForm from "../components/ConfigForm";
+import Switch from "./components/Switch";
+import ConfigForm from "./components/ConfigForm";
 
-import logoPic from "../assets/oh-proxy.png";
+import logoPic from "./assets/oh-proxy.png";
 
-class Options extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -55,4 +55,4 @@ class Options extends React.Component {
   }
 }
 
-export default Options;
+export default App;

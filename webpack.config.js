@@ -5,7 +5,8 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    options: path.resolve("src/options.js")
+    index: path.resolve("src/index.js"),
+    background: path.resolve("src/background.js")
   },
   output: {
     filename: "[name].js",
@@ -26,6 +27,10 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif)$/,
         use: { loader: "file-loader" }
+      },
+      {
+        test: /\.pac$/,
+        use: { loader: "raw-loader" }
       }
     ]
   },
@@ -38,8 +43,8 @@ module.exports = {
     ]),
     new HtmlWebPackPlugin({
       template: path.resolve("public/template.html"),
-      filename: "options.html",
-      chunks: ["options"],
+      filename: "index.html",
+      chunks: ["index"],
       hash: true,
       title: "Oh Proxy Options",
       minify: {
