@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "permissions": ["proxy", "storage", "tabs", "windows"],
   "browser_action": {
-    "default_icon": "proxy-enable.png"
+    "default_icon": "proxy-unable.png"
   },
   "icons": {
     "64": "proxy-enable.png"
