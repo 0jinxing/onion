@@ -5,7 +5,7 @@
 
 var proxy = "$PROXY;";
 
-var userrules = $USERRULES;
+var userRules = $USERRULES;
 var rules = $RULES;
 /*
  * This file is part of Adblock Plus <http://adblockplus.org/>,
@@ -735,13 +735,13 @@ CombinedMatcher.prototype = {
   }
 };
 
-var userrulesMatcher = new CombinedMatcher();
+var userRulesMatcher = new CombinedMatcher();
 var defaultMatcher = new CombinedMatcher();
 
 var direct = "DIRECT;";
 
-for (var i = 0; i < userrules.length; i++) {
-  userrulesMatcher.add(Filter.fromText(userrules[i]));
+for (var i = 0; i < userRules.length; i++) {
+  userRulesMatcher.add(Filter.fromText(userRules[i]));
 }
 
 for (var i = 0; i < rules.length; i++) {
@@ -749,10 +749,10 @@ for (var i = 0; i < rules.length; i++) {
 }
 
 function FindProxyForURL(url, host) {
-  if (userrulesMatcher.matchesAny(url, host) instanceof BlockingFilter) {
+  if (userRulesMatcher.matchesAny(url, host) instanceof BlockingFilter) {
     return proxy;
   }
-  if (userrulesMatcher.matchesAny(url, host) instanceof WhitelistFilter) {
+  if (userRulesMatcher.matchesAny(url, host) instanceof WhitelistFilter) {
     return direct;
   }
   if (defaultMatcher.matchesAny(url, host) instanceof BlockingFilter) {

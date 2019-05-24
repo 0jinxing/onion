@@ -30,7 +30,7 @@ class ConfigForm extends React.Component {
           }
           .field :global(input) {
             font-size: 16px;
-            color: #9055a2;
+            color: #EC6A69;
           }
           .field {
             display: block;

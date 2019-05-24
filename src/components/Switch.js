@@ -55,7 +55,7 @@ class Switch extends React.Component {
             transition: all 0.36s cubic-bezier(0.78, 0.14, 0.15, 0.86);
           }
           .checked {
-            background: #9055a2;
+            background: #EC6A69;
           }
           .switch::after {
             content: "";

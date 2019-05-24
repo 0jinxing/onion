@@ -16,11 +16,11 @@ const reducer = (state = {}, action) => {
 
   const data = action.payload ? action.payload.data || {} : {};
   const userRules = action.payload ? action.payload.userRules || [] : [];
-  const userrulesMatcher = new CombinedMatcher();
+  const userRulesMatcher = new CombinedMatcher();
   userRules.forEach(rule => {
-    userrulesMatcher.add(Filter.fromText(rule));
+    userRulesMatcher.add(Filter.fromText(rule));
   });
-  const ufilter = userrulesMatcher.matchesAny(url, host);
+  const ufilter = userRulesMatcher.matchesAny(url, host);
 
   let newUserRules = [];
 

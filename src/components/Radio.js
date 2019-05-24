@@ -67,10 +67,10 @@ class Radio extends React.Component {
             transition: background 0.2s linear;
           }
           .radio input[type="radio"]:checked + .radio-dot {
-            border-color: #9055a2;
+            border-color: #EC6A69;
           }
           .radio input[type="radio"]:checked + .radio-dot::after {
-            background: #9055a2;
+            background: #EC6A69;
           }
         `}</style>
       </div>

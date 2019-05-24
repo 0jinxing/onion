@@ -42,7 +42,7 @@ class Input extends React.Component {
           }
           input:focus,
           input:hover {
-            border-color: #9055a2;
+            border-color: #EC6A69;
             border-bottom-width: 1px;
           }
           :global(::-webkit-input-placeholder) {
