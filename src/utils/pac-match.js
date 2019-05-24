@@ -45,7 +45,7 @@ function extend(subclass, superclass, definition) {
   }
 }
 
-function Filter(text) {
+export function Filter(text) {
   this.text = text;
   this.subscriptions = [];
 }
@@ -414,7 +414,7 @@ RegExpFilter.prototype.contentType &= ~(
   RegExpFilter.typeMap.ELEMHIDE | RegExpFilter.typeMap.POPUP
 );
 
-function BlockingFilter(
+export function BlockingFilter(
   text,
   regexpSource,
   contentType,
@@ -440,7 +440,7 @@ extend(BlockingFilter, RegExpFilter, {
   collapse: null
 });
 
-function WhitelistFilter(
+export function WhitelistFilter(
   text,
   regexpSource,
   contentType,
@@ -600,7 +600,7 @@ Matcher.prototype = {
   }
 };
 
-function CombinedMatcher() {
+export function CombinedMatcher() {
   this.blacklist = new Matcher();
   this.whitelist = new Matcher();
   this.resultCache = createDict();
@@ -725,5 +725,3 @@ CombinedMatcher.prototype = {
     return result;
   }
 };
-
-export default CombinedMatcher;

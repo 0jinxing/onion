@@ -3,12 +3,12 @@
   "name": "Oh Proxy",
   "description": "a simple proxy tool",
   "version": "1.0.0",
-  "permissions": ["proxy", "storage"],
+  "permissions": ["proxy", "storage", "tabs", "windows"],
   "browser_action": {
-    "default_icon": "oh-proxy.png"
+    "default_icon": "proxy-enable.png"
   },
   "icons": {
-    "200": "oh-proxy.png"
+    "64": "proxy-enable.png"
   },
   "options_page": "index.html",
   "background": {

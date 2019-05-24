@@ -6,7 +6,7 @@ module.exports = {
   mode: "development",
   entry: {
     index: path.resolve("src/index.js"),
-    background: path.resolve("src/background.js")
+    background: path.resolve("src/scripts/background.js")
   },
   output: {
     filename: "[name].js",

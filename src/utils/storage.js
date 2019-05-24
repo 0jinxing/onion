@@ -2,9 +2,9 @@ const chrome = window.chrome;
 
 const createStorageHelpper = storage => {
   return {
-    get: async keys => new Promise(resolve => storage.get(keys, resolve)),
-    set: async kv => new Promise(resolve => storage.set(kv, resolve)),
-    clear: async () => new Promise(resolve => storage.clear(resolve))
+    get: keys => new Promise(resolve => storage.get(keys, resolve)),
+    set: kv => new Promise(resolve => storage.set(kv, resolve)),
+    clear: () => new Promise(resolve => storage.clear(resolve))
   };
 };
 
