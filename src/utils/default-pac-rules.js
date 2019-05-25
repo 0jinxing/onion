@@ -1,4 +1,5 @@
-export default [
+import { CombinedMatcher, Filter } from "./pac-match";
+const defaultPacRules = [
   "|http://85.17.73.31/",
   "||agnesb.fr",
   "||akiba-web.com",
@@ -7255,3 +7256,10 @@ export default [
   "@@||zhongsou.com",
   "@@|http://ime.baidu.jp"
 ];
+
+export const defaultMatcher = new CombinedMatcher();
+defaultPacRules.forEach(rule => {
+  defaultMatcher.add(Filter.fromText(rule));
+});
+
+export default defaultPacRules;

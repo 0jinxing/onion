@@ -1,1 +1,0 @@
-const chrome = window.chrome;

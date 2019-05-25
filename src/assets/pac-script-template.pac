@@ -3,7 +3,7 @@
 
 // 2019-02-08: Updated to support shadowsocks-windows user rules.
 
-var proxy = "$PROXY;";
+var proxy = "$PROXY";
 
 var userRules = $USERRULES;
 var rules = $RULES;
