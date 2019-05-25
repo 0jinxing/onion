@@ -1,48 +1,37 @@
+import createHelper from "../utils/create-helper";
 import {
-  CombinedMatcher,
-  Filter,
-  BlockingFilter,
-  WhitelistFilter
-} from "../utils/pac-match";
-import defaultPacRules from "../utils/default-pac-rules";
-import { local, sync } from "../utils/storage";
-
+  chromeTabsQuery,
+  chromeTabsReload,
+  chromeBrowserActionSetIcon
+} from "../utils/chrome-promisify";
 const chrome = window.chrome;
 
 (async () => {
-  let lastHost; // 用于避免事件的重复触发
-  let currentUrlHasProxy = false; // 判断点击 browser_action_icon 时，该进行的操作
+  let lastUrl = "chrome://new"; // 用于避免事件的重复触发
 
-  // chrome 数据加载加载
-  let { enable, proxy, userRulesSerial } = await local.get([
-    "enable",
-    "proxy",
-    "userRulesSerial"
-  ]);
+  const helper = await createHelper();
 
-  // 图标
-  if (!enable) chrome.browserAction.setIcon({ path: "proxy-unable.png" });
-
-  // default matcher 初始化
-  const defaultMatcher = new CombinedMatcher();
-  defaultPacRules.forEach(rule => {
-    defaultMatcher.add(Filter.fromText(rule));
-  });
-  // user matcher 初始化
-  const userRules = (userRulesSerial || "").split(";").filter(rule => !!rule);
-  const userRulesMatcher = new CombinedMatcher();
-  userRules.forEach(rule => {
-    userRulesMatcher.add(Filter.fromText(rule));
-  });
-
-  chrome.browserAction.onClicked.addListener(() => {
+  chrome.browserAction.onClicked.addListener(async () => {
     // 未开启，打开选项页
-    if (!enable) chrome.runtime.openOptionsPage();
-    if (currentUrlHasProxy) {
-      // 取消代理
+    if (!helper.state.getEnable()) chrome.runtime.openOptionsPage();
+    const resultArr = await chromeTabsQuery({
+      active: true,
+      lastFocusedWindow: true
+    });
+    const tabs = resultArr[0];
+    if (!tabs || !tabs.length) return;
+    const currentTag = tabs[0];
+    let iconPath;
+    if (!currentTag.url || !currentTag.url.startsWith("http")) return;
+    else if (helper.check(currentTag.url)) {
+      await helper.disallow(currentTag.url);
+      iconPath = "proxy-unable.png";
     } else {
-      // 启用代理
+      await helper.allow(currentTag.url);
+      iconPath = "proxy-enable.png";
     }
+    await chromeTabsReload(currentTag.id);
+    await chromeBrowserActionSetIcon({ path: iconPath });
   });
 
   chrome.runtime.onInstalled.addListener(() => {
@@ -50,37 +39,33 @@ const chrome = window.chrome;
   });
 
   const handleTagUpdatedAndChanged = async () => {
-    if (!enable) {
+    if (!helper.state.getEnable) {
       chrome.browserAction.setIcon({ path: "proxy-unable.png" });
       return;
     }
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-      const location = new URL(tabs[0].url);
-      const { href: url, host } = location;
-      if (lastHost === host) return;
-      lastHost = host;
-      const ufilter = userRulesMatcher.matchesAny(url, host);
-      const dfilter = defaultMatcher.matchesAny(url, host);
-      if (ufilter instanceof BlockingFilter) {
-        chrome.browserAction.setIcon({ path: "proxy-enable.png" });
-        currentUrlHasProxy = true;
-      } else if (ufilter instanceof WhitelistFilter) {
-        chrome.browserAction.setIcon({ path: "proxy-unable.png" });
-        currentUrlHasProxy = false;
-      } else if (dfilter instanceof BlockingFilter) {
-        chrome.browserAction.setIcon({ path: "proxy-enable.png" });
-        currentUrlHasProxy = true;
-      } else {
-        chrome.browserAction.setIcon({ path: "proxy-unable.png" });
-        currentUrlHasProxy = false;
-      }
+    const resultArr = await chromeTabsQuery({
+      active: true,
+      lastFocusedWindow: true
     });
+    const tabs = resultArr[0];
+    if (!tabs.length) return;
+    const url = tabs[0].url;
+    const { host: curHost } = new URL(url);
+    const { host: lastHost } = new URL(lastUrl);
+    if (lastHost === curHost) return;
+    lastUrl = url;
+    let iconPath;
+    if (helper.check(url)) iconPath = "proxy-enable.png";
+    else iconPath = "proxy-unable.png";
+
+    await chromeBrowserActionSetIcon({ path: iconPath });
   };
+
   chrome.tabs.onUpdated.addListener(handleTagUpdatedAndChanged);
   chrome.tabs.onSelectionChanged.addListener(handleTagUpdatedAndChanged);
 
-  chrome.windows.onRemoved.addListener(() => {
-    // @TODO async
+  chrome.windows.onRemoved.addListener(async () => {
+    await helper.state.pushState();
   });
 
   // options 页面的数据更新
@@ -88,15 +73,13 @@ const chrome = window.chrome;
     const { type, data } = request;
     switch (type) {
       case "SWITCH":
-        enable = data;
+        helper.state.setEnable(data);
         chrome.browserAction.setIcon(
-          enable ? "proxy_enable.png" : "proxy_unable.png"
+          data ? "proxy-enable.png" : "proxy-unable.png"
         );
-        // @TODO cancel proxy, sync data
         break;
       case "PROXY":
-        proxy = data;
-        // @TODO update proxy config，sync data
+        helper.state.proxy = data;
         break;
     }
   });

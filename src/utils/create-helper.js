@@ -6,44 +6,35 @@ const createHelper = async () => {
   state = state ? state : await createState();
   return {
     state,
-    enableProxy: () => {
-      state.enable = true;
-    },
-    unableProxy: () => {
-      state.enable = false;
-    },
-    setProxy: val => {
-      state.proxy = val;
-    },
-    allow: (url, host) => {
-      const ufilter = state.userRulesMatcher.matchesAny(url, host);
+    allow: async url => {
+      const { href, host } = new URL(url);
+      const ufilter = state.getUserRulesMatcher().matchesAny(href, host);
+      const userRules = state.getUserRules();
       if (ufilter instanceof BlockingFilter) return;
       else if (ufilter instanceof WhitelistFilter) {
-        const delInd = state.userRules.indexOf(ufilter.text);
-        state.userRules = [...state.userRules.splice(delInd, 1), host];
-      } else {
-        state.userRules = [state.userRules, host];
+        const delInd = userRules.indexOf(ufilter.text);
+        userRules.splice(delInd, 1);
       }
+      await state.setUserRules([...userRules, host]);
     },
-    disallow: (url, host) => {
-      const ufilter = state.userRulesMatcher.matchesAny(url, host);
+    disallow: async url => {
+      const { href, host } = new URL(url);
+      const ufilter = state.getUserRulesMatcher().matchesAny(href, host);
+      const userRules = state.getUserRules();
       if (ufilter instanceof WhitelistFilter) return;
       else if (ufilter instanceof BlockingFilter) {
-        const delInd = state.userRules.indexOf(ufilter.text);
-        state.userRules = [...state.userRules.splice(delInd, 1), "@@" + host];
-      } else {
-        state.userRules = [state.userRules, "@@" + host];
+        const delInd = userRules.indexOf(ufilter.text);
+        userRules.splice(delInd, 1);
       }
+      await state.setUserRules([...userRules, "@@" + host]);
     },
-    check: (url, host) => {
-      const ufilter = state.userRulesMatcher.matchesAny(url, host);
+    check: url => {
+      const { href, host } = new URL(url);
+      const ufilter = state.getUserRulesMatcher().matchesAny(href, host);
       if (ufilter instanceof WhitelistFilter) return false;
-      else if (ufilter instanceof BlockingFilter) {
-        return true;
-      }
-      return (
-        state.defaultMatcher.matchesAny(url, host) instanceof BlockingFilter
-      );
+      else if (ufilter instanceof BlockingFilter) return true;
+      const dfilter = state.getDefaultMatcher().matchesAny(href, host);
+      return dfilter instanceof BlockingFilter;
     }
   };
 };
