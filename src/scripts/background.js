@@ -10,10 +10,7 @@ const chrome = window.chrome;
   let lastUrl = "chrome://new"; // 用于避免事件的重复触发
 
   const helper = await createHelper();
-
   chrome.browserAction.onClicked.addListener(async () => {
-    // 未开启，打开选项页
-    if (!helper.state.getEnable()) chrome.runtime.openOptionsPage();
     const resultArr = await chromeTabsQuery({
       active: true,
       lastFocusedWindow: true
@@ -39,10 +36,6 @@ const chrome = window.chrome;
   });
 
   const handleTagUpdatedAndChanged = async () => {
-    if (!helper.state.getEnable) {
-      chrome.browserAction.setIcon({ path: "proxy-unable.png" });
-      return;
-    }
     const resultArr = await chromeTabsQuery({
       active: true,
       lastFocusedWindow: true
@@ -69,18 +62,13 @@ const chrome = window.chrome;
   });
 
   // options 页面的数据更新
-  chrome.runtime.onMessage.addListener(request => {
-    const { type, data } = request;
-    switch (type) {
-      case "SWITCH":
-        helper.state.setEnable(data);
-        chrome.browserAction.setIcon(
-          data ? "proxy-enable.png" : "proxy-unable.png"
-        );
-        break;
-      case "PROXY":
-        helper.state.proxy = data;
-        break;
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    const { type, data } = message;
+    if (type === "REQUEST_PROXY_CHANGED") {
+      helper.state.setProxy("PROXY localhost:1080").then(() => {
+        sendResponse({ type: "PROXY_CHANGED", data });
+      });
     }
+    return true;
   });
 })();

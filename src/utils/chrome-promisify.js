@@ -16,19 +16,26 @@ const promisify = (fn, thisArg) => {
 
 const chrome = window.chrome;
 
-export const chromeProxySettingsSet = promisify(
-  chrome.proxy.settings.set,
-  chrome.proxy.settings
-);
-
-export const chromeRuntimeSendMessage = promisify(
-  chrome.runtime.sendMessage,
-  chrome.runtime
-);
+// chrome extension api promisify
 
 export const chromeTabsQuery = promisify(chrome.tabs.query, chrome.tabs);
 
 export const chromeTabsReload = promisify(chrome.tabs.reload, chrome.tabs);
+
+export const chromeStorageSyncGet = promisify(
+  chrome.storage.sync.get,
+  chrome.storage.sync
+);
+
+export const chromeStorageSyncSet = promisify(
+  chrome.storage.sync.set,
+  chrome.storage.sync
+);
+
+export const chromeProxySettingsSet = promisify(
+  chrome.proxy.settings.set,
+  chrome.proxy.settings
+);
 
 export const chromeBrowserActionSetIcon = promisify(
   chrome.browserAction.setIcon,

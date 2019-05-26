@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import styles from "./Input.css";
 
 class Input extends React.Component {
   constructor(props) {
@@ -29,26 +29,12 @@ class Input extends React.Component {
     const { value } = this.state;
     return (
       <>
-        <input {...rest} onChange={this.handleChange} value={value} />
-        <style jsx>{`
-          input {
-            outline: none;
-            border: none;
-            padding: 6px 0;
-            border-bottom: 1px solid #aaa;
-            box-shadow: none;
-            transition: all 0.2s linear;
-            color: #222;
-          }
-          input:focus,
-          input:hover {
-            border-color: #EC6A69;
-            border-bottom-width: 1px;
-          }
-          :global(::-webkit-input-placeholder) {
-            color: #cccccc;
-          }
-        `}</style>
+        <input
+          {...rest}
+          className={styles.input}
+          onChange={this.handleChange}
+          value={value}
+        />
       </>
     );
   }

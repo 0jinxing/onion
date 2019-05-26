@@ -22,7 +22,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { modules: true } }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif)$/,
@@ -46,7 +49,7 @@ module.exports = {
       filename: "index.html",
       chunks: ["index"],
       hash: true,
-      title: "Oh Proxy Options",
+      title: "Spider Proxy Options",
       minify: {
         collapseWhitespace: true,
         removeComments: true,

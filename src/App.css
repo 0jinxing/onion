@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.wrap {
+  width: 600px;
+  margin: 64px auto;
+}
+
+.headerWrap {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 18px;
+  position: relative;
+}
+
+.title {
+  font: italic 24px Georgia, serif;
+  font-weight: bold;
+  margin-left: 0.8em;
+  display: inline;
+}
+
+.logo {
+  width: 60px;
+  vertical-align: bottom;
+}
+
+.container {
+  padding: 24px 0;
+}
+
+.field > .fieldTitle:first-child {
+  margin-bottom: 8px;
+  font: italic 1.4em Georgia, serif;
+  font-weight: bold;
+}
+
+.field {
+  display: block;
+}
+
+.inlineField {
+  display: flex;
+  align-items: center;
+}
+
+.field,
+.inlineField {
+  margin-bottom: 16px;
+}
+
+.inlineField > .fieldTitle:first-child {
+  font: italic 1.4em Georgia, serif;
+  font-weight: bold;
+}
+
+.fieldContainer {
+  margin-left: 16px;
+}

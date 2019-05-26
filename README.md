@@ -1,6 +1,6 @@
 ![logo](https://raw.githubusercontent.com/gh-0/oh-proxy/master/public/proxy-enable.png)
 
-# Oh Proxy
+# Spider Proxy
 [![GitHub issues](https://img.shields.io/github/issues/gh-0/oh-proxy.svg)](https://github.com/gh-0/oh-proxy/issues)
 [![GitHub forks](https://img.shields.io/github/forks/gh-0/oh-proxy.svg)](https://github.com/gh-0/oh-proxy/network)
 [![GitHub stars](https://img.shields.io/github/stars/gh-0/oh-proxy.svg)](https://github.com/gh-0/oh-proxy/stargazers)
