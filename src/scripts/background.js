@@ -6,6 +6,10 @@ import {
 } from "../utils/chrome-promisify";
 const chrome = window.chrome;
 
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === "install") chrome.runtime.openOptionsPage();
+});
+
 (async () => {
   let lastUrl = "chrome://new"; // 用于避免事件的重复触发
 
@@ -31,10 +35,6 @@ const chrome = window.chrome;
     await chromeBrowserActionSetIcon({ path: iconPath });
   });
 
-  chrome.runtime.onInstalled.addListener(() => {
-    chrome.runtime.openOptionsPage();
-  });
-
   const handleTagUpdatedAndChanged = async () => {
     const resultArr = await chromeTabsQuery({
       active: true,
@@ -57,18 +57,18 @@ const chrome = window.chrome;
   chrome.tabs.onUpdated.addListener(handleTagUpdatedAndChanged);
   chrome.tabs.onSelectionChanged.addListener(handleTagUpdatedAndChanged);
 
-  chrome.windows.onRemoved.addListener(async () => {
-    await helper.state.pushState();
-  });
-
   // options 页面的数据更新
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { type, data } = message;
     if (type === "REQUEST_PROXY_CHANGED") {
-      helper.state.setProxy("PROXY localhost:1080").then(() => {
+      helper.state.setProxy(data).then(() => {
         sendResponse({ type: "PROXY_CHANGED", data });
       });
     }
     return true;
+  });
+
+  chrome.windows.onRemoved.addListener(() => {
+    helper.state.pushState();
   });
 })();

@@ -7,6 +7,7 @@ import { chromeStorageSyncGet } from "./utils/chrome-promisify";
 
 import logoPic from "./assets/spider-proxy.png";
 import styles from "./App.css";
+import Toast from "./components/Toast";
 
 const chrome = window.chrome;
 
@@ -16,24 +17,14 @@ class App extends React.Component {
     userRulesSerial: ""
   };
 
-  handleReceiveResponse = (...args) => {
-    console.log(args);
-    // if (type === "ENABLE_CHANGED") {
-    //   this.setState({ enable: data });
-    // } else if (type === "PROXY_CHANGED") {
-    //   this.setState({ proxy: data });
-    // }
-  };
-
-  handleProxySwitch = checked => {
-    console.log(11);
-    chrome.runtime.sendMessage(
-      {
-        type: "REQUEST_ENABLE_CHANGED",
-        data: checked
-      },
-      this.handleReceiveResponse
-    );
+  handleReceiveResponse = ({ type, data }) => {
+    if (type === "PROXY_CHANGED") {
+      this.setState({ proxy: data });
+      this.toast.show({
+        type: "success",
+        message: "Configuration settings were updated successfully"
+      });
+    }
   };
 
   handleProxyChange = e => {
@@ -88,22 +79,12 @@ class App extends React.Component {
                 <List items={userRules} />
               </div>
             </div>
-            <div>
-              <div style={{ float: "right" }}>
-                <span
-                  style={{
-                    color: "#bbb",
-                    fontSize: "16px",
-                    marginRight: "16px"
-                  }}
-                >
-                  SUCCESS
-                </span>
-                <Button>SAVE</Button>
-              </div>
+            <div className={styles.controllWrap}>
+              <Button onClick={this.handleProxyUpdate}>SAVE</Button>
             </div>
           </main>
         </div>
+        <Toast ref={toast => (this.toast = toast)} />
       </div>
     );
   }

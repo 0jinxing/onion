@@ -1,0 +1,75 @@
+.toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 2em;
+  left: 0;
+  right: 0;
+  animation: show 0.36s linear;
+}
+
+.toast.hide {
+  opacity: 0;
+  top: -9999px;
+  animation: hide 0.36s linear;
+}
+
+.container {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  min-height: 1.8em;
+  padding: 8px 16px;
+  min-width: 100px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.36s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  font-size: 14px;
+}
+
+.icon {
+  display: block;
+  height: 1.8em;
+  width: 1.8em;
+  background-image: url(../assets/remind.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.icon.success {
+  background-image: url(../assets/success.svg);
+}
+
+.icon.warning {
+  background-image: url(../assets/warning.svg);
+}
+
+.icon.info {
+  background-image: url(../assets/remind.svg);
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+    top: 2em;
+  }
+  100% {
+    opacity: 0;
+    top: -2em;
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    top: -2em;
+  }
+  100% {
+    opacity: 1;
+    top: 2em;
+  }
+}

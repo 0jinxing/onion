@@ -62,3 +62,6 @@
 .fieldContainer {
   margin-left: 16px;
 }
+.controllWrap {
+  text-align: right;
+}
