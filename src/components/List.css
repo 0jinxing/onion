@@ -2,7 +2,7 @@
   list-style: none;
 }
 
-.list li {
+.list li, .empty {
   font-size: 16px;
   margin-bottom: 4px;
   line-height: 1.4;

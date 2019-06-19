@@ -3,9 +3,9 @@ import React from "react";
 import Input from "./components/Input";
 import List from "./components/List";
 import Button from "./components/Button";
-import { chromeStorageSyncGet } from "./utils/chrome-promisify";
+import { chromeStorageLocalGet } from "./utils/chrome-promisify";
 
-import logoPic from "./assets/spider-proxy.png";
+import logoPic from "./assets/heroic-proxy.png";
 import styles from "./App.css";
 import Toast from "./components/Toast";
 
@@ -42,7 +42,7 @@ class App extends React.Component {
   };
 
   async componentDidMount() {
-    const resultArr = await chromeStorageSyncGet(["proxy", "userRulesSerial"]);
+    const resultArr = await chromeStorageLocalGet(["proxy", "userRulesSerial"]);
     const data = resultArr[0];
     this.setState(data);
   }
@@ -58,13 +58,13 @@ class App extends React.Component {
             <img
               className={styles.logo}
               src={logoPic}
-              alt="spider proxy logo"
+              alt="heroic proxy logo"
             />
-            <h1 className={styles.title}>Spider Proxy Configuration</h1>
+            <h1 className={styles.title}>Heroic Proxy Configuration</h1>
           </header>
           <main className={styles.container}>
             <label className={styles.inlineField}>
-              <h2 className={styles.fieldTitle}>Proxy URI</h2>
+              <label className={styles.fieldTitle}>Proxy URI</label>
               <div className={styles.fieldContainer}>
                 <Input
                   placeholder="Enter Your Proxy URI"
@@ -74,7 +74,7 @@ class App extends React.Component {
               </div>
             </label>
             <div className={styles.field}>
-              <h2 className={styles.fieldTitle}>User Rules</h2>
+              <label className={styles.fieldTitle}>User Rules</label>
               <div className={styles.fieldContainer}>
                 <List items={userRules} />
               </div>

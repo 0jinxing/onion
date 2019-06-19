@@ -19,7 +19,7 @@
 }
 
 .title {
-  font: italic 24px Georgia, serif;
+  font: 24px Georgia, serif;
   font-weight: bold;
   margin-left: 0.8em;
   display: inline;
@@ -36,8 +36,6 @@
 
 .field > .fieldTitle:first-child {
   margin-bottom: 8px;
-  font: italic 1.4em Georgia, serif;
-  font-weight: bold;
 }
 
 .field {
@@ -54,9 +52,9 @@
   margin-bottom: 16px;
 }
 
-.inlineField > .fieldTitle:first-child {
-  font: italic 1.4em Georgia, serif;
-  font-weight: bold;
+.inlineField > .fieldTitle:first-child,
+.field > .fieldTitle:first-child {
+  font-size: 1.4em;
 }
 
 .fieldContainer {

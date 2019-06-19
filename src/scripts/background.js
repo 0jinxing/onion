@@ -6,14 +6,13 @@ import {
 } from "../utils/chrome-promisify";
 const chrome = window.chrome;
 
-chrome.runtime.onInstalled.addListener(({ reason }) => {
-  if (reason === "install") chrome.runtime.openOptionsPage();
-});
-
 (async () => {
-  let lastUrl = "chrome://new"; // 用于避免事件的重复触发
+  let lastUrl = "chrome://newtab"; // 用于避免事件的重复触发
 
+  // 初始化部分状态
   const helper = await createHelper();
+
+  // 点击 icon
   chrome.browserAction.onClicked.addListener(async () => {
     const resultArr = await chromeTabsQuery({
       active: true,
@@ -35,6 +34,7 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
     await chromeBrowserActionSetIcon({ path: iconPath });
   });
 
+  // 页面切换
   const handleTagUpdatedAndChanged = async () => {
     const resultArr = await chromeTabsQuery({
       active: true,
@@ -58,17 +58,19 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
   chrome.tabs.onSelectionChanged.addListener(handleTagUpdatedAndChanged);
 
   // options 页面的数据更新
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    const { type, data } = message;
-    if (type === "REQUEST_PROXY_CHANGED") {
-      helper.state.setProxy(data).then(() => {
+  chrome.runtime.onMessage.addListener(
+    async (message, sender, sendResponse) => {
+      const { type, data } = message;
+      if (type === "REQUEST_PROXY_CHANGED") {
+        await helper.state.setProxy(data);
         sendResponse({ type: "PROXY_CHANGED", data });
-      });
+      }
+      return true;
     }
-    return true;
-  });
-
-  chrome.windows.onRemoved.addListener(() => {
-    helper.state.pushState();
-  });
+  );
 })();
+
+// 初次安装打开选项页面
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === "install") chrome.runtime.openOptionsPage();
+});

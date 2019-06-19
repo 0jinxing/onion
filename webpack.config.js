@@ -49,7 +49,7 @@ module.exports = {
       filename: "index.html",
       chunks: ["index"],
       hash: true,
-      title: "Spider Proxy Options",
+      title: "Heroic Proxy Options",
       minify: {
         collapseWhitespace: true,
         removeComments: true,

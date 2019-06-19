@@ -3,18 +3,15 @@ import defaultPacRules from "./default-pac-rules";
 import createPacScript from "./create-pac-script";
 import {
   chromeProxySettingsSet,
-  chromeStorageSyncGet,
-  chromeStorageSyncSet
+  chromeStorageLocalSet,
+  chromeStorageLocalGet
 } from "./chrome-promisify";
 
-const syncFrequency =
-  (60 * 60 * 1000) / chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR;
-
-const createState = async () => {
-  const resultArr = await chromeStorageSyncGet(["proxy", "userRulesSerial"]);
+async function createState() {
+  const resultArr = await chromeStorageLocalGet(["proxy", "userRulesSerial"]);
   const data = resultArr[0];
   const userRulesSerial = data.userRulesSerial || "";
-  let _proxy = data.proxy || "PROXY 127.0.0.1:1080;";
+  let _proxy = data.proxy;
   let _userRules = userRulesSerial.split(";").filter(rule => !!rule);
   let _userRulesMatcher = new CombinedMatcher();
   _userRules.forEach(rule => {
@@ -30,25 +27,13 @@ const createState = async () => {
 
   const defaultMatcher = new CombinedMatcher();
   defaultPacRules.forEach(rule => defaultMatcher.add(Filter.fromText(rule)));
+  
+  if (!_proxy) {
+    _proxy = data.proxy;
+    setProxy("PROXY 127.0.0.1:1080;");
+  }
 
-  let lastSyncTimestamp = Date.now();
-
-  const pushState = () => {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        chromeStorageSyncSet({
-          userRulesSerial: _userRules.join(";"),
-          proxy: _proxy
-        }).then(() => {
-          const timestamp = Date.now();
-          lastSyncTimestamp = timestamp;
-          resolve(timestamp);
-        });
-      }, syncFrequency - (Date.now() - lastSyncTimestamp));
-    });
-  };
-
-  const setUserRules = async val => {
+  async function setUserRules(val) {
     if (val === _userRules) return;
 
     _userRules = val;
@@ -56,15 +41,10 @@ const createState = async () => {
     _userRules.forEach(rule => {
       _userRulesMatcher.add(Filter.fromText(rule));
     });
-    const timestamp = Date.now();
-    if (timestamp - lastSyncTimestamp > syncFrequency) {
-      chromeStorageSyncSet({
-        userRulesSerial: _userRules.join(";"),
-        proxy: _proxy
-      }).then(() => {
-        lastSyncTimestamp = timestamp;
-      });
-    }
+    chromeStorageLocalSet({
+      proxy: _proxy,
+      userRulesSerial: _userRules.join(";"),
+    });
 
     let config = { mode: "system" };
     const pacScript = createPacScript(_proxy, _userRules);
@@ -73,20 +53,18 @@ const createState = async () => {
       pacScript: { data: pacScript }
     };
     await chromeProxySettingsSet({ value: config, scope: "regular" });
-  };
-  const getUserRules = () => _userRules;
+  }
+  function getUserRules() {
+    return _userRules;
+  }
 
-  const setProxy = async val => {
+  async function setProxy(val) {
     if (val === _proxy) return;
     _proxy = val;
-    const timestamp = Date.now();
-    if (timestamp - lastSyncTimestamp > syncFrequency) {
-      await chromeStorageSyncSet({
-        proxy: _proxy,
-        userRulesSerial: _userRules.join(";")
-      });
-      lastSyncTimestamp = timestamp;
-    }
+    await chromeStorageLocalSet({
+      proxy: _proxy,
+      userRulesSerial: _userRules.join(";")
+    });
 
     let config = { mode: "system" };
     const pacScript = createPacScript(_proxy, _userRules);
@@ -95,15 +73,17 @@ const createState = async () => {
       pacScript: { data: pacScript }
     };
     await chromeProxySettingsSet({ value: config, scope: "regular" });
-  };
-  const getProxy = () => _proxy;
+  }
+  function getProxy() {
+    return _proxy;
+  }
 
-  const getUserRulesMatcher = () => {
+  function getUserRulesMatcher() {
     return _userRulesMatcher;
-  };
-  const getDefaultMatcher = () => {
+  }
+  function getDefaultMatcher() {
     return defaultMatcher;
-  };
+  }
 
   return {
     setUserRules,
@@ -111,9 +91,8 @@ const createState = async () => {
     setProxy,
     getProxy,
     getUserRulesMatcher,
-    getDefaultMatcher,
-    pushState
+    getDefaultMatcher
   };
-};
+}
 
 export default createState;
