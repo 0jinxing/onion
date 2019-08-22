@@ -1,4 +1,5 @@
-import { CombinedMatcher, Filter } from "./pac-match";
+import { CombinedMatcher, Filter } from "../libs/adblockplus";
+
 const defaultPacRules = [
   "|http://85.17.73.31/",
   "||agnesb.fr",
@@ -7258,6 +7259,7 @@ const defaultPacRules = [
 ];
 
 export const defaultMatcher = new CombinedMatcher();
+
 defaultPacRules.forEach(rule => {
   defaultMatcher.add(Filter.fromText(rule));
 });
