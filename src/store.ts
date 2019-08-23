@@ -1,80 +1,24 @@
 import { createStore } from "redux";
-import { persistStore, persistReducer, AsyncStorage } from "redux-persist";
+import { persistStore, persistReducer, Storage } from "redux-persist";
 import rootReducer from "./reducers";
 
-class ChromeLocalStorage implements AsyncStorage {
-  getItem(
-    key: string,
-    callback?:
-      | ((error?: Error | undefined, result?: string | undefined) => void)
-      | undefined
-  ): Promise<string> {
+export class ChromeLocalStorage implements Storage {
+  getItem(key: string): Promise<string> {
     return new Promise(resolve => {
       chrome.storage.local.get(key, item => {
         resolve(item[key]);
       });
     });
   }
-  setItem(
-    key: string,
-    value: string,
-    callback?: ((error?: Error | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
+  setItem(key: string, value: string): Promise<void> {
+    return new Promise(resolve => {
+      chrome.storage.local.set({ [key]: value }, resolve);
+    });
   }
-  removeItem(
-    key: string,
-    callback?: ((error?: Error | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  mergeItem(
-    key: string,
-    value: string,
-    callback?: ((error?: Error | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  clear(
-    callback?: ((error?: Error | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  getAllKeys(
-    callback?:
-      | ((error?: Error | undefined, keys?: string[] | undefined) => void)
-      | undefined
-  ): Promise<string[]> {
-    throw new Error("Method not implemented.");
-  }
-  multiGet(
-    keys: string[],
-    callback?:
-      | ((
-          errors?: Error[] | undefined,
-          result?: [string, string][] | undefined
-        ) => void)
-      | undefined
-  ): Promise<[string, string][]> {
-    throw new Error("Method not implemented.");
-  }
-  multiSet(
-    keyValuePairs: string[][],
-    callback?: ((errors?: Error[] | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  multiRemove(
-    keys: string[],
-    callback?: ((errors?: Error[] | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  multiMerge(
-    keyValuePairs: string[][],
-    callback?: ((errors?: Error[] | undefined) => void) | undefined
-  ): Promise<void> {
-    throw new Error("Method not implemented.");
+  removeItem(key: string): Promise<void> {
+    return new Promise(resolve => {
+      chrome.storage.local.remove(key, resolve);
+    });
   }
 }
 
@@ -82,7 +26,7 @@ const storage = new ChromeLocalStorage();
 
 const persistedReducer = persistReducer(
   {
-    key: "just",
+    key: "0jinxing",
     storage
   },
   rootReducer
