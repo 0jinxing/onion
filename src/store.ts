@@ -31,3 +31,5 @@ const persistedReducer = persistReducer(
   },
   rootReducer
 );
+
+const store = createStore(rootReducer);

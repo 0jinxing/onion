@@ -7258,10 +7258,10 @@ const defaultPacRules = [
   "@@|http://ime.baidu.jp"
 ];
 
-export const defaultMatcher = new CombinedMatcher();
+export const dMatcher = new CombinedMatcher();
 
 defaultPacRules.forEach(rule => {
-  defaultMatcher.add(Filter.fromText(rule));
+  dMatcher.add(Filter.fromText(rule));
 });
 
 export default defaultPacRules;
