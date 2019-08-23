@@ -1,37 +1,32 @@
 import { handleActions } from "redux-actions";
 import actions from "../actions";
 
-const { allow, disallow, toggle, updateActionIcon } = (actions as unknown) as {
-  allow: string;
-  disallow: string;
-  toggle: string;
-  updateActionIcon: string;
-};
+const { allow, disallow, toggle, updateActionIcon } = actions;
 
 const reducer = handleActions(
   {
-    [allow]: (
+    [allow.toString()]: (
       state: { rules: Array<string> },
       { payload: { url } }: { payload: { url: string } }
     ) => ({
       // @TODO
       ...state
     }),
-    [disallow]: (
+    [disallow.toString()]: (
       state: { rules: Array<string> },
       { payload: { url } }: { payload: { url: string } }
     ) => ({
       // @TODO
       ...state
     }),
-    [toggle]: (
+    [toggle.toString()]: (
       state: { rules: Array<string> },
       { payload: { url } }: { payload: { url: string } }
     ) => ({
       // @TODO
       ...state
     }),
-    [updateActionIcon]: (
+    [updateActionIcon.toString()]: (
       state: { rules: Array<string> },
       { payload: { url } }: { payload: { url: string } }
     ) => ({
