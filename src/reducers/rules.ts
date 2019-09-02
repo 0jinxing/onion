@@ -6,7 +6,7 @@ import {
   Filter,
   BlockingFilter,
   WhitelistFilter
-} from "../libs/adblockplus";
+} from "../lib/adblockplus";
 import { dMatcher } from "../utils/default-pac-rules";
 
 const rulesSelector = (state: { val: Array<string> }) => state.val;
@@ -68,7 +68,7 @@ export default handleActions(
       // @TODO
       const { val: rules } = state;
       const uMatcher = uMatcherSelector(state);
-      
+
       return state;
     }
   },

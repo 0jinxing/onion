@@ -3,16 +3,15 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     index: path.resolve("src/index.js"),
     background: path.resolve("src/scripts/background.js")
   },
   output: {
     filename: "[name].js",
-    path: path.resolve("build")
+    path: path.resolve("ext")
   },
-  devtool: "source-map",
   module: {
     rules: [
       {
