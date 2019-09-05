@@ -1,19 +1,25 @@
 import React from "react";
 import { Table, Column, Cell } from "@blueprintjs/table";
+import { Intent } from "@blueprintjs/core";
 
 export type UserRulrsProps = {
   rules: string[];
 };
 
 const UserRulrs = (props: UserRulrsProps) => {
-  const cellRenderer = (rowIndex: number) => (
-    <Cell>{props.rules[rowIndex]}</Cell>
-  );
+  const cellRenderer = (rowIndex: number) => {
+    const rule = props.rules[rowIndex];
+    return (
+      <Cell intent={rule.startsWith("@@") ? Intent.DANGER : Intent.SUCCESS}>
+        {rule}
+      </Cell>
+    );
+  };
 
   return (
     <div>
       <Table numRows={props.rules.length}>
-        <Column name="用户规则列表" cellRenderer={cellRenderer} />
+        <Column name="用户规则" cellRenderer={cellRenderer} />
       </Table>
       <p
         style={{

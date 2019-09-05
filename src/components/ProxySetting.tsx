@@ -1,10 +1,12 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import { Action } from "redux";
 import {
   Button,
   ControlGroup,
   InputGroup,
   Popover,
+  Toaster,
+  Position,
   Classes,
   Intent
 } from "@blueprintjs/core";
@@ -13,10 +15,13 @@ type ProxySettingProps = {
   proxy: string;
   updateProxy: (proxy: string) => Action;
   createModify: () => Action;
+  saveModify: () => Action;
 };
 
 const ProxySetting = (props: ProxySettingProps) => {
   const [proxy, setProxy] = useState(props.proxy);
+  const toaster = useRef<Toaster>(null);
+
   return (
     <div>
       <ControlGroup vertical={false} fill={true}>
@@ -35,14 +40,7 @@ const ProxySetting = (props: ProxySettingProps) => {
           }}
         >
           <Popover>
-            <Button
-              intent={Intent.NONE}
-              onClick={() => {
-                props.updateProxy(proxy);
-              }}
-            >
-              更新
-            </Button>
+            <Button intent={Intent.NONE}>更新</Button>
             <div
               style={{
                 padding: "20px"
@@ -69,6 +67,17 @@ const ProxySetting = (props: ProxySettingProps) => {
                 <Button
                   intent={Intent.PRIMARY}
                   className={Classes.POPOVER_DISMISS}
+                  onClick={() => {
+                    props.updateProxy(proxy);
+                    if (toaster.current) {
+                      toaster.current.show({
+                        message: "代理地址更新成功",
+                        intent: Intent.SUCCESS,
+                        icon: "clean"
+                      });
+                      props.saveModify();
+                    }
+                  }}
                 >
                   确定
                 </Button>
@@ -86,6 +95,7 @@ const ProxySetting = (props: ProxySettingProps) => {
       >
         输入你的代理服务器地址（例如：http://127.0.0.1:1080）
       </p>
+      <Toaster ref={toaster} position={Position.TOP} />
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-
 import LogoImage from "../assets/emoticon.svg";
 
 export type TitleHeaderProps = {
