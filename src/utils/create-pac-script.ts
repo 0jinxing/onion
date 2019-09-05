@@ -1,4 +1,4 @@
-import pacScriptTemplate from "../assets/pac-script-template.pac!string";
+import pacScriptTemplate from "../assets/pac-script-template.pac";
 import defaultRacRules from "./default-pac-rules";
 
 export default (proxy: string, userRules: Array<string>) => {

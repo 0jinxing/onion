@@ -1,4 +1,4 @@
-import { CombinedMatcher, Filter } from "../libs/adblockplus";
+import { CombinedMatcher } from "../lib/adblockplus";
 
 const getCurrentFilter = (url: string, ...matcherArray: Array<CombinedMatcher>) => {
   const { href, host } = new URL(url);

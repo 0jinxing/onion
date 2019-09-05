@@ -4,6 +4,8 @@ import {
   chromeTabsReload,
   chromeBrowserActionSetIcon
 } from "../utils/chrome-promisify";
+import activedIcon from "../assets/emoticon.png";
+import disactivedIcon from "../assets/emoticon_d.png";
 const chrome = window.chrome;
 
 (async () => {
@@ -25,10 +27,10 @@ const chrome = window.chrome;
     if (!currentTag.url || !currentTag.url.startsWith("http")) return;
     else if (helper.check(currentTag.url)) {
       await helper.disallow(currentTag.url);
-      iconPath = "proxy-unable.png";
+      iconPath = activedIcon;
     } else {
       await helper.allow(currentTag.url);
-      iconPath = "proxy-enable.png";
+      iconPath = disactivedIcon;
     }
     await chromeTabsReload(currentTag.id);
     await chromeBrowserActionSetIcon({ path: iconPath });
@@ -48,8 +50,8 @@ const chrome = window.chrome;
     if (lastHost === curHost) return;
     lastUrl = url;
     let iconPath;
-    if (helper.check(url)) iconPath = "proxy-enable.png";
-    else iconPath = "proxy-unable.png";
+    if (helper.check(url)) iconPath = activedIcon;
+    else iconPath = disactivedIcon;
 
     await chromeBrowserActionSetIcon({ path: iconPath });
   };

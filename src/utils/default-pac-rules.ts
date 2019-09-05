@@ -1,4 +1,4 @@
-import { CombinedMatcher, Filter } from "../libs/adblockplus";
+import { CombinedMatcher, Filter } from "../lib/adblockplus";
 
 const defaultPacRules = [
   "|http://85.17.73.31/",

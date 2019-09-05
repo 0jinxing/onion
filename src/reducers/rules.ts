@@ -22,53 +22,26 @@ const uMatcherSelector = createSelector(
 
 export default handleActions(
   {
-    [allow.toString()]: (
-      state: { val: Array<string> },
-      { payload: { url } }: { payload: { url: string } }
-    ) => {
-      // @TODO
-      const { val: rules } = state;
-      const { href, host } = new URL(url);
-
-      const uMatcher = uMatcherSelector(state);
-
-      const uFilter = uMatcher.matchesAny(href, host);
-      if (uFilter instanceof BlockingFilter) {
-        return { ...state };
-      }
-      const nRules = [...rules, host];
-      return { ...state, val: nRules };
-    },
-
-    [disallow.toString()]: (
-      state: { val: Array<string> },
-      { payload: { url } }: { payload: { url: string } }
-    ) => {
-      const { val: rules } = state;
-      const { href, host } = new URL(url);
-
-      const uMatcher = uMatcherSelector(state);
-      const uFilter = uMatcher.matchesAny(href, host);
-
-      if (uFilter instanceof WhitelistFilter) {
-        return { ...state };
-      } else if (uFilter instanceof BlockingFilter) {
-        const delInd = rules.indexOf((uFilter as Filter).text);
-        rules.splice(delInd, 1);
-      }
-      const nRules = [...rules, "@@" + host];
-
-      return { ...state, val: nRules };
-    },
-
     [toggle.toString()]: (
       state: { val: Array<string> },
       { payload: { url } }: { payload: { url: string } }
     ) => {
-      // @TODO
-      const { val: rules } = state;
+      const { href, host } = new URL(url);
       const uMatcher = uMatcherSelector(state);
-
+      const uFilter = uMatcher.matchesAny(href, host);
+      let isBlocking = false;
+      if (uFilter instanceof WhitelistFilter) {
+        isBlocking = false;
+      } else if (uFilter instanceof BlockingFilter) {
+        isBlocking = true;
+      } else {
+        const dFilter = dMatcher.matchesAny(href, host);
+        isBlocking = dFilter instanceof BlockingFilter;
+      }
+      // @TODO
+      if (isBlocking) {
+      } else {
+      }
       return state;
     }
   },

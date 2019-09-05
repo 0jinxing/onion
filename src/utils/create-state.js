@@ -1,4 +1,4 @@
-import { CombinedMatcher, Filter } from "./pac-match";
+import { CombinedMatcher, Filter } from "../lib/adblockplus";
 import defaultPacRules from "./default-pac-rules";
 import createPacScript from "./create-pac-script";
 import {

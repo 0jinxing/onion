@@ -12,6 +12,9 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve("ext")
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
   module: {
     rules: [
       {
@@ -26,14 +29,23 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          { loader: "css-loader", options: { modules: true } }
-        ]
+        use: ["style-loader", { loader: "css-loader" }]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
-        use: { loader: "file-loader" }
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 4096
+          }
+        }
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        loader: "file-loader",
+        options: {
+          name: "fonts/[name].[ext]"
+        }
       },
       {
         test: /\.pac$/,

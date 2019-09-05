@@ -5,8 +5,8 @@ export default handleActions(
   {
     [setProxy.toString()]: (
       state: { val: string },
-      { payload: { val } }: { payload: { val: string } }
-    ) => ({ ...state, val })
+      { payload: { proxy } }: { payload: { proxy: string } }
+    ) => ({ ...state, val: proxy })
   },
   {
     val: "PROXY 127.0.0.1:1080"

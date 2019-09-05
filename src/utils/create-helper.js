@@ -1,4 +1,4 @@
-import { BlockingFilter, WhitelistFilter } from "./pac-match";
+import { BlockingFilter, WhitelistFilter } from "../lib/adblockplus";
 import createState from "./create-state";
 
 let state = null;

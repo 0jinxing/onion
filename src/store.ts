@@ -1,5 +1,7 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer, Storage } from "redux-persist";
+import logger from "redux-logger";
+
 import rootReducer from "./reducers";
 
 export class ChromeLocalStorage implements Storage {
@@ -32,4 +34,5 @@ const persistedReducer = persistReducer(
   rootReducer
 );
 
-const store = createStore(rootReducer);
+export const store = createStore(persistedReducer, applyMiddleware(logger));
+export const persistor = persistStore(store);
