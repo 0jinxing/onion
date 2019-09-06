@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { hot } from "react-hot-loader/root";
 import { store, persistor } from "./store";
 import ProxySetting from "./containers/ProxySetting";
 import TitleHeader from "./containers/TitleHeader";
@@ -38,4 +39,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(App);

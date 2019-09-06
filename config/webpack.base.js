@@ -1,16 +1,11 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "production",
   entry: {
-    index: path.resolve("src/index.js"),
+    index: path.resolve("src/index.tsx"),
     background: path.resolve("src/scripts/background.js")
-  },
-  output: {
-    filename: "[name].js",
-    path: path.resolve("ext")
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
@@ -53,27 +48,20 @@ module.exports = {
       }
     ]
   },
+
   plugins: [
     new CopyPlugin([
       {
         from: path.resolve("public"),
-        ignore: "template.html"
+        ignore: ["*.html" | "*.json"]
       }
     ]),
-    new HtmlWebPackPlugin({
+    new HtmlPlugin({
       template: path.resolve("public/template.html"),
       filename: "index.html",
       chunks: ["index"],
       hash: true,
-      title: "Heroic Proxy Options",
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true
-      }
+      title: "Just proxy - options"
     })
   ]
 };

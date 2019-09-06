@@ -5,18 +5,20 @@
   "author": "Jinxing Lin <172601673@qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack --watch",
-    "build": "webpack"
+    "start": "cross-env NODE_ENV=development rimraf ext/dev && webpack-dev-server --config config/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production rimraf ext/prod && webpack --config config/webpack.prod.js"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.18.0",
     "@blueprintjs/table": "^3.7.0",
+    "@hot-loader/react-dom": "^16.9.0",
     "classnames": "^2.2.6",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "rc-form": "^2.4.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.12.12",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
@@ -38,6 +40,7 @@
     "@types/chrome": "^0.0.88",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/react-hot-loader": "^4.1.0",
     "@types/react-redux": "^7.1.2",
     "@types/redux": "^3.6.0",
     "@types/redux-actions": "^2.6.1",
@@ -45,16 +48,21 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.3",
+    "cross-env": "^5.2.1",
     "css-loader": "^2.1.1",
     "extract-loader": "^3.1.0",
     "file-loader": "^3.0.1",
     "html-webpack-plugin": "^3.2.0",
     "raw-loader": "^2.0.0",
+    "rimraf": "^3.0.0",
     "style-loader": "^0.23.1",
     "styled-jsx": "^3.2.1",
     "typescript": "^3.5.3",
     "url-loader": "^2.1.0",
     "webpack": "^4.32.0",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2",
+    "write-file-webpack-plugin": "^4.5.1"
   }
 }

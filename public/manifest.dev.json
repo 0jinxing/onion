@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Heroic Proxy",
+  "description": "a simple proxy tool",
+  "version": "1.0.0",
+  "permissions": [
+    "proxy",
+    "storage",
+    "tabs",
+    "management",
+    "http://127.0.0.1:8000/*"
+  ],
+  "browser_action": {
+    "default_icon": "emoticon.png"
+  },
+  "icons": {
+    "64": "emoticon.png"
+  },
+  "options_page": "index.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "default-src 'self' http://127.0.0.1:8000 http://localhost:8000; script-src 'self' http://127.0.0.1:8000 http://localhost:8000 'unsafe-eval'; connect-src http://127.0.0.1:8000 http://localhost:8000 ws://127.0.0.1:8000 ws://localhost:8000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+}

@@ -43,7 +43,8 @@ const ProxySetting = (props: ProxySettingProps) => {
             <Button intent={Intent.NONE}>更新</Button>
             <div
               style={{
-                padding: "20px"
+                padding: "20px",
+                paddingBottom: "10px"
               }}
             >
               <p>

@@ -34,5 +34,9 @@ const persistedReducer = persistReducer(
   rootReducer
 );
 
-export const store = createStore(persistedReducer, applyMiddleware(logger));
+export const store =
+  process.env.NODE_ENV === "development"
+    ? createStore(persistedReducer, applyMiddleware(logger))
+    : createStore(persistedReducer);
+    
 export const persistor = persistStore(store);

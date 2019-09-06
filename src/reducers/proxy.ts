@@ -9,6 +9,6 @@ export default handleActions(
     ) => ({ ...state, val: proxy })
   },
   {
-    val: "PROXY 127.0.0.1:1080"
+    val: "http://127.0.0.1:1080"
   }
 );

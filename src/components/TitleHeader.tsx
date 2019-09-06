@@ -26,7 +26,7 @@ const TitleHeader = (props: TitleHeaderProps) => {
           fontWeight: "normal"
         }}
       >
-        简单的代理工具 - 设置 {props.modify ? "*" : ""}
+        Just proxy - options {props.modify ? "*" : ""}
       </h1>
     </header>
   );
