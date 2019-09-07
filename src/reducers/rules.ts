@@ -1,48 +1,46 @@
 import { handleActions } from "redux-actions";
-import { createSelector } from "reselect";
-import { allow, disallow, toggle } from "../actions/rules";
-import {
-  CombinedMatcher,
-  Filter,
-  BlockingFilter,
-  WhitelistFilter
-} from "../lib/adblockplus";
-import { dMatcher } from "../utils/default-pac-rules";
-
-const rulesSelector = (state: { val: Array<string> }) => state.val;
-const uMatcherSelector = createSelector(
-  rulesSelector,
-  rules => {
-    return rules.reduce((pre, cur) => {
-      pre.add(Filter.fromText(cur));
-      return pre;
-    }, new CombinedMatcher());
-  }
-);
+import { allow, disallow } from "../actions/rules";
 
 export default handleActions(
   {
-    [toggle.toString()]: (
+    [allow.toString()]: (
       state: { val: Array<string> },
-      { payload: { url } }: { payload: { url: string } }
+      {
+        payload: { host, delInd }
+      }: { payload: { host: string; delInd: number } }
     ) => {
-      const { href, host } = new URL(url);
-      const uMatcher = uMatcherSelector(state);
-      const uFilter = uMatcher.matchesAny(href, host);
-      let isBlocking = false;
-      if (uFilter instanceof WhitelistFilter) {
-        isBlocking = false;
-      } else if (uFilter instanceof BlockingFilter) {
-        isBlocking = true;
-      } else {
-        const dFilter = dMatcher.matchesAny(href, host);
-        isBlocking = dFilter instanceof BlockingFilter;
+      const rules = state.val;
+      if (typeof delInd === "number") {
+        return {
+          val: [
+            ...rules.slice(0, delInd),
+            ...rules.slice(delInd + 1, rules.length),
+            host
+          ]
+        };
       }
-      // @TODO
-      if (isBlocking) {
-      } else {
+      return {
+        val: [...rules, host]
+      };
+    },
+
+    [disallow.toString()]: (
+      state: { val: Array<string> },
+      {
+        payload: { host, delInd }
+      }: { payload: { host: string; delInd: number } }
+    ) => {
+      const rules = state.val;
+      if (typeof delInd === "number") {
+        return {
+          val: [
+            ...rules.slice(0, delInd),
+            ...rules.slice(delInd + 1, rules.length),
+            "@@" + host
+          ]
+        };
       }
-      return state;
+      return { val: [...rules, "@@" + host] };
     }
   },
   { val: [] }
