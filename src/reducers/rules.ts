@@ -10,7 +10,7 @@ export default handleActions(
       }: { payload: { host: string; delInd: number } }
     ) => {
       const rules = state.val;
-      if (typeof delInd === "number") {
+      if (typeof delInd === "number" && delInd >= 0) {
         return {
           val: [
             ...rules.slice(0, delInd),
@@ -31,7 +31,7 @@ export default handleActions(
       }: { payload: { host: string; delInd: number } }
     ) => {
       const rules = state.val;
-      if (typeof delInd === "number") {
+      if (typeof delInd === "number" && delInd >= 0) {
         return {
           val: [
             ...rules.slice(0, delInd),

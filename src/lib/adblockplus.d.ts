@@ -135,7 +135,7 @@ export class CombinedMatcher {
     thirdParty: boolean,
     sitekey: string
   ): Filter;
-  matchesAny(location: string, docDomain: string): Filter;
+  matchesAny(location: string, docDomain: string): null | Filter;
 
   static maxCacheEntries: number;
 }
