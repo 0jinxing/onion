@@ -18,6 +18,7 @@ export function* toggleSaga(action: {
   } else {
     yield put(allow(host, filter ? rules.indexOf(filter.text) : undefined));
   }
+  chrome.tabs.reload();
 }
 
 export default function* watchToggle() {

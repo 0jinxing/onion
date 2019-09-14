@@ -18,7 +18,7 @@ const chromeProxyMiddleware: Middleware = store => next => action => {
 
   if (_.isEqual(rules, nextRules) && _.isEqual(proxy, nextProxy)) return;
 
-  const pacScript = createPacScript(nextProxy.val, nextRules.val);
+  const pacScript = createPacScript(`PROXY ${nextProxy.val};`, nextRules.val);
 
   // Send message to options page
   chrome.runtime.sendMessage(action);
@@ -28,10 +28,6 @@ const chromeProxyMiddleware: Middleware = store => next => action => {
     pacScript: { data: pacScript }
   };
   chrome.proxy.settings.set({ value: config, scope: "regular" }, async () => {
-    console.log(nextRules.val, nextProxy.val, {
-      value: config,
-      scope: "regular"
-    });
     // Set browser action icon
     const tabs: chrome.tabs.Tab[] = await new Promise(resolve => {
       chrome.tabs.query({ active: true, lastFocusedWindow: true }, resolve);

@@ -5,7 +5,7 @@ const HtmlPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     index: path.resolve("src/index.tsx"),
-    background: path.resolve("src/scripts/background.js")
+    background: path.resolve("src/scripts/background.ts")
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"]

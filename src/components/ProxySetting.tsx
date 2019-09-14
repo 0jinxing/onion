@@ -27,7 +27,7 @@ const ProxySetting = (props: ProxySettingProps) => {
       <ControlGroup vertical={false} fill={true}>
         <InputGroup
           id="proxy"
-          placeholder="http://127.0.0.1:1080"
+          placeholder="127.0.0.1:1080"
           defaultValue={proxy}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setProxy(e.target.value);
@@ -94,7 +94,7 @@ const ProxySetting = (props: ProxySettingProps) => {
           color: "#5c7080"
         }}
       >
-        输入你的代理服务器地址（例如：http://127.0.0.1:1080）
+        输入你的代理服务器地址（例如：127.0.0.1:1080）
       </p>
       <Toaster ref={toaster} position={Position.TOP} />
     </div>

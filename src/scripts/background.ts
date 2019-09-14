@@ -1,6 +1,7 @@
+import _ from "lodash";
 import store from "../store";
 import { toggle } from "../actions/rules";
-import { createPacScript, getCurrentFilter } from "../utils";
+import { getCurrentFilter } from "../utils";
 import { BlockingFilter } from "../lib/adblockplus";
 import aIcon from "../assets/emoticon.png";
 import dIcon from "../assets/emoticon_d.png";
@@ -28,8 +29,10 @@ const handleTabsUpdatedAndChanged = async () => {
   }
 };
 
-chrome.tabs.onUpdated.addListener(handleTabsUpdatedAndChanged);
-chrome.tabs.onUpdated.addListener(handleTabsUpdatedAndChanged);
+chrome.tabs.onUpdated.addListener(_.debounce(handleTabsUpdatedAndChanged, 400));
+chrome.tabs.onSelectionChanged.addListener(
+  _.debounce(handleTabsUpdatedAndChanged, 400)
+);
 
 const handleBrowserActionClicked = async () => {
   const tabs: chrome.tabs.Tab[] = await new Promise(resolve => {
@@ -46,4 +49,10 @@ const handleBrowserActionClicked = async () => {
   store.dispatch(toggle(tabs[0].url));
 };
 
-chrome.browserAction.onClicked.addListener(handleBrowserActionClicked);
+chrome.browserAction.onClicked.addListener(
+  _.debounce(handleBrowserActionClicked, 400)
+);
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === "install") chrome.runtime.openOptionsPage();
+});
