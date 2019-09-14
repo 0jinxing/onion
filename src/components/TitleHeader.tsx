@@ -1,5 +1,5 @@
 import React from "react";
-import LogoImage from "../assets/emoticon.svg";
+import LogoImage from "../assets/emoticon.png";
 
 export type TitleHeaderProps = {
   modify: boolean;
