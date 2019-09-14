@@ -5,8 +5,9 @@
   "author": "Jinxing Lin <172601673@qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development rimraf ext/dev && webpack-dev-server --config config/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production rimraf ext/prod && webpack --config config/webpack.prod.js"
+    "start": "rimraf ext/dev && cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
+    "build:dev": "rimraf ext/dev && cross-env NODE_ENV=development INTENT=build webpack --config config/webpack.dev.js",
+    "build": "rimraf ext/prod && cross-env NODE_ENV=production webpack --config config/webpack.prod.js"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.18.0",
