@@ -5,7 +5,7 @@ import createSagaMiddleware from "redux-saga";
 import chromeProxyMiddleware from "./chrome-proxy-middleware";
 
 import rootReducer from "../reducers";
-import rootSagas from '../sagas';
+import rootSagas from "../sagas";
 import ChromeLocalStorage from "../lib/chrome-local-storage";
 
 const storage = new ChromeLocalStorage();
@@ -26,7 +26,10 @@ const store =
         persistedReducer,
         applyMiddleware(logger, chromeProxyMiddleware, sagaMiddleware)
       )
-    : createStore(persistedReducer);
+    : createStore(
+        persistedReducer,
+        applyMiddleware(chromeProxyMiddleware, sagaMiddleware)
+      );
 
 sagaMiddleware.run(rootSagas);
 

@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "start": "rimraf ext/dev && cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
-    "build:dev": "rimraf ext/dev && cross-env NODE_ENV=development INTENT=build webpack --config config/webpack.dev.js",
     "build": "rimraf ext/prod && cross-env NODE_ENV=production webpack --config config/webpack.prod.js"
   },
   "dependencies": {

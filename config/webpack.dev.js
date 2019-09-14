@@ -5,14 +5,12 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const baseConfig = require("./webpack.base");
 
-const isBuild = /build/i.test(process.env.INTENT);
-
 module.exports = merge(baseConfig, {
   mode: "development",
   output: {
     filename: "[name].js",
     path: path.resolve("ext", "dev"),
-    ...(isBuild ? {} : { publicPath: "http://127.0.0.1:8000/" })
+    publicPath: "http://127.0.0.1:8000/"
   },
   resolve: {
     alias: {
