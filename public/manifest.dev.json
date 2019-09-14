@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Heroic Proxy",
-  "description": "a simple proxy tool",
+  "name": "Just proxy",
+  "description": "A simple proxy tool",
   "version": "1.0.0",
   "permissions": [
     "proxy",

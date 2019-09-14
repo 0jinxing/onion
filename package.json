@@ -1,7 +1,7 @@
 {
-  "name": "heroic-proxy",
+  "name": "just-proxy",
   "version": "1.0.0",
-  "repository": "git@github.com:0jinxing/heroic-proxy.git",
+  "repository": "git@github.com:0jinxing/just-proxy.git",
   "author": "Jinxing Lin <172601673@qq.com>",
   "license": "MIT",
   "scripts": {
