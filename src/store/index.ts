@@ -13,7 +13,8 @@ const storage = new ChromeLocalStorage();
 const persistedReducer = persistReducer(
   {
     key: "0jinxing",
-    storage
+    storage,
+    blacklist: ["modify"]
   },
   rootReducer
 );

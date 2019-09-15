@@ -1,7 +1,9 @@
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import { Action } from "redux";
+import validator from "validator";
 import {
   Button,
+  FormGroup,
   ControlGroup,
   InputGroup,
   Popover,
@@ -20,17 +22,33 @@ type ProxySettingProps = {
 
 const ProxySetting = (props: ProxySettingProps) => {
   const [proxy, setProxy] = useState(props.proxy);
+  const [error, setError] = useState("");
   const toaster = useRef<Toaster>(null);
 
+  useEffect(() => {
+    if (validator.isEmpty(proxy)) {
+      setError("代理服务器地址不能为空");
+    } else if (!validator.isURL(proxy)) {
+      setError("请输入正确的代理服务器地址");
+    } else {
+      setError("");
+    }
+  }, [proxy]);
+
   return (
-    <div>
+    <FormGroup
+      helperText={error || "输入你的代理服务器地址（例如：127.0.0.1:1080）"}
+      intent={error ? Intent.DANGER : Intent.NONE}
+    >
       <ControlGroup vertical={false} fill={true}>
         <InputGroup
           id="proxy"
           placeholder="127.0.0.1:1080"
           defaultValue={proxy}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setProxy(e.target.value);
+            const value = e.target.value;
+            setProxy(value);
+
             props.createModify();
           }}
         />
@@ -39,8 +57,8 @@ const ProxySetting = (props: ProxySettingProps) => {
             flexGrow: 0
           }}
         >
-          <Popover>
-            <Button intent={Intent.NONE}>更新</Button>
+          <Popover disabled={!!error}>
+            <Button disabled={!!error}>更新</Button>
             <div
               style={{
                 padding: "20px",
@@ -87,17 +105,8 @@ const ProxySetting = (props: ProxySettingProps) => {
           </Popover>
         </div>
       </ControlGroup>
-      <p
-        style={{
-          marginTop: "5px",
-          fontSize: "12px",
-          color: "#5c7080"
-        }}
-      >
-        输入你的代理服务器地址（例如：127.0.0.1:1080）
-      </p>
       <Toaster ref={toaster} position={Position.TOP} />
-    </div>
+    </FormGroup>
   );
 };
 
