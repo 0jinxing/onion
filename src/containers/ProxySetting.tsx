@@ -4,9 +4,13 @@ import { setProxy } from "../actions/proxy";
 import { createModify, saveModify } from "../actions/modify";
 import ProxySetting from "../components/ProxySetting";
 
-const mapStateToProps = (state: { proxy: { val: string } }) => {
+const mapStateToProps = (state: {
+  proxy: { val: string };
+  modify: { val: boolean };
+}) => {
   return {
-    proxy: state.proxy.val
+    proxy: state.proxy.val,
+    modify: state.modify.val
   };
 };
 

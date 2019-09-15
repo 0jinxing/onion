@@ -15,6 +15,7 @@ import {
 
 type ProxySettingProps = {
   proxy: string;
+  modify: boolean;
   updateProxy: (proxy: string) => Action;
   createModify: () => Action;
   saveModify: () => Action;
@@ -49,7 +50,9 @@ const ProxySetting = (props: ProxySettingProps) => {
             const value = e.target.value;
             setProxy(value);
 
-            props.createModify();
+            if (!props.modify) {
+              props.createModify();
+            }
           }}
         />
         <div
