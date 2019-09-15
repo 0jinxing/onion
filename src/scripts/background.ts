@@ -29,9 +29,11 @@ const handleTabsUpdatedAndChanged = async () => {
   }
 };
 
-chrome.tabs.onUpdated.addListener(_.debounce(handleTabsUpdatedAndChanged, 400));
+chrome.tabs.onUpdated.addListener(
+  _.debounce(handleTabsUpdatedAndChanged, 1000 / 30)
+);
 chrome.tabs.onSelectionChanged.addListener(
-  _.debounce(handleTabsUpdatedAndChanged, 400)
+  _.debounce(handleTabsUpdatedAndChanged, 1000 / 30)
 );
 
 const handleBrowserActionClicked = async () => {
