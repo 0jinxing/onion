@@ -22,7 +22,7 @@
 <div align=center>
   <img src="https://raw.githubusercontent.com/0jinxing/just-proxy/master/docs/demo.gif" alt="demo" />
   <p>
-    <a src="https://chrome.google.com/webstore/detail/just-proxy/ooinoebmmhbmhkocojcoahbkefikddch">插件地址</a>
+    <a href="https://chrome.google.com/webstore/detail/just-proxy/ooinoebmmhbmhkocojcoahbkefikddch" target="_blank">插件地址</a>
   </p>
 </div>
 
