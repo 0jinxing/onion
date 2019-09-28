@@ -17,6 +17,16 @@
   </a>
 </div>
 
+
+## Demo
+
+<div align=center>
+  <img src="https://raw.githubusercontent.com/0jinxing/just-proxy/master/docs/demo.gif" alt="demo" />
+</div>
+
+插件地址：<https://chrome.google.com/webstore/detail/just-proxy/ooinoebmmhbmhkocojcoahbkefikddch>
+
+
 ## License
 
 The code is available under the [MIT license](https://github.com/0jinxing/just-proxy/blob/master/LICENSE)
