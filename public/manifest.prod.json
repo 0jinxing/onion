@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Just proxy",
   "description": "A simple proxy tool",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "permissions": ["proxy", "storage", "tabs", "management"],
   "browser_action": {
     "default_icon": "emoticon.png"

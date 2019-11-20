@@ -29,7 +29,12 @@ const ProxySetting = (props: ProxySettingProps) => {
   useEffect(() => {
     if (validator.isEmpty(proxy)) {
       setError("代理服务器地址不能为空");
-    } else if (!validator.isURL(proxy)) {
+    } else if (
+      !validator.isURL(proxy, {
+        protocols: ["http", "https", "socks", "socks5"],
+        require_protocol: false
+      })
+    ) {
       setError("请输入正确的代理服务器地址");
     } else {
       setError("");
