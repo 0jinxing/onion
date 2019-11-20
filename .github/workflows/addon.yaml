@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy:
+  upload:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
@@ -19,8 +19,6 @@ jobs:
       - uses: montudor/action-zip@v0.1.0
         with:
           args: zip -qq -r ./prod.zip ./ext/prod
-      - run: |
-          ls -al
 
       - uses: trmcnvn/chrome-addon@v1
         with:
