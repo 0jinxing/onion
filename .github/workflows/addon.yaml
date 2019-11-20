@@ -13,10 +13,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "10.x"
-      - uses: trmcnvn/chrome-addon@v1
-        run: |
+      - run: |
           npm install && npm run build
           zip -r ext/prod ext.zip
+      - uses: trmcnvn/chrome-addon@v1
         with:
           # extension is only necessary when updating an existing addon,
           # omitting it will create a new addon
