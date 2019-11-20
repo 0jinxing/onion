@@ -15,13 +15,17 @@ jobs:
           node-version: "10.x"
       - run: |
           npm install && npm run build
-          zip -r ext/prod ext.zip
+      
+      - uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r ./ext/prod ./
+
       - uses: trmcnvn/chrome-addon@v1
         with:
           # extension is only necessary when updating an existing addon,
           # omitting it will create a new addon
           extension: ooinoebmmhbmhkocojcoahbkefikddch
-          zip: ext.zip
+          zip: prod.zip
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
