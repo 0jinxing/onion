@@ -1,2 +1,27 @@
-- name: Chrome Addon Action
-  uses: trmcnvn/chrome-addon@v1
+name: Chrome Addon Upload
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+        run: |
+          npm install && npm run build
+          zip -r ext/prod ext.zip
+      - uses: trmcnvn/chrome-addon@v1
+        with:
+          # extension is only necessary when updating an existing addon,
+          # omitting it will create a new addon
+          extension: ooinoebmmhbmhkocojcoahbkefikddch
+          zip: ext.zip
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
