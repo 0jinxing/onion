@@ -18,7 +18,7 @@ jobs:
       
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./ext/prod ./
+          args: zip -qq -r ./prod.zip ./ext/prod
       - run: |
           ls -al
 
