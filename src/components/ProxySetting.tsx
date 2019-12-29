@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from "react";
+import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { Action } from "redux";
 import validator from "validator";
 import {
@@ -51,6 +51,7 @@ const ProxySetting = (props: ProxySettingProps) => {
     >
       <ControlGroup vertical={false} fill>
         <InputGroup
+          leftIcon="link"
           id="proxy"
           placeholder="127.0.0.1:1080"
           defaultValue={proxy}
@@ -65,17 +66,16 @@ const ProxySetting = (props: ProxySettingProps) => {
         />
         <div className="bp3-fixed">
           <Popover disabled={!!error}>
-            <Button disabled={!!error}>更新</Button>
+            <Button intent={Intent.PRIMARY} disabled={!!error} icon="updated">
+              更新代理服务器
+            </Button>
             <div className="popover-container">
               <p>
                 即将更新 <b>代理服务器</b> 设置
               </p>
               <div className="button-group">
                 <Button
-                  className={classNames([
-                    Classes.POPOVER_DISMISS,
-                    "mr15"
-                  ])}
+                  className={classNames([Classes.POPOVER_DISMISS, "mr15"])}
                   intent={Intent.NONE}
                 >
                   取消

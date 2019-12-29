@@ -10,7 +10,7 @@ const TitleHeader = (props: TitleHeaderProps) => {
   return (
     <header className="title-header">
       <img className="logo" src={LogoImage} />
-      <h1 className="title">Just proxy - options {props.modify ? "*" : ""}</h1>
+      <h1 className="title">PROXY OPTIONS {props.modify ? "*" : ""}</h1>
     </header>
   );
 };

@@ -1,0 +1,14 @@
+.edit-input {
+  .input {
+    flex-grow: 1;
+  }
+  .tag-wrap {
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+  }
+}

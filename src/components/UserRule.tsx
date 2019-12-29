@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { Table, Column, Cell, TruncatedFormat } from "@blueprintjs/table";
 import { Intent } from "@blueprintjs/core";
 import { Rule } from "../reducers/rule";
+import EditInput from "./EditInput";
 import "./UserRule.scss";
 
 export type UserRulrsProps = {
@@ -59,6 +60,7 @@ const UserRulrs = (props: UserRulrsProps) => {
         </a>
         了解更多
       </p>
+      <EditInput />
     </div>
   );
 };
