@@ -6,7 +6,8 @@ import aIcon from "../assets/emoticon.png";
 import dIcon from "../assets/emoticon_d.png";
 
 import { setProxy } from "../actions/proxy";
-import { toggle } from "../actions/rules";
+import { toggle } from "../actions/rule";
+import { State } from "../store";
 
 const passingActions = [setProxy, toggle].map(a => a.toString());
 
@@ -20,25 +21,22 @@ const chromeProxyMiddleware: Middleware = store => {
   });
 
   return next => action => {
-    const {
-      rules,
-      proxy
-    }: { rules: { val: string[] }; proxy: { val: string } } = store.getState();
+    const { rule, proxy }: State = store.getState();
     next(action);
     // Send message to options page or background script
 
-    const {
-      rules: nextRules,
-      proxy: nextProxy
-    }: { rules: { val: string[] }; proxy: { val: string } } = store.getState();
+    const { rule: nextRule, proxy: nextProxy }: State = store.getState();
 
-    if (_.isEqual(rules, nextRules) && _.isEqual(proxy, nextProxy)) return;
+    if (_.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy)) return;
 
     if (passingActions.indexOf(action.type) >= 0 && !action.passed) {
       chrome.runtime.sendMessage(action);
     }
 
-    const pacScript = createPacScript(`PROXY ${nextProxy.val};`, nextRules.val);
+    const pacScript = createPacScript(
+      `PROXY ${nextProxy.val};`,
+      nextRule.val.map(i => i.pattern)
+    );
 
     const config = {
       mode: "pac_script",
@@ -59,7 +57,10 @@ const chromeProxyMiddleware: Middleware = store => {
       }
       const url = tabs[0].url;
 
-      const curFilter = getCurrentFilter(url, nextRules.val);
+      const curFilter = getCurrentFilter(
+        url,
+        nextRule.val.map(i => i.pattern)
+      );
       if (curFilter instanceof BlockingFilter) {
         chrome.browserAction.setIcon({ path: aIcon });
       } else {

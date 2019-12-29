@@ -1,6 +1,6 @@
 import _ from "lodash";
 import store from "../store";
-import { toggle } from "../actions/rules";
+import { toggle } from "../actions/rule";
 import { getCurrentFilter } from "../utils";
 import { BlockingFilter } from "../lib/adblockplus";
 import aIcon from "../assets/emoticon.png";
@@ -20,7 +20,7 @@ const handleTabsUpdatedAndChanged = async () => {
 
   const curFilter = getCurrentFilter(
     currentTab.url,
-    store.getState().rules.val
+    store.getState().rule.val.map(i => i.pattern)
   );
   if (curFilter instanceof BlockingFilter) {
     chrome.browserAction.setIcon({ path: aIcon });

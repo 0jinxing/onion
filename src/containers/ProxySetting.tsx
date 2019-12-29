@@ -3,30 +3,16 @@ import { connect } from "react-redux";
 import { setProxy } from "../actions/proxy";
 import { createModify, saveModify } from "../actions/modify";
 import ProxySetting from "../components/ProxySetting";
+import { State } from "../store";
 
-const mapStateToProps = (state: {
-  proxy: { val: string };
-  modify: { val: boolean };
-}) => {
-  return {
-    proxy: state.proxy.val,
-    modify: state.modify.val
-  };
+const mapStateToProps = (state: State) => {
+  return { proxy: state.proxy.val, modify: state.modify.val };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateProxy: (proxy: string) => {
-    return dispatch(setProxy(proxy));
-  },
-  createModify: () => {
-    return dispatch(createModify());
-  },
-  saveModify: () => {
-    return dispatch(saveModify());
-  }
+  updateProxy: (proxy: string) => dispatch(setProxy(proxy)),
+  createModify: () => dispatch(createModify()),
+  saveModify: () => dispatch(saveModify())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProxySetting);
+export default connect(mapStateToProps, mapDispatchToProps)(ProxySetting);

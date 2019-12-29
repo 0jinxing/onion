@@ -5,7 +5,7 @@ import { hot } from "react-hot-loader/root";
 import store, { persistor } from "./store";
 import ProxySetting from "./containers/ProxySetting";
 import TitleHeader from "./containers/TitleHeader";
-import UserRules from "./containers/UserRules";
+import UserRule from "./containers/UserRule";
 
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
@@ -31,7 +31,7 @@ const App = () => {
               marginTop: "25px"
             }}
           >
-            <UserRules />
+            <UserRule />
           </section>
         </main>
       </PersistGate>

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import rulesReducer from "./rules";
+import ruleReducer from "./rule";
 import proxyReducer from "./proxy";
 import modifyReducer from "./modify";
 
 export default combineReducers({
-  rules: rulesReducer,
+  rule: ruleReducer,
   proxy: proxyReducer,
   modify: modifyReducer
 });

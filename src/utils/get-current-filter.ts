@@ -1,9 +1,9 @@
 import { Filter, CombinedMatcher } from "../lib/adblockplus";
-import { dMatcher } from "./default-pac-rules";
+import { dMatcher } from "./default-pac-list";
 
-const getCurrentFilter = (url: string, rules: string[]): null | Filter => {
+const getCurrentFilter = (url: string, patterns: string[]): null | Filter => {
   const { host, href } = new URL(url);
-  const uMatcher = rules.reduce((pre, cur) => {
+  const uMatcher = patterns.reduce((pre, cur) => {
     pre.add(Filter.fromText(cur));
     return pre;
   }, new CombinedMatcher());

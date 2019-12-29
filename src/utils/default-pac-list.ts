@@ -1,6 +1,6 @@
 import { CombinedMatcher, Filter } from "../lib/adblockplus";
 
-const defaultPacRules = [
+const defaultPacList = [
   "|http://85.17.73.31/",
   "||agnesb.fr",
   "||akiba-web.com",
@@ -7260,8 +7260,8 @@ const defaultPacRules = [
 
 export const dMatcher = new CombinedMatcher();
 
-defaultPacRules.forEach(rule => {
+defaultPacList.forEach(rule => {
   dMatcher.add(Filter.fromText(rule));
 });
 
-export default defaultPacRules;
+export default defaultPacList;

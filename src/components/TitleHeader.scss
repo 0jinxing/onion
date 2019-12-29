@@ -1,0 +1,12 @@
+.title-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  .logo {
+    height: 40px;
+    margin-right: 15px;
+  }
+  .title {
+    font-weight: normal;
+  }
+}

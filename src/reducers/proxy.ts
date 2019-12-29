@@ -8,7 +8,5 @@ export default handleActions(
       { payload: { proxy } }: { payload: { proxy: string } }
     ) => ({ ...state, val: proxy })
   },
-  {
-    val: "127.0.0.1:1080"
-  }
+  { val: "127.0.0.1:1080" }
 );

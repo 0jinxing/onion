@@ -1,0 +1,10 @@
+.popover-container {
+  padding: 15px;
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    .mr15 {
+      margin-right: 15px;
+    }
+  }
+}

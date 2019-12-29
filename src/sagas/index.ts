@@ -1,6 +1,6 @@
 import { all, call } from "redux-saga/effects";
-import rulesSagas from "./rules";
+import ruleSagas from "./rule";
 
 export default function*() {
-  yield all([rulesSagas].map(call));
+  yield all([ruleSagas].map(call));
 }

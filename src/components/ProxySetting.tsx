@@ -12,6 +12,8 @@ import {
   Classes,
   Intent
 } from "@blueprintjs/core";
+import classNames from "classnames";
+import "./ProxySetting.scss";
 
 type ProxySettingProps = {
   proxy: string;
@@ -43,10 +45,11 @@ const ProxySetting = (props: ProxySettingProps) => {
 
   return (
     <FormGroup
+      className="proxy-setting"
       helperText={error || "输入你的代理服务器地址（例如：127.0.0.1:1080）"}
       intent={error ? Intent.DANGER : Intent.NONE}
     >
-      <ControlGroup vertical={false} fill={true}>
+      <ControlGroup vertical={false} fill>
         <InputGroup
           id="proxy"
           placeholder="127.0.0.1:1080"
@@ -60,34 +63,20 @@ const ProxySetting = (props: ProxySettingProps) => {
             }
           }}
         />
-        <div
-          style={{
-            flexGrow: 0
-          }}
-        >
+        <div className="bp3-fixed">
           <Popover disabled={!!error}>
             <Button disabled={!!error}>更新</Button>
-            <div
-              style={{
-                padding: "20px",
-                paddingBottom: "10px"
-              }}
-            >
+            <div className="popover-container">
               <p>
                 即将更新 <b>代理服务器</b> 设置
               </p>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end"
-                }}
-              >
+              <div className="button-group">
                 <Button
-                  className={Classes.POPOVER_DISMISS}
+                  className={classNames([
+                    Classes.POPOVER_DISMISS,
+                    "mr15"
+                  ])}
                   intent={Intent.NONE}
-                  style={{
-                    marginRight: "15px"
-                  }}
                 >
                   取消
                 </Button>
