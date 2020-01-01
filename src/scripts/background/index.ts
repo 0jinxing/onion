@@ -1,10 +1,10 @@
 import _ from "lodash";
-import store from "../store";
-import { toggle } from "../actions/rule";
-import { getCurrentFilter } from "../utils";
-import { BlockingFilter } from "../lib/adblockplus";
-import aIcon from "../assets/emoticon.png";
-import dIcon from "../assets/emoticon_d.png";
+import store from "@/store";
+import { toggle } from "@/actions/rule";
+import { getCurrentFilter } from "@/utils";
+import { BlockingFilter } from "@/lib/adblockplus";
+import aIcon from "@/assets/emoticon.png";
+import dIcon from "@/assets/emoticon_d.png";
 
 const handleTabsUpdatedAndChanged = async () => {
   const tabs: chrome.tabs.Tab[] = await new Promise(resolve => {

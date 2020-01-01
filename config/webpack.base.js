@@ -5,10 +5,13 @@ const HtmlPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     index: path.resolve("src/index.tsx"),
-    background: path.resolve("src/scripts/background.ts")
+    background: path.resolve("src/scripts/background/index.ts")
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "@": path.resolve("src")
+    }
   },
   module: {
     rules: [

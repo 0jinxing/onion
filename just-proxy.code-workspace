@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "name": "root", "path": "." },
+    { "name": "src", "path": "./src" },
+    { "name": "docs", "path": "./docs" },
+    { "name": "config", "path": "./config" }
+  ]
+}
