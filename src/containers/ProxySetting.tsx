@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { setProxy } from "../actions/proxy";
-import { createModify, saveModify } from "../actions/modify";
-import ProxySetting from "../components/ProxySetting";
-import { State } from "../store";
+import { setProxy } from "@/actions/proxy";
+import { createModify, saveModify } from "@/actions/modify";
+import ProxySetting from "@/components/ProxySetting";
+import { State } from "@/store";
 
 const mapStateToProps = (state: State) => {
   return { proxy: state.proxy.val, modify: state.modify.val };

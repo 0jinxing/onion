@@ -21,7 +21,8 @@ module.exports = merge(baseConfig, {
     contentBase: path.resolve("ext", "dev"),
     hot: true,
     disableHostCheck: true,
-    port: 8000
+    port: 8000,
+    headers: { "Access-Control-Allow-Headers": "*" }
   },
   plugins: [
     new CopyPlugin([

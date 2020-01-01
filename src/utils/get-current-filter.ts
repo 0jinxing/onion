@@ -1,4 +1,4 @@
-import { Filter, CombinedMatcher } from "../lib/adblockplus";
+import { Filter, CombinedMatcher } from "@/lib/adblockplus";
 import { dMatcher } from "./default-pac-list";
 
 const getCurrentFilter = (url: string, patterns: string[]): null | Filter => {

@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { setProxy } from "../actions/proxy";
+import { setProxy } from "@/actions/proxy";
 
 export default handleActions(
   {

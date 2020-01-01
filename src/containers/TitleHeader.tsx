@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import TitleHeader from "../components/TitleHeader";
+import TitleHeader from "@/components/TitleHeader";
 
 const mapStateToProps = (state: { modify: { val: boolean } }) => {
   return {

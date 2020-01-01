@@ -1,10 +1,10 @@
 import { takeEvery, put, select } from "redux-saga/effects";
-import { toggle, allow, disallow } from "../actions/rule";
-import { getCurrentFilter } from "../utils";
-import { BlockingFilter } from "../lib/adblockplus";
+import { toggle, allow, disallow } from "@/actions/rule";
+import { getCurrentFilter } from "@/utils";
+import { BlockingFilter } from "@/lib/adblockplus";
 
-import { Rule } from "../reducers/rule";
-import { State } from "../store";
+import { Rule } from "@/reducers/rule";
+import { State } from "@/store";
 
 export function* toggleSaga(action: {
   type: string;

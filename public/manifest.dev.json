@@ -21,5 +21,13 @@
     "scripts": ["background.js"],
     "persistent": false
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "content_security_policy": "default-src 'self' http://127.0.0.1:8000 http://localhost:8000; script-src 'self' http://127.0.0.1:8000 http://localhost:8000 'unsafe-eval'; connect-src http://127.0.0.1:8000 http://localhost:8000 ws://127.0.0.1:8000 ws://localhost:8000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }

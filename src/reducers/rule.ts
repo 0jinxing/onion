@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { allow, disallow } from "../actions/rule";
+import { allow, disallow } from "@/actions/rule";
 
 export type Rule = {
   pattern: string;

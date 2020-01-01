@@ -1,13 +1,13 @@
 import _ from "lodash";
 import { Middleware } from "redux";
-import { createPacScript, getCurrentFilter } from "../utils";
-import { BlockingFilter } from "../lib/adblockplus";
-import aIcon from "../assets/emoticon.png";
-import dIcon from "../assets/emoticon_d.png";
+import { createPacScript, getCurrentFilter } from "@/utils";
+import { BlockingFilter } from "@/lib/adblockplus";
+import aIcon from "@/assets/emoticon.png";
+import dIcon from "@/assets/emoticon_d.png";
 
-import { setProxy } from "../actions/proxy";
-import { toggle } from "../actions/rule";
-import { State } from "../store";
+import { setProxy } from "@/actions/proxy";
+import { toggle } from "@/actions/rule";
+import { State } from "@/store";
 
 const passingActions = [setProxy, toggle].map(a => a.toString());
 

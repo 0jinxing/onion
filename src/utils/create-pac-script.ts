@@ -1,4 +1,4 @@
-import pacScriptTemplate from "../assets/pac-script-template.pac";
+import pacScriptTemplate from "@/assets/pac-script-template.pac";
 import pacList from "./default-pac-list";
 
 export default (proxy: string, userRules: Array<string>) => {

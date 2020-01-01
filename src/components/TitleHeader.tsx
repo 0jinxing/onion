@@ -1,5 +1,5 @@
 import React from "react";
-import LogoImage from "../assets/emoticon.png";
+import LogoImage from "@/assets/emoticon.png";
 import "./TitleHeader.scss";
 
 export type TitleHeaderProps = {

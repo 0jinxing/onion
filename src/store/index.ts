@@ -4,10 +4,10 @@ import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import chromeProxyMiddleware from "./chrome-proxy-middleware";
 
-import rootReducer from "../reducers";
-import rootSagas from "../sagas";
-import ChromeLocalStorage from "../lib/chrome-local-storage";
-import { Rule } from "../reducers/rule";
+import rootReducer from "@/reducers";
+import rootSagas from "@/sagas";
+import ChromeLocalStorage from "@/lib/chrome-local-storage";
+import { Rule } from "@/reducers/rule";
 
 const storage = new ChromeLocalStorage();
 

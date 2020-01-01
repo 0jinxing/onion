@@ -2,6 +2,7 @@
   "folders": [
     { "name": "root", "path": "." },
     { "name": "src", "path": "./src" },
+    { "name": "public", "path": "./public" },
     { "name": "docs", "path": "./docs" },
     { "name": "config", "path": "./config" }
   ]
