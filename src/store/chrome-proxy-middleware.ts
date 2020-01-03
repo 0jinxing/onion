@@ -11,6 +11,8 @@ import { State } from "@/store";
 
 const passingActions = [setProxy, toggle].map(a => a.toString());
 
+const extRuntime = document.location.protocol === "chrome-extension:";
+
 const chromeProxyMiddleware: Middleware = store => {
   // Receive message
   chrome.runtime.onMessage.addListener(request => {
@@ -27,7 +29,12 @@ const chromeProxyMiddleware: Middleware = store => {
 
     const { rule: nextRule, proxy: nextProxy }: State = store.getState();
 
-    if (_.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy)) return;
+    if (
+      !extRuntime ||
+      (_.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy))
+    ) {
+      return;
+    }
 
     if (passingActions.indexOf(action.type) >= 0 && !action.passed) {
       chrome.runtime.sendMessage(action);

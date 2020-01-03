@@ -1,16 +1,16 @@
 import { createAction, Action } from "redux-actions";
 
 export type RuleAction = Action<{
-  host: string;
+  hostname: string;
   delInd?: number;
 }>;
 
 export const toggle = createAction("TOGGLE", (url: string) => ({ url }));
-export const allow = createAction("ALLOW", (host: string, delInd?: number) => ({
-  host,
+export const allow = createAction("ALLOW", (hostname: string, delInd?: number) => ({
+  hostname,
   delInd
 }));
 export const disallow = createAction(
   "DISALLOW",
-  (host: string, delInd?: number) => ({ host, delInd })
+  (hostname: string, delInd?: number) => ({ hostname, delInd })
 );

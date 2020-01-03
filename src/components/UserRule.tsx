@@ -25,7 +25,7 @@ const UserRulrs = (props: UserRulrsProps) => {
 
   const modifyRenderer = (rowIndex: number) => {
     const rule = props.rule[rowIndex];
-    const moment = dayjs(rule.modifyAt);
+    const moment = dayjs(rule.timestamp);
     return (
       <Cell>
         <TruncatedFormat>
@@ -43,7 +43,7 @@ const UserRulrs = (props: UserRulrsProps) => {
         defaultColumnWidth={200}
       >
         <Column name="Pattern" cellRenderer={patternRenderer} />
-        <Column name="Modify at" cellRenderer={modifyRenderer} />
+        <Column name="Timestamp" cellRenderer={modifyRenderer} />
       </Table>
       <p className="desc">
         用户规则，遵循与

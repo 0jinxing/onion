@@ -12,16 +12,16 @@ export function* toggleSaga(action: {
 }) {
   const url = action.payload.url;
   const rule: Rule[] = yield select((state: State) => state.rule.val);
-  const { host } = new URL(url);
+  const { hostname } = new URL(url);
   const filter = getCurrentFilter(
     url,
     rule.map(r => r.pattern)
   );
   const ind = filter ? rule.findIndex(r => r.pattern === filter.text) : -1;
   if (filter instanceof BlockingFilter) {
-    yield put(disallow(host, ind));
+    yield put(disallow(hostname, ind));
   } else {
-    yield put(allow(host, filter ? ind : undefined));
+    yield put(allow(hostname, filter ? ind : undefined));
   }
   chrome.tabs.reload();
 }
