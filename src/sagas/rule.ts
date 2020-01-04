@@ -1,22 +1,18 @@
 import { takeEvery, put, select } from "redux-saga/effects";
 import { toggle, allow, disallow } from "@/actions/rule";
-import { getCurrentFilter } from "@/utils";
+import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
+import { Action } from "redux-actions";
 
-import { Rule } from "@/reducers/rule";
+import { Rule, TogglePayload } from "@/actions/rule";
 import { State } from "@/store";
 
-export function* toggleSaga(action: {
-  type: string;
-  payload: { url: string };
-}) {
+export function* toggleSaga(action: Action<TogglePayload>) {
   const url = action.payload.url;
   const rule: Rule[] = yield select((state: State) => state.rule.val);
   const { hostname } = new URL(url);
-  const filter = getCurrentFilter(
-    url,
-    rule.map(r => r.pattern)
-  );
+  const patternArr = rule.map(r => r.pattern);
+  const filter = queryFilter([url], patternArr)[0];
   const ind = filter ? rule.findIndex(r => r.pattern === filter.text) : -1;
   if (filter instanceof BlockingFilter) {
     yield put(disallow(hostname, ind));

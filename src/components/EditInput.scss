@@ -5,7 +5,7 @@
   .tag-wrap {
     display: flex;
     flex-wrap: wrap;
-
+    width: calc(100% + 10px);
     .tag {
       margin-right: 10px;
       margin-top: 10px;

@@ -7,15 +7,17 @@ import {
   Tag,
   Intent
 } from "@blueprintjs/core";
+import { Report } from "@/actions/report";
+import { Rule } from "@/actions/rule";
 import "./EditInput.scss";
+
 export type EditInputProps = {
-  initValue: string;
-  onChange: () => Action;
+  rule: Rule[];
+  report: Report[];
+  addRule: (hostname: string, delInd?: number) => Action;
 };
 
-const EditInput = () => {
-  // const [canUpdate, setCanUpdate] = useState(false || props.initValue);
-  // const [pattern, setPattern] = useState(props.initValue || "");
+const EditInput = (props: EditInputProps) => {
   return (
     <div className="edit-input">
       <ControlGroup>
@@ -28,28 +30,13 @@ const EditInput = () => {
         </Button>
       </ControlGroup>
       <div className="tag-wrap">
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
-        <Tag className="tag">11</Tag>
+        {props.report.map(r => (
+          <Tag className="tag" key={r.hostname} onClick={() => {
+            
+          }}>
+            {r.hostname}
+          </Tag>
+        ))}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
 import createPacScript from "./create-pac-script";
-import getCurrentFilter from "./get-current-filter";
+import queryFilter from "./query-filter";
 
-export { createPacScript, getCurrentFilter };
+export { createPacScript, queryFilter };

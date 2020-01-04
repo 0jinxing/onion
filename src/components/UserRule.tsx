@@ -2,8 +2,8 @@ import React from "react";
 import dayjs from "dayjs";
 import { Table, Column, Cell, TruncatedFormat } from "@blueprintjs/table";
 import { Intent } from "@blueprintjs/core";
-import { Rule } from "@/reducers/rule";
-import EditInput from "./EditInput";
+import { Rule } from "@/actions/rule";
+import EditInput from "@/containers/EditInput";
 import "./UserRule.scss";
 
 export type UserRulrsProps = {

@@ -1,19 +1,5 @@
 import { handleActions, Action } from "redux-actions";
-import { allow, disallow } from "@/actions/rule";
-
-export type Rule = {
-  pattern: string;
-  timestamp: number;
-};
-
-export type RuleState = {
-  val: Rule[];
-};
-
-export type RulePayload = {
-  hostname: string;
-  delInd: number;
-};
+import { allow, disallow, RuleState, RulePayload } from "@/actions/rule";
 
 export default handleActions(
   {

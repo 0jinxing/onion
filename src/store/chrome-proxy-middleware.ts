@@ -1,15 +1,16 @@
 import _ from "lodash";
 import { Middleware } from "redux";
-import { createPacScript, getCurrentFilter } from "@/utils";
+import { createPacScript, queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
 import aIcon from "@/assets/emoticon.png";
 import dIcon from "@/assets/emoticon_d.png";
 
 import { setProxy } from "@/actions/proxy";
 import { toggle } from "@/actions/rule";
+import { report } from "@/actions/report";
 import { State } from "@/store";
 
-const passingActions = [setProxy, toggle].map(a => a.toString());
+const passingActions = [setProxy, toggle, report].map(a => a.toString());
 
 const extRuntime = document.location.protocol === "chrome-extension:";
 
@@ -25,20 +26,17 @@ const chromeProxyMiddleware: Middleware = store => {
   return next => action => {
     const { rule, proxy }: State = store.getState();
     next(action);
-    // Send message to options page or background script
 
-    const { rule: nextRule, proxy: nextProxy }: State = store.getState();
-
-    if (
-      !extRuntime ||
-      (_.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy))
-    ) {
-      return;
-    }
-
+    // Send message to other store
     if (passingActions.indexOf(action.type) >= 0 && !action.passed) {
       chrome.runtime.sendMessage(action);
     }
+
+    const { rule: nextRule, proxy: nextProxy }: State = store.getState();
+
+    const hasChanged = _.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy);
+
+    if (!extRuntime || hasChanged) return;
 
     const pacScript = createPacScript(
       `PROXY ${nextProxy.val};`,
@@ -64,8 +62,8 @@ const chromeProxyMiddleware: Middleware = store => {
       }
       const url = tabs[0].url;
 
-      const curFilter = getCurrentFilter(
-        url,
+      const curFilter = queryFilter(
+        [url],
         nextRule.val.map(i => i.pattern)
       );
       if (curFilter instanceof BlockingFilter) {

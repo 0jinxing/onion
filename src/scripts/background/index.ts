@@ -1,7 +1,7 @@
 import _ from "lodash";
 import store from "@/store";
 import { toggle } from "@/actions/rule";
-import { getCurrentFilter } from "@/utils";
+import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
 import aIcon from "@/assets/emoticon.png";
 import dIcon from "@/assets/emoticon_d.png";
@@ -18,8 +18,8 @@ const handleTabsUpdatedAndChanged = async () => {
     return;
   }
 
-  const curFilter = getCurrentFilter(
-    currentTab.url,
+  const curFilter = queryFilter(
+    [currentTab.url],
     store.getState().rule.val.map(i => i.pattern)
   );
   if (curFilter instanceof BlockingFilter) {
