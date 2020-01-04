@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { allow } from "@/actions/rule";
+import { allow, disallow } from "@/actions/rule";
 import { Dispatch } from "redux";
 import { State } from "@/store";
 import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
-import EditInput from "@/components/EditInput";
+import RuleInput from "@/components/RuleInput";
 
 const mapStateToProps = (state: State) => {
   const { rule, report } = state;
@@ -20,9 +20,12 @@ const mapStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    addRule: (hostname: string, delInd?: number) =>
-      dispatch(allow(hostname, delInd))
+    allow: (hostname: string, delInd?: number) =>
+      dispatch(allow(hostname, delInd)),
+      
+    disallow: (hostname: string, delInd?: number) =>
+      dispatch(disallow(hostname, delInd))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditInput);
+export default connect(mapStateToProps, mapDispatchToProps)(RuleInput);

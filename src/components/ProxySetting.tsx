@@ -1,18 +1,15 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { Action } from "redux";
-import validator from "validator";
+import { isEmpty, isURL } from "validator";
 import {
   Button,
   FormGroup,
   ControlGroup,
   InputGroup,
-  Popover,
   Toaster,
   Position,
-  Classes,
   Intent
 } from "@blueprintjs/core";
-import classNames from "classnames";
 import "./ProxySetting.scss";
 
 type ProxySettingProps = {
@@ -29,11 +26,11 @@ const ProxySetting = (props: ProxySettingProps) => {
   const toaster = useRef<Toaster>(null);
 
   useEffect(() => {
-    if (validator.isEmpty(proxy)) {
+    if (isEmpty(proxy)) {
       setError("代理服务器地址不能为空");
     } else if (
-      !validator.isURL(proxy, {
-        protocols: ["http", "https", "socks", "socks5"],
+      !isURL(proxy, {
+        protocols: ["http", "https", "socks5"],
         require_protocol: false
       })
     ) {
@@ -51,10 +48,10 @@ const ProxySetting = (props: ProxySettingProps) => {
     >
       <ControlGroup vertical={false} fill>
         <InputGroup
-          leftIcon="link"
+          leftIcon="asterisk"
           id="proxy"
           placeholder="127.0.0.1:1080"
-          defaultValue={proxy}
+          value={proxy}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             setProxy(value);
@@ -65,41 +62,24 @@ const ProxySetting = (props: ProxySettingProps) => {
           }}
         />
         <div className="bp3-fixed">
-          <Popover disabled={!!error}>
-            <Button intent={Intent.PRIMARY} disabled={!!error} icon="updated">
-              更新代理服务器
-            </Button>
-            <div className="popover-container">
-              <p>
-                即将更新 <b>代理服务器</b> 设置
-              </p>
-              <div className="button-group">
-                <Button
-                  className={classNames([Classes.POPOVER_DISMISS, "mr15"])}
-                  intent={Intent.NONE}
-                >
-                  取消
-                </Button>
-                <Button
-                  intent={Intent.PRIMARY}
-                  className={Classes.POPOVER_DISMISS}
-                  onClick={() => {
-                    props.updateProxy(proxy);
-                    if (toaster.current) {
-                      toaster.current.show({
-                        message: "代理地址更新成功",
-                        intent: Intent.SUCCESS,
-                        icon: "clean"
-                      });
-                      props.saveModify();
-                    }
-                  }}
-                >
-                  确定
-                </Button>
-              </div>
-            </div>
-          </Popover>
+          <Button
+            intent={Intent.PRIMARY}
+            disabled={!!error}
+            icon="updated"
+            onClick={() => {
+              props.updateProxy(proxy);
+              if (toaster.current) {
+                toaster.current.show({
+                  message: "代理地址更新成功",
+                  intent: Intent.SUCCESS,
+                  icon: "clean"
+                });
+                props.saveModify();
+              }
+            }}
+          >
+            更新代理服务器
+          </Button>
         </div>
       </ControlGroup>
       <Toaster ref={toaster} position={Position.TOP} />

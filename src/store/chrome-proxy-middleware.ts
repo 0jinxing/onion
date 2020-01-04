@@ -6,11 +6,13 @@ import aIcon from "@/assets/emoticon.png";
 import dIcon from "@/assets/emoticon_d.png";
 
 import { setProxy } from "@/actions/proxy";
-import { toggle } from "@/actions/rule";
+import { toggle, allow, disallow } from "@/actions/rule";
 import { report } from "@/actions/report";
 import { State } from "@/store";
 
-const passingActions = [setProxy, toggle, report].map(a => a.toString());
+const passingActions = [setProxy, toggle, allow, disallow, report].map(a =>
+  a.toString()
+);
 
 const extRuntime = document.location.protocol === "chrome-extension:";
 
@@ -65,7 +67,7 @@ const chromeProxyMiddleware: Middleware = store => {
       const curFilter = queryFilter(
         [url],
         nextRule.val.map(i => i.pattern)
-      );
+      )[0];
       if (curFilter instanceof BlockingFilter) {
         chrome.browserAction.setIcon({ path: aIcon });
       } else {

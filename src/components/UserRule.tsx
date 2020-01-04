@@ -1,9 +1,17 @@
 import React from "react";
 import dayjs from "dayjs";
-import { Table, Column, Cell, TruncatedFormat } from "@blueprintjs/table";
-import { Intent } from "@blueprintjs/core";
+import {
+  Table,
+  Column,
+  Cell,
+  TruncatedFormat,
+  IMenuContext,
+  SelectionModes
+} from "@blueprintjs/table";
+import { Intent, Menu, MenuItem, MenuDivider } from "@blueprintjs/core";
+import { flatten } from "lodash";
 import { Rule } from "@/actions/rule";
-import EditInput from "@/containers/EditInput";
+import RuleInput from "@/containers/RuleInput";
 import "./UserRule.scss";
 
 export type UserRulrsProps = {
@@ -35,10 +43,43 @@ const UserRulrs = (props: UserRulrsProps) => {
     );
   };
 
+  const renderBodyContextMenu = (context: IMenuContext) => {
+    const selectedData = flatten(
+      context.getSelectedRegions().map(reg => {
+        if (!reg.rows) return props.rule;
+        return props.rule.slice(reg.rows[0], reg.rows[1] + 1);
+      })
+    );
+    return (
+      <Menu>
+        {selectedData.length === 1 && (
+          <>
+            {selectedData[0].pattern.startsWith("@@") ? (
+              <MenuItem icon="walk" text="添加到代理" intent={Intent.PRIMARY} />
+            ) : (
+              <MenuItem
+                icon="disable"
+                text="添加白名单"
+                intent={Intent.PRIMARY}
+              />
+            )}
+
+            <MenuDivider />
+          </>
+        )}
+        <MenuItem icon="delete" intent={Intent.DANGER} text="删除" />
+      </Menu>
+    );
+  };
+
   return (
     <div className="user-rule">
       <Table
+        bodyContextMenuRenderer={renderBodyContextMenu}
         enableMultipleSelection
+        enableFocusedCell
+        enableRowResizing={false}
+        selectionModes={SelectionModes.ROWS_AND_CELLS}
         numRows={props.rule.length}
         defaultColumnWidth={200}
       >
@@ -60,7 +101,7 @@ const UserRulrs = (props: UserRulrsProps) => {
         </a>
         了解更多
       </p>
-      <EditInput />
+      <RuleInput />
     </div>
   );
 };
