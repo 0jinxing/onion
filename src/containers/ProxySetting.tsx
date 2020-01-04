@@ -5,9 +5,10 @@ import { createModify, saveModify } from "@/actions/modify";
 import ProxySetting from "@/components/ProxySetting";
 import { State } from "@/store";
 
-const mapStateToProps = (state: State) => {
-  return { proxy: state.proxy.val, modify: state.modify.val };
-};
+const mapStateToProps = (state: State) => ({
+  proxy: state.proxy,
+  modify: state.modify
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateProxy: (proxy: string) => dispatch(setProxy(proxy)),

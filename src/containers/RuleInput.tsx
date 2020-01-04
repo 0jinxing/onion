@@ -8,14 +8,14 @@ import RuleInput from "@/components/RuleInput";
 
 const mapStateToProps = (state: State) => {
   const { rule, report } = state;
-  const urls = report.val.map(r => r.href);
-  const patterns = rule.val.map(r => r.pattern);
+  const urls = report.map(r => r.href);
+  const patterns = rule.map(r => r.pattern);
   const filterArr = queryFilter(urls, patterns);
 
-  const _report = state.report.val.filter((_, ind) => {
+  const _report = state.report.filter((_, ind) => {
     return !(filterArr[ind] instanceof BlockingFilter);
   });
-  return { rule: state.rule.val, report: _report };
+  return { rule: state.rule, report: _report };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {

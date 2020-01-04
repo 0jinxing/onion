@@ -3,10 +3,6 @@ import UserRule from "@/components/UserRule";
 
 import { State } from "@/store";
 
-const mapStateToProps = (state: State) => {
-  return {
-    rule: state.rule.val
-  };
-};
+const mapStateToProps = (state: State) => ({ rule: state.rule });
 
 export default connect(mapStateToProps)(UserRule);

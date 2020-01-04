@@ -20,7 +20,7 @@ const handleTabsUpdatedAndChanged = async () => {
 
   const curFilter = queryFilter(
     [currentTab.url],
-    store.getState().rule.val.map(i => i.pattern)
+    store.getState().rule.map(i => i.pattern)
   )[0];
   if (curFilter instanceof BlockingFilter) {
     chrome.browserAction.setIcon({ path: aIcon });

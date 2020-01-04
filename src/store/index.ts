@@ -24,10 +24,10 @@ const persistedReducer = persistReducer(
 const sagaMiddleware = createSagaMiddleware();
 
 export type State = {
-  rule: { val: Rule[] };
-  report: { val: Report[] };
-  proxy: { val: string };
-  modify: { val: boolean };
+  rule: Rule[];
+  report: Report[];
+  proxy: string;
+  modify: boolean;
 };
 
 const middleware = applyMiddleware(chromeProxyMiddleware, sagaMiddleware);

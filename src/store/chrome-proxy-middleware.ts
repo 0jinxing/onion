@@ -10,8 +10,8 @@ import { toggle, allow, disallow } from "@/actions/rule";
 import { report } from "@/actions/report";
 import { State } from "@/store";
 
-const passingActions = [setProxy, toggle, allow, disallow, report].map(a =>
-  a.toString()
+const passingActions = [setProxy, allow, disallow, report].map(creator =>
+  creator.toString()
 );
 
 const extRuntime = document.location.protocol === "chrome-extension:";
@@ -41,8 +41,8 @@ const chromeProxyMiddleware: Middleware = store => {
     if (!extRuntime || hasChanged) return;
 
     const pacScript = createPacScript(
-      `PROXY ${nextProxy.val};`,
-      nextRule.val.map(i => i.pattern)
+      `PROXY ${nextProxy};`,
+      nextRule.map(i => i.pattern)
     );
 
     const config = {
@@ -66,7 +66,7 @@ const chromeProxyMiddleware: Middleware = store => {
 
       const curFilter = queryFilter(
         [url],
-        nextRule.val.map(i => i.pattern)
+        nextRule.map(i => i.pattern)
       )[0];
       if (curFilter instanceof BlockingFilter) {
         chrome.browserAction.setIcon({ path: aIcon });

@@ -6,7 +6,8 @@ import {
   Cell,
   TruncatedFormat,
   IMenuContext,
-  SelectionModes
+  SelectionModes,
+  RegionCardinality
 } from "@blueprintjs/table";
 import { Intent, Menu, MenuItem, MenuDivider } from "@blueprintjs/core";
 import { flatten } from "lodash";
@@ -78,8 +79,9 @@ const UserRulrs = (props: UserRulrsProps) => {
         bodyContextMenuRenderer={renderBodyContextMenu}
         enableMultipleSelection
         enableFocusedCell
+        enableGhostCells
         enableRowResizing={false}
-        selectionModes={SelectionModes.ROWS_AND_CELLS}
+        selectionModes={SelectionModes.ROWS_ONLY}
         numRows={props.rule.length}
         defaultColumnWidth={200}
       >
