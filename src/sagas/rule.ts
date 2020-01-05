@@ -23,5 +23,5 @@ export function* toggleSaga(action: Action<string>) {
 }
 
 export default function* watchToggle() {
-  yield takeEvery(toToggle.toString(), toggleSaga);
+  yield takeEvery(String(toToggle), toggleSaga);
 }

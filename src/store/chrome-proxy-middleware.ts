@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { isEqual } from "lodash";
 import { Middleware } from "redux";
 import { createPacScript, queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
@@ -16,7 +16,7 @@ const passingActions = [
   toDisallow,
   toDelete,
   toReport
-].map(creator => creator.toString());
+].map(creator => String(creator));
 
 const extRuntime = document.location.protocol === "chrome-extension:";
 
@@ -40,9 +40,9 @@ const chromeProxyMiddleware: Middleware = store => {
 
     const { rule: nextRule, proxy: nextProxy }: State = store.getState();
 
-    const hasChanged = _.isEqual(rule, nextRule) && _.isEqual(proxy, nextProxy);
+    const hasChanged = !(isEqual(rule, nextRule) && isEqual(proxy, nextProxy));
 
-    if (!extRuntime || hasChanged) return;
+    if (!extRuntime || !hasChanged) return;
 
     let config: object = {
       mode: "system"

@@ -17,7 +17,7 @@ export default handleActions(
           { hostname, href, timestamp: Date.now() }
         ];
       }
-      return nextState.slice(Math.max(nextState.length - 20, 0), 20);
+      return nextState.slice(Math.max(nextState.length - 10, 0), 10);
     }
   },
   []
