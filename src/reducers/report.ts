@@ -1,9 +1,9 @@
 import { handleActions, Action } from "redux-actions";
-import { report, Report } from "@/actions/report";
+import { toReport, Report } from "@/actions/report";
 
 export default handleActions(
   {
-    [String(report)]: (state: Report[], action: Action<string>) => {
+    [String(toReport)]: (state: Report[], action: Action<string>) => {
       const { hostname, href } = new URL(action.payload);
       const delInd = state.findIndex(rp => rp.hostname === hostname);
 

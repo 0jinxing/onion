@@ -1,6 +1,6 @@
 import _ from "lodash";
 import store from "@/store";
-import { toggle } from "@/actions/rule";
+import { toToggle } from "@/actions/rule";
 import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
 import aIcon from "@/assets/emoticon.png";
@@ -48,7 +48,7 @@ const handleBrowserActionClicked = async () => {
   ) {
     return;
   }
-  store.dispatch(toggle(tabs[0].url));
+  store.dispatch(toToggle(tabs[0].url));
 };
 
 chrome.browserAction.onClicked.addListener(

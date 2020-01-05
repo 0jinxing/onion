@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { allow, disallow } from "@/actions/rule";
+import { toAllow, toDisallow } from "@/actions/rule";
 import { Dispatch } from "redux";
 import { State } from "@/store";
 import { queryFilter } from "@/utils";
@@ -21,10 +21,10 @@ const mapStateToProps = (state: State) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     allow: (hostname: string, delInd?: number) =>
-      dispatch(allow(hostname, delInd)),
+      dispatch(toAllow(hostname, delInd)),
       
     disallow: (hostname: string, delInd?: number) =>
-      dispatch(disallow(hostname, delInd))
+      dispatch(toDisallow(hostname, delInd))
   };
 };
 

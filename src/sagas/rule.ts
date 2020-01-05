@@ -1,5 +1,5 @@
 import { takeEvery, put, select } from "redux-saga/effects";
-import { toggle, allow, disallow } from "@/actions/rule";
+import { toToggle, toAllow, toDisallow } from "@/actions/rule";
 import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
 import { Action } from "redux-actions";
@@ -15,13 +15,13 @@ export function* toggleSaga(action: Action<string>) {
   const filter = queryFilter([url], patterns)[0];
   const ind = filter ? rule.findIndex(r => r.pattern === filter.text) : -1;
   if (filter instanceof BlockingFilter) {
-    yield put(disallow(hostname, ind));
+    yield put(toDisallow(hostname, ind));
   } else {
-    yield put(allow(hostname, filter ? ind : undefined));
+    yield put(toAllow(hostname, filter ? ind : undefined));
   }
   chrome.tabs.reload();
 }
 
 export default function* watchToggle() {
-  yield takeEvery(toggle.toString(), toggleSaga);
+  yield takeEvery(toToggle.toString(), toggleSaga);
 }

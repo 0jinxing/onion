@@ -6,13 +6,17 @@ import aIcon from "@/assets/emoticon.png";
 import dIcon from "@/assets/emoticon_d.png";
 
 import { setProxy } from "@/actions/proxy";
-import { allow, disallow } from "@/actions/rule";
-import { report } from "@/actions/report";
+import { toAllow, toDisallow, toDelete } from "@/actions/rule";
+import { toReport } from "@/actions/report";
 import { State } from "@/store";
 
-const passingActions = [setProxy, allow, disallow, report].map(creator =>
-  creator.toString()
-);
+const passingActions = [
+  setProxy,
+  toAllow,
+  toDisallow,
+  toDelete,
+  toReport
+].map(creator => creator.toString());
 
 const extRuntime = document.location.protocol === "chrome-extension:";
 
@@ -43,7 +47,7 @@ const chromeProxyMiddleware: Middleware = store => {
     let config: object = {
       mode: "system"
     };
-    
+
     if (nextProxy) {
       const pacScript = createPacScript(
         `PROXY ${nextProxy};`,

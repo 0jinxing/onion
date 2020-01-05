@@ -1,5 +1,5 @@
 import store from "@/store";
-import { report } from "@/actions/report";
+import { toReport } from "@/actions/report";
 import { each } from "lodash";
 
 const trackPool = new Set();
@@ -12,7 +12,7 @@ function resultErrorListener(ev: ErrorEvent) {
   const target = ev.target;
   if (target) {
     const url = Reflect.get(target, "src");
-    url && store.dispatch(report(url));
+    url && store.dispatch(toReport(url));
   }
 }
 

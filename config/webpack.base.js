@@ -72,7 +72,7 @@ module.exports = {
       filename: "index.html",
       chunks: ["index"],
       hash: true,
-      title: "Just proxy - options"
+      title: "PROXY - OPTIONS"
     })
   ]
 };
