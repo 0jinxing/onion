@@ -6,7 +6,7 @@ import aIcon from "@/assets/emoticon.png";
 import dIcon from "@/assets/emoticon_d.png";
 
 import { setProxy } from "@/actions/proxy";
-import { toggle, allow, disallow } from "@/actions/rule";
+import { allow, disallow } from "@/actions/rule";
 import { report } from "@/actions/report";
 import { State } from "@/store";
 
@@ -40,15 +40,22 @@ const chromeProxyMiddleware: Middleware = store => {
 
     if (!extRuntime || hasChanged) return;
 
-    const pacScript = createPacScript(
-      `PROXY ${nextProxy};`,
-      nextRule.map(i => i.pattern)
-    );
-
-    const config = {
-      mode: "pac_script",
-      pacScript: { data: pacScript }
+    let config: object = {
+      mode: "system"
     };
+    
+    if (nextProxy) {
+      const pacScript = createPacScript(
+        `PROXY ${nextProxy};`,
+        nextRule.map(i => i.pattern)
+      );
+
+      config = {
+        mode: "pac_script",
+        pacScript: { data: pacScript }
+      };
+    }
+
     chrome.proxy.settings.set({ value: config, scope: "regular" }, async () => {
       // Set browser action icon
       const tabs: chrome.tabs.Tab[] = await new Promise(resolve => {

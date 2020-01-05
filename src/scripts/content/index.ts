@@ -1,6 +1,6 @@
 import store from "@/store";
 import { report } from "@/actions/report";
-import _ from "lodash";
+import { each } from "lodash";
 
 const trackPool = new Set();
 
@@ -13,12 +13,11 @@ function resultErrorListener(ev: ErrorEvent) {
   if (target) {
     const url = Reflect.get(target, "src");
     url && store.dispatch(report(url));
-    console.log(url);
   }
 }
 
 function observeFn(mutations: MutationRecord[], observer: MutationObserver) {
-  _.each($("[src]"), node => {
+  each($("[src]"), node => {
     if (!trackPool.has(node)) {
       trackPool.add(node);
       node.addEventListener("error", resultErrorListener);
@@ -26,7 +25,7 @@ function observeFn(mutations: MutationRecord[], observer: MutationObserver) {
   });
 }
 
-_.each($("[src]"), node => {
+each($("[src]"), node => {
   trackPool.add(node);
   node.addEventListener("error", resultErrorListener);
 });

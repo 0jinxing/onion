@@ -7,17 +7,17 @@ export default handleActions(
       const { hostname, href } = new URL(action.payload);
       const delInd = state.findIndex(rp => rp.hostname === hostname);
 
-      let _state = state;
+      let nextState = state;
       if (delInd < 0) {
-        _state = [{ hostname, href, timestamp: Date.now() }, ...state];
+        nextState = [...state, { hostname, href, timestamp: Date.now() }];
       } else {
-        _state = [
-          { hostname, href, timestamp: Date.now() },
+        nextState = [
           ...state.slice(0, delInd),
-          ...state.slice(delInd + 1, state.length)
+          ...state.slice(delInd + 1, state.length),
+          { hostname, href, timestamp: Date.now() }
         ];
       }
-      return _state.slice(0, 20);
+      return nextState.slice(Math.max(nextState.length - 20, 0), 20);
     }
   },
   []

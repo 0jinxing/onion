@@ -8,5 +8,10 @@
   }
   .title {
     font-weight: normal;
+    flex-grow: 1;
+  }
+  .tip {
+    font-size: 12px;
+    color: #999;
   }
 }

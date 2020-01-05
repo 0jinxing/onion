@@ -4,11 +4,11 @@ import { queryFilter } from "@/utils";
 import { BlockingFilter } from "@/lib/adblockplus";
 import { Action } from "redux-actions";
 
-import { Rule, TogglePayload } from "@/actions/rule";
+import { Rule } from "@/actions/rule";
 import { State } from "@/store";
 
-export function* toggleSaga(action: Action<TogglePayload>) {
-  const url = action.payload.url;
+export function* toggleSaga(action: Action<string>) {
+  const url = action.payload;
   const rule: Rule[] = yield select((state: State) => state.rule);
   const { hostname } = new URL(url);
   const patterns = rule.map(r => r.pattern);

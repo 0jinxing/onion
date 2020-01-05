@@ -1,17 +1,11 @@
 import { handleActions, Action } from "redux-actions";
-import {
-  allow,
-  disallow,
-  dele,
-  Rule,
-  AllowPayload,
-  DelePayload
-} from "@/actions/rule";
+import { allow, disallow, del, toggle, Rule } from "@/actions/rule";
+import { flowReducers } from "@/utils";
 
-import { composeReducers } from "@/reducers";
+type AllowAction = Action<{ hostname: string; delInd: number }>;
 
 const allowReducerMap = {
-  [allow.toString()]: (state: Rule[], action: Action<AllowPayload>) => {
+  [String(allow)]: (state: Rule[], action: AllowAction) => {
     const { hostname, delInd } = action.payload;
     if (typeof delInd === "number" && delInd >= 0) {
       return [
@@ -23,7 +17,7 @@ const allowReducerMap = {
     return [{ pattern: hostname, timestamp: Date.now() }, ...state];
   },
 
-  [disallow.toString()]: (state: Rule[], action: Action<AllowPayload>) => {
+  [String(disallow)]: (state: Rule[], action: AllowAction) => {
     const { hostname, delInd } = action.payload;
     if (typeof delInd === "number" && delInd >= 0) {
       return [
@@ -38,14 +32,13 @@ const allowReducerMap = {
 
 const allowReducer = handleActions(allowReducerMap, []);
 
-const deleReducerMap = {
-  [dele.toString()]: (state: Rule[], action: Action<DelePayload>) => {
-    const patterns = action.payload.patterns;
+const delReducerMap = {
+  [String(del)]: (state: Rule[], action: Action<string[]>) => {
+    const patterns = action.payload;
     return state.filter(v => patterns.findIndex(p => p === v.pattern) < 0);
   }
 };
 
-const deleReducer = handleActions(deleReducerMap, []);
+const delReducer = handleActions(delReducerMap, []);
 
-export default allowReducer;
-// export default composeReducers([], allowReducer, deleReducer);
+export default flowReducers([], allowReducer, delReducer);
