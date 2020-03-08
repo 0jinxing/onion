@@ -17,7 +17,7 @@
   </a>
 </div>
 
-## Use
+## Usage
 
 <div align=center>
   <img src="https://raw.githubusercontent.com/0jinxing/just-proxy/master/docs/demo.gif" alt="demo" />
