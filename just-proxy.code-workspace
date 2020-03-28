@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "@",
+      "path": "src"
+    },
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "config",
+      "path": "config"
+    }
+  ]
+}

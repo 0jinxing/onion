@@ -1,0 +1,32 @@
+@import "../common/mixins.scss";
+@import "../common/utils.scss";
+
+@include b(rule-table) {
+  @include e(tip) {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    font-size: 12px;
+  }
+
+  @include e(table) {
+    .ant-table-body {
+      @include utils-scroll-bar;
+    }
+    .ant-table-container {
+      border: 1px solid #f0f0f0;
+    }
+    .ant-table-placeholder {
+      .ant-table-cell {
+        border: 0;
+      }
+    }
+    tr:last-child {
+      td {
+        border-bottom: 0;
+      }
+    }
+    th:last-child {
+      border-right: 0;
+    }
+  }
+}

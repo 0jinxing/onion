@@ -54,7 +54,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve("public/template.html"),
       filename: "index.html",
-      chunks: ["options"],
       hash: true,
       title: "PROXY - OPTIONS"
     }),
@@ -81,24 +80,5 @@ module.exports = {
       { test: /\.pac$/, use: rawLoader },
       { test: /\.s[ac]ss$/, use: sassLoader }
     ]
-  },
-
-  optimization: {
-    runtimeChunk: "single",
-    splitChunks: {
-      cacheGroups: {
-        common: { name: "common", chunks: "all", priority: 1 },
-        vendor: {
-          chunks: "all",
-          test: /node_modules/,
-          priority: 2,
-          name: mod => {
-            const pathArr = mod.context.split(path.sep);
-            const nameInd = pathArr.findIndex(p => p === "node_modules") + 1;
-            return pathArr[nameInd];
-          }
-        }
-      }
-    }
   }
 };

@@ -1,0 +1,127 @@
+@import "function";
+@import "var";
+
+/* Break-points
+ -------------------------- */
+@mixin res($key, $map: $--breakpoints) {
+  @if map-has-key($map, $key) {
+    @media only screen and #{inspect(map-get($map, $key))} {
+      @content;
+    }
+  } @else {
+    @warn "Undefeined points: `#{$map}`";
+  }
+}
+
+/* BEM
+ -------------------------- */
+@mixin b($block) {
+  $B: $namespace + "-" + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin e($element, $flat: false) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: $currentSelector +
+      "." +
+      $B +
+      $element-separator +
+      $unit +
+      ",";
+  }
+
+  @if $flat {
+    @if hitAllSpecialNestRule($selector) {
+      @at-root {
+        #{$selector} {
+          #{$currentSelector} {
+            @content;
+          }
+        }
+      }
+    } @else {
+      @at-root {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+@mixin m($modifier, $flat: false) {
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector +
+      & +
+      $modifier-separator +
+      $unit +
+      ","};
+  }
+
+  @if $flat {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  } @else {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+@mixin meb($modifier: false, $element: $E, $block: $B) {
+  $selector: &;
+  $modifierCombo: "";
+
+  @if $modifier {
+    $modifierCombo: $modifier-separator + $modifier;
+  }
+
+  @at-root {
+    #{$selector} {
+      .#{$block + $element-separator + $element + $modifierCombo} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+@mixin extend-rule($name) {
+  @extend #{"%shared-" + $name};
+}
+
+@mixin share-rule($name) {
+  $rule-name: "%shared-" + $name;
+
+  @at-root #{$rule-name} {
+    @content;
+  }
+}
+
+@mixin pseudo($pseudo) {
+  @at-root #{&}#{":#{$pseudo}"} {
+    @content;
+  }
+}

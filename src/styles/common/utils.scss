@@ -1,0 +1,72 @@
+@mixin utils-user-select($value) {
+  -moz-user-select: $value;
+  -webkit-user-select: $value;
+  -ms-user-select: $value;
+}
+
+@mixin utils-clearfix {
+  $selector: &;
+
+  @at-root {
+    #{$selector}::before,
+    #{$selector}::after {
+      display: table;
+      content: "";
+    }
+    #{$selector}::after {
+      clear: both;
+    }
+  }
+}
+
+@mixin utils-vertical-center {
+  $selector: &;
+
+  @at-root {
+    #{$selector}::after {
+      display: inline-block;
+      content: "";
+      height: 100%;
+      vertical-align: middle;
+    }
+  }
+}
+
+@mixin utils-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin utils-scroll-bar {
+  $--scrollbar-thumb-background: #b4bccc;
+  $--scrollbar-track-background: #fff;
+
+  &::-webkit-scrollbar {
+    z-index: 11;
+    width: 6px;
+
+    &:horizontal {
+      height: 6px;
+    }
+
+    &-thumb {
+      border-radius: 5px;
+      width: 6px;
+      background: $--scrollbar-thumb-background;
+    }
+
+    &-corner {
+      background: $--scrollbar-track-background;
+    }
+
+    &-track {
+      background: $--scrollbar-track-background;
+
+      &-piece {
+        background: $--scrollbar-track-background;
+        width: 6px;
+      }
+    }
+  }
+}

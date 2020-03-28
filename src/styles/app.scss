@@ -1,0 +1,43 @@
+@import "common/var.scss";
+@import "common/mixins.scss";
+@import "components/proxy-setting.scss";
+@import "components/rule-table.scss";
+@import "components/rule-input.scss";
+@import "components/url-tags.scss";
+@import "components/gwf-list.scss";
+
+@include b(container) {
+  width: $--sm;
+  margin: 0 auto;
+  padding: 60px 0;
+
+  @include e(header) {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .icon {
+      display: block;
+      height: 40px;
+      margin-right: 12px;
+    }
+    .title {
+      margin: 0;
+      color: #141414;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 40px;
+    }
+    .github {
+      margin-left: auto;
+      align-self: flex-end;
+      .anticon {
+        margin-right: 4px;
+      }
+    }
+    .star,
+    .wiki {
+      margin-left: 12px;
+    }
+  }
+}

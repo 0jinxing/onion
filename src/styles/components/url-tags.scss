@@ -1,0 +1,10 @@
+@import "../common/mixins.scss";
+
+@include b("url-tags") {
+  width: calc(100% + 8px);
+
+  @include e("item") {
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+}

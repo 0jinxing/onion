@@ -1,0 +1,13 @@
+@import "../common/mixins.scss";
+
+@include b("gwf-list") {
+  margin-bottom: 24px;
+
+  @include e("input") {
+    flex: 1;
+  }
+
+  .ant-row:last-child {
+    margin-right: 0;
+  }
+}
