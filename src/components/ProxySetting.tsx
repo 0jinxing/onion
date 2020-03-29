@@ -17,7 +17,7 @@ const ProxySetting: React.FunctionComponent = props => {
           placeholder="输入你的代理地址"
         />
         <p className="tip">
-          输入你的代理服务器地址（例如：http://127.0.0.1:1080）
+          输入你的代理服务器地址（eg：http://127.0.0.1:1080）
         </p>
       </FormItem>
       <FormItem className="ghoo-proxy-setting__button">

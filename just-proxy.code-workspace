@@ -1,12 +1,12 @@
 {
   "folders": [
     {
-      "name": "@",
-      "path": "src"
+      "name": "/",
+      "path": "."
     },
     {
-      "name": "root",
-      "path": "."
+      "name": "@",
+      "path": "src"
     },
     {
       "name": "config",

@@ -1,6 +1,6 @@
 @import "../common/mixins.scss";
 
-@include b("gwf-list") {
+@include b("gfw-list") {
   margin-bottom: 24px;
 
   @include e("input") {

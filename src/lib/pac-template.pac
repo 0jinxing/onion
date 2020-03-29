@@ -5,8 +5,8 @@
 
 var proxy = "$$PROXY$$";
 
-var userRules = $$USERRULES$$;
 var rules = $$RULES$$;
+var userRules = $$USERRULES$$;
 /*
  * This file is part of Adblock Plus <http://adblockplus.org/>,
  * Copyright (C) 2006-2014 Eyeo GmbH
@@ -758,5 +758,5 @@ function FindProxyForURL(url, host) {
   if (defaultMatcher.matchesAny(url, host) instanceof BlockingFilter) {
     return proxy;
   }
-  return direct;
+  return $$DEFAULT$$;
 }

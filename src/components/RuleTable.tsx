@@ -3,7 +3,7 @@ import { Table } from "antd";
 
 const { Column } = Table;
 
-const tableData = Array.from({ length: 100 }).map((_, ind) => ({
+const tableData = Array.from({ length: 1000 }).map((_, ind) => ({
   key: ind,
   pattern: "baidu.com",
   timestamp: "2019/01/01 00:00:00"

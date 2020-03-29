@@ -8,7 +8,7 @@ import ProxySetting from "@/components/ProxySetting";
 import RuleTable from "@/components/RuleTable";
 import RuleInput from "@/components/RuleInput";
 import UrlTags from "@/components/UrlTags";
-import GWFList from "@/components/GWFList";
+import GFWList from "@/components/GFWList";
 import "antd/dist/antd.css";
 import "./styles/app.scss";
 
@@ -19,15 +19,27 @@ const App: React.FunctionComponent = () => {
         <img src="icon.png" className="icon" />
         <h1 className="title">PROXY - OPTIONS</h1>
         <div className="github">
-          <a className="issue">
+          <a
+            className="issue"
+            href="https://github.com/0jinxing/just-proxy/issues"
+            target="__blank"
+          >
             <QuestionOutlined />
             issue
           </a>
-          <a className="star">
+          <a
+            className="star"
+            href="https://github.com/0jinxing/just-proxy"
+            target="__blank"
+          >
             <HeartOutlined />
             star
           </a>
-          <a className="wiki">
+          <a
+            className="wiki"
+            href="https://github.com/0jinxing/just-proxy/wiki"
+            target="__blank"
+          >
             <FileTextOutlined />
             wiki
           </a>
@@ -35,7 +47,7 @@ const App: React.FunctionComponent = () => {
       </header>
       <main className="ghoo-container__main">
         <ProxySetting />
-        <GWFList />
+        <GFWList />
         <RuleTable />
         <RuleInput />
         <UrlTags />
