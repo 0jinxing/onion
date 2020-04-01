@@ -6,11 +6,13 @@ export type ReportState = Array<{
   timestamp: number;
 }>;
 
+const { TO_REPORT } = ReportTypeEnum;
+
 const ReportReducer = (state: ReportState, action: ReportAction) => {
   const { type, payload } = action;
 
   switch (type) {
-    case ReportTypeEnum.TO_REPORT:
+    case TO_REPORT:
       const { hostname, href } = new URL(payload);
       const _state = state.slice();
       const lastIndex = _state.findIndex(it => it.hostname === hostname);
