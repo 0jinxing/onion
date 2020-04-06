@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input, Button, Form } from "antd";
 import { BulbTwoTone } from "@ant-design/icons";
 
@@ -16,6 +16,14 @@ const ProxySetting = (props: ProxySettingProps) => {
 
   const [proxyUrlFieldError, updateProxyUrlFieldError] = useState<string[]>([]);
 
+  const [fieldData, setFieldData] = useState([
+    { name: ["proxyUrl"], value: proxyUrl },
+  ]);
+
+  useEffect(() => {
+    setFieldData([{ name: ["proxyUrl"], value: proxyUrl }]);
+  }, [proxyUrl]);
+
   return (
     <Form
       layout="inline"
@@ -29,12 +37,12 @@ const ProxySetting = (props: ProxySettingProps) => {
       onFinishFailed={() => {
         updateProxyUrlFieldError(form.getFieldError("proxyUrl"));
       }}
-      initialValues={{ proxyUrl }}
+      fields={fieldData}
     >
       <FormItem
         name="proxyUrl"
         className="ghoo-proxy-setting__input"
-        rules={[{ type: "url", message: "请输入正确的代理地址" }]}
+        rules={[{ type: "string", message: "请输入正确的代理地址" }]}
         validateStatus={proxyUrlFieldError.length ? "error" : undefined}
         help={
           proxyUrlFieldError[0] ||

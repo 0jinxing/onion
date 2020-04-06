@@ -5,6 +5,8 @@ import {
   FileTextOutlined,
 } from "@ant-design/icons";
 
+import whitelistIcon from "@/assets/whitelist.png";
+
 export type PageHeaderProps = {
   change: boolean;
   proxyUrl: string;
@@ -14,9 +16,11 @@ const PageHeader = (props: PageHeaderProps) => {
   const { change, proxyUrl } = props;
   return (
     <header className="ghoo-page-header">
-      <img src="icon.png" className="ghoo-page-header__icon" />
+      <img src={whitelistIcon} className="ghoo-page-header__icon" />
       <h1 className="ghoo-page-header__title">OPTIONS {change ? "*" : null}</h1>
-      <span className="ghoo-page-header__tip">当前未填写代理地址，使用系统代理</span>
+      <span className="ghoo-page-header__tip">
+        当前未填写代理地址，使用系统代理
+      </span>
       <div className="ghoo-page-header__github">
         <a
           className="issue"

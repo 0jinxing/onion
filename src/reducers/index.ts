@@ -9,8 +9,8 @@ import error from "./error";
 
 const rootReducer = combineReducers({
   change,
-  proxy,
   report,
+  proxy,
   rule,
   loading,
   error,

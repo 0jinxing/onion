@@ -15,7 +15,7 @@ const RuleInput = () => {
           添加到白名单
         </Button>
       </FormItem>
-      <FormItem className="ghoo-rule-input__blacklist">
+      <FormItem className="ghoo-rule-input__blocking">
         <Button type="primary">添加到黑名单</Button>
       </FormItem>
     </Form>

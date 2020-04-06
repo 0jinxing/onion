@@ -1,9 +1,7 @@
 const path = require("path");
-const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WebpackExtensionPlugin = require("webpack-extension-reloader");
 
 const mode = process.env.NODE_ENV;
 const isDev = mode === "development";
@@ -16,7 +14,7 @@ const cssLoader = [MiniCssExtractPlugin.loader, "css-loader"];
 
 const sassLoader = [
   ...cssLoader,
-  { loader: "sass-loader", options: { implementation: require("sass") } }
+  { loader: "sass-loader", options: { implementation: require("sass") } },
 ];
 
 const imageLoader = [{ loader: "url-loader", options: { limit: 8192 } }];
@@ -30,32 +28,25 @@ module.exports = {
   entry: {
     content: path.resolve("src/scripts", "content/index.ts"),
     background: path.resolve("src/scripts", "background/index.ts"),
-    options: path.resolve("src", "index.tsx")
+    options: path.resolve("src", "index.tsx"),
   },
 
   output: {
     path: path.resolve("dist", isDev ? "dev" : "prod"),
-    filename: "[name].bundle.js"
+    filename: "[name].bundle.js",
   },
 
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
-    alias: { "@": path.resolve("src") }
+    alias: { "@": path.resolve("src") },
   },
 
   plugins: [
-    new WebpackExtensionPlugin({
-      entries: {
-        contentScript: "content",
-        background: "background",
-        extensionPage: ["options"]
-      }
-    }),
     new HtmlWebpackPlugin({
       template: path.resolve("public/template.html"),
       filename: "index.html",
       hash: true,
-      title: "PROXY - OPTIONS"
+      title: "PROXY - OPTIONS",
     }),
     new MiniCssExtractPlugin(),
     new CopyWebpackPlugin([
@@ -63,13 +54,10 @@ module.exports = {
         from: isDev
           ? path.resolve("public", "manifest.dev.json")
           : path.resolve("public", "manifest.prod.json"),
-        to: "manifest.json"
+        to: "manifest.json",
       },
-      { from: path.resolve("public", "icon.png") }
+      { from: path.resolve("public", "icon.png") },
     ]),
-    new webpack.SourceMapDevToolPlugin({
-      exclude: /.*\.ts/
-    })
   ],
 
   module: {
@@ -78,7 +66,14 @@ module.exports = {
       { test: /\.tsx?$/, use: tsLoader },
       { test: /\.css$/, use: cssLoader },
       { test: /\.pac$/, use: rawLoader },
-      { test: /\.s[ac]ss$/, use: sassLoader }
-    ]
-  }
+      { test: /\.s[ac]ss$/, use: sassLoader },
+      { test: /\.png$/, use: imageLoader },
+    ],
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
 };

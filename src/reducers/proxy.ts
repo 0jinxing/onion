@@ -5,8 +5,7 @@ export type ProxyState = {
   gfwUrl: string;
   gfwMode: GFWMode;
   gfwList: string[];
-  loading: boolean;
-  error: object | null;
+  updateAt: number;
 };
 
 const {
@@ -19,42 +18,31 @@ const {
 const defaultState: ProxyState = {
   proxyUrl: "",
   gfwUrl: "https://repo.or.cz/gfwlist.git/blob_plain/HEAD:/gfwlist.txt",
-  gfwMode: GFWMode.BLACKLIST,
+  gfwMode: GFWMode.BLOCKING,
   gfwList: [],
-  error: null,
-  loading: false,
+  updateAt: 0,
 };
 
-const proxyReducer = (
+function proxyReducer(
   state: ProxyState = defaultState,
   action: ProxyAction
-) => {
+): ProxyState {
   const { type, payload } = action;
 
-  switch (type) {
-    case UPDATE_PROXY_URL:
-      return {
-        ...state,
-        proxyUrl: payload.proxyUrl,
-      };
-    case UPDATE_GFW_URL:
-      return {
-        ...state,
-        gfwUrl: payload.gfwUrl,
-      };
-    case UPDATE_GFW_MODE:
-      return {
-        ...state,
-        gfwMode: payload.gfwMode,
-      };
-    case UPDATE_GFW_LIST:
-      return {
-        ...state,
-        gfwList: payload.gfwList,
-      };
-    default:
-      return state;
+  if (type === UPDATE_PROXY_URL && payload.proxyUrl) {
+    return { ...state, proxyUrl: payload.proxyUrl };
+  } else if (type === UPDATE_GFW_URL && payload.gfwUrl) {
+    return { ...state, gfwUrl: payload.gfwUrl };
+  } else if (type === UPDATE_GFW_MODE && payload.gfwMode) {
+    return { ...state, gfwMode: payload.gfwMode };
+  } else if (type === UPDATE_GFW_LIST && payload.gfwList) {
+    return {
+      ...state,
+      gfwList: payload.gfwList || state.gfwList,
+      updateAt: Date.now(),
+    };
   }
-};
+  return state;
+}
 
 export default proxyReducer;

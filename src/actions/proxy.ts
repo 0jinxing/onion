@@ -9,7 +9,7 @@ export enum ProxyTypeEnum {
 }
 
 export enum GFWMode {
-  BLACKLIST = "blacklist",
+  BLOCKING = "blocking",
   WHITELIST = "whitelist",
 }
 

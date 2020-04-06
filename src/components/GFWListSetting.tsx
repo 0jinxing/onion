@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Radio, Button, Input, Form } from "antd";
 import { FireTwoTone } from "@ant-design/icons";
 import { GFWMode, updateGFWList } from "@/actions/proxy";
@@ -19,12 +19,24 @@ const GFWListSetting = (props: GFWListSettingProps) => {
 
   const [form] = Form.useForm();
 
+  const [fieldData, setFieldData] = useState([
+    { name: ["gfwMode"], value: gfwMode },
+    { name: ["gfwUrl"], value: gfwUrl },
+  ]);
+  useEffect(() => {
+    setFieldData([
+      { name: ["gfwMode"], value: gfwMode },
+      { name: ["gfwUrl"], value: gfwUrl },
+    ]);
+  }, [gfwMode, gfwUrl]);
+
   return (
     <Form
       className="ghoo-gfw-list-setting"
       layout="inline"
+      fields={fieldData}
       form={form}
-      initialValues={{ gfwMode, gfwUrl }}
+      // initialValues={{ gfwMode, gfwUrl }}
       onFinish={(values) => {
         const gfwUrl: string = values.gfwUrl;
         updateGFWUrl(gfwUrl);
@@ -36,7 +48,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
             updateGFWMode(value);
           }}
         >
-          <Radio.Button value="blacklist">黑名单</Radio.Button>
+          <Radio.Button value="blocking">黑名单</Radio.Button>
           <Radio.Button value="whitelist">白名单</Radio.Button>
         </RadioGroup>
       </FormItem>

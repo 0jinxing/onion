@@ -5,12 +5,12 @@
       "path": "."
     },
     {
-      "name": "@",
-      "path": "src"
-    },
-    {
       "name": "config",
       "path": "config"
+    },
+    {
+      "name": "@",
+      "path": "src"
     }
   ]
 }

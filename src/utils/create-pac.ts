@@ -4,13 +4,13 @@ const createPac = (
   proxy: string,
   rules: string[],
   userRules: string[],
-  isBlacklist = true
+  isBlocking = true
 ) => {
   return pacTemplate
     .replace("$$PROXY$$", proxy)
     .replace("$$RULES$$", JSON.stringify(rules))
     .replace("$$USERRULES$$", JSON.stringify(userRules))
-    .replace("$$DEFAULT$$", isBlacklist ? "direct" : "proxy");
+    .replace("$$DEFAULT$$", isBlocking ? "direct" : "proxy");
 };
 
 export default createPac;
