@@ -1,13 +1,8 @@
-@import "../common/mixins.scss";
+@import "../common/mixins";
 
 @include b(proxy-setting) {
   @include e(input) {
     flex: 1;
-    .tip {
-      margin-top: 4px;
-      margin-bottom: 24px;
-      font-size: 12px;
-    }
   }
   .ant-row:last-child {
     margin-right: 0;

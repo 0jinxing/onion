@@ -1,0 +1,45 @@
+@import "../common/mixins";
+
+@include b("page-header") {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+
+  @include e("icon") {
+    display: block;
+    height: 40px;
+    margin-right: 12px;
+  }
+
+  @include e("title") {
+    margin: 0;
+    color: #141414;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  @include e("tip") {
+    align-self: flex-end;
+    position: absolute;
+    left: 14em;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 2;
+  }
+
+  @include e("github") {
+    margin-left: auto;
+    align-self: flex-end;
+    font-size: 14px;
+    line-height: 2;
+    .anticon {
+      margin-right: 4px;
+    }
+    .star,
+    .wiki {
+      margin-left: 12px;
+    }
+  }
+}

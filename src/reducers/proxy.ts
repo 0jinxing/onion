@@ -1,27 +1,28 @@
-import { ProxyAction, ProxyTypeEnum } from "@/actions/proxy";
+import { ProxyAction, ProxyTypeEnum, GFWMode } from "@/actions/proxy";
 
 export type ProxyState = {
-  proxy?: string;
-  gfwUrl?: string;
+  proxyUrl: string;
+  gfwUrl: string;
+  gfwMode: GFWMode;
   gfwList: string[];
   loading: boolean;
-  error?: object;
+  error: object | null;
 };
 
 const {
-  SET_PROXY,
+  UPDATE_PROXY_URL,
   UPDATE_GFW_URL,
+  UPDATE_GFW_MODE,
   UPDATE_GFW_LIST,
-  START_UPDATE_GFW_LIST,
-  FINALLY_UPDATE_GFW_LIST,
-  THROW_UPDATE_GFW_LIST,
-  CATCH_UPDATE_GFW_LIST
 } = ProxyTypeEnum;
 
 const defaultState: ProxyState = {
-  loading: false,
+  proxyUrl: "",
   gfwUrl: "https://repo.or.cz/gfwlist.git/blob_plain/HEAD:/gfwlist.txt",
-  gfwList: []
+  gfwMode: GFWMode.BLACKLIST,
+  gfwList: [],
+  error: null,
+  loading: false,
 };
 
 const proxyReducer = (
@@ -31,41 +32,25 @@ const proxyReducer = (
   const { type, payload } = action;
 
   switch (type) {
-    case SET_PROXY:
+    case UPDATE_PROXY_URL:
       return {
         ...state,
-        proxy: payload.proxy
+        proxyUrl: payload.proxyUrl,
       };
     case UPDATE_GFW_URL:
       return {
         ...state,
-        gfwUrl: action.payload.gfwUrl
+        gfwUrl: payload.gfwUrl,
+      };
+    case UPDATE_GFW_MODE:
+      return {
+        ...state,
+        gfwMode: payload.gfwMode,
       };
     case UPDATE_GFW_LIST:
       return {
         ...state,
-        gfwList: payload.gfwList
-      };
-
-    case START_UPDATE_GFW_LIST:
-      return {
-        ...state,
-        loading: true
-      };
-    case FINALLY_UPDATE_GFW_LIST:
-      return {
-        ...state,
-        loading: false
-      };
-    case THROW_UPDATE_GFW_LIST:
-      return {
-        ...state,
-        error: action.payload.error
-      };
-    case CATCH_UPDATE_GFW_LIST:
-      return {
-        ...state,
-        error: null
+        gfwList: payload.gfwList,
       };
     default:
       return state;

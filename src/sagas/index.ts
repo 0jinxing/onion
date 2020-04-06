@@ -1,11 +1,15 @@
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest, all, fork } from "redux-saga/effects";
 import { updateGFWListSaga } from "./proxy";
 import { ProxyTypeEnum } from "@/actions/proxy";
 
-const { FETCH_GFW_LIST } = ProxyTypeEnum;
+const { EMIT_FETCH_GFW_LIST } = ProxyTypeEnum;
+
+function* watchFetchGFWList() {
+  yield takeLatest(EMIT_FETCH_GFW_LIST, updateGFWListSaga);
+}
 
 function* rootSaga() {
-  yield takeLatest(FETCH_GFW_LIST, updateGFWListSaga);
+  yield all([fork(watchFetchGFWList)]);
 }
 
 export default rootSaga;

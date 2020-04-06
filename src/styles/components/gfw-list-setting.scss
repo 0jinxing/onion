@@ -1,0 +1,21 @@
+@import "../common/mixins";
+
+@include b("gfw-list-setting") {
+  margin-bottom: 24px;
+
+  @include e("input") {
+    flex: 1;
+  }
+
+  .ant-row:last-child {
+    margin-right: 0;
+  }
+
+  .ant-form-item-explain {
+    position: absolute;
+  }
+
+  .ant-form-item-with-help {
+    margin-bottom: 0;
+  }
+}

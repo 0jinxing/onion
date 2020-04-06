@@ -1,25 +1,17 @@
-import { call, put } from "redux-saga/effects";
-import {
-  ProxyAction,
-  updateGFWList,
-  startUpdateGFWList,
-  finallyUpdateGFWList,
-  throwUpdateGFWList
-} from "@/actions/proxy";
-import fetchGFW from "@/utils/fetchGFW";
+import { call, put, select } from "redux-saga/effects";
+import { ProxyAction, updateGFWList } from "@/actions/proxy";
+import fetchGFWList from "@/utils/fetch-gfwlist";
+import { State } from "@/store";
+import asyncSaga from "./utils/async-saga";
 
-export function* updateGFWListSaga(action: ProxyAction) {
-  // 根据 gfwUrl 获取新的 gfwList
-  const { gfwUrl } = action.payload;
+function* _updateGFWListSaga(_: ProxyAction) {
+  const gfwUrl = yield select((state: State) => state.proxy.gfwUrl);
   if (gfwUrl) {
-    try {
-      const _gfwList: string[] = yield call(fetchGFW, gfwUrl);
-      yield put(startUpdateGFWList());
-      yield put(updateGFWList(_gfwList));
-    } catch (e) {
-      yield put(throwUpdateGFWList(e));
-    } finally {
-      yield put(finallyUpdateGFWList());
-    }
+    const _gfwList: string[] = yield call(fetchGFWList, gfwUrl);
+    yield put(updateGFWList(_gfwList));
+  } else {
+    yield put(updateGFWList([]));
   }
 }
+
+export const updateGFWListSaga = asyncSaga(_updateGFWListSaga);

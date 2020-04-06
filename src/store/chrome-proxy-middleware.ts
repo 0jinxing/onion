@@ -11,7 +11,7 @@ import { State } from "./index";
 const passingActions = [
   RuleTypeEnum.ADD_RULE,
   RuleTypeEnum.DELETE_RULE,
-  ProxyTypeEnum.SET_PROXY,
+  ProxyTypeEnum.UPDATE_PROXY_URL,
   ProxyTypeEnum.UPDATE_GFW_LIST,
   ReportTypeEnum.TO_REPORT
 ];

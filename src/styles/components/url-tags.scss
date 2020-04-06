@@ -1,4 +1,4 @@
-@import "../common/mixins.scss";
+@import "../common/mixins";
 
 @include b("url-tags") {
   width: calc(100% + 8px);
