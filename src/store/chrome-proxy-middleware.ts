@@ -51,6 +51,8 @@ const chromeProxyMiddleware: Middleware = (store) => {
     // 比较代价小的
     if (state.proxy.proxyUrl !== nextState.proxy.proxyUrl) {
       hasProxyChange = !!nextState.proxy.proxyUrl;
+    } else if (state.proxy.gfwMode !== nextState.proxy.gfwMode) {
+      hasProxyChange = true;
     } else if (state.proxy.gfwList.length !== nextState.proxy.gfwList.length) {
       hasProxyChange = true;
     } else if (state.rule.length !== nextState.rule.length) {
@@ -93,7 +95,7 @@ const chromeProxyMiddleware: Middleware = (store) => {
         if (!isHttpDocument) return;
 
         let curFilter = queryFilter(document.location.href, nextPatterns);
-        
+
         if (!curFilter) {
           curFilter = queryFilter(
             document.location.href,

@@ -34,7 +34,7 @@ async function handleTabsChanged() {
   } else {
     chrome.browserAction.setIcon({
       path:
-        state.proxy.gfwMode === GFWMode.BLOCKING ? blockingIcon : whitelistIcon,
+        state.proxy.gfwMode === GFWMode.BLOCKING ? whitelistIcon : blockingIcon,
     });
   }
 }

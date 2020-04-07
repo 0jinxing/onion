@@ -45,6 +45,13 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store, null, () => {
+  window.postMessage(
+    {
+      type: "APP_RENDER",
+    },
+    location.origin
+  );
+
   const state: State = store.getState();
   // 更新 GFW List，频率 1 周
   if (
