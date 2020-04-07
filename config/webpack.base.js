@@ -46,6 +46,7 @@ module.exports = {
       template: path.resolve("public/template.html"),
       filename: "index.html",
       hash: true,
+      chunks: ["options"],
       title: "PROXY - OPTIONS",
     }),
     new MiniCssExtractPlugin(),
@@ -69,11 +70,5 @@ module.exports = {
       { test: /\.s[ac]ss$/, use: sassLoader },
       { test: /\.png$/, use: imageLoader },
     ],
-  },
-
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-  },
+  }
 };
