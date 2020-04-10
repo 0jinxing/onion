@@ -7,7 +7,7 @@ import {
 } from "@/actions/proxy";
 import GFWListSetting from "@/components/GFWListSetting";
 import { Dispatch } from "redux";
-import { State } from "@/store";
+import { State } from "@/store/query-store";
 
 const mapStateToProps = (state: State) => {
   return {

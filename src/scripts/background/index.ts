@@ -1,4 +1,4 @@
-import store from "@/store";
+import queryStore from "@/store/query-store";
 import queryFilter from "@/utils/query-filter";
 
 import blockingIcon from "@/assets/blocking.png";
@@ -7,9 +7,12 @@ import { BlockingFilter, WhitelistFilter } from "@/lib/adblockplus";
 import { GFWMode } from "@/actions/proxy";
 import { addRule, deleteRule } from "@/actions/rule";
 
-async function handleTabsChanged() {
+const store = queryStore(true);
+
+async function handleTabsActivated() {
+  console.log("trigger");
   const tabs: chrome.tabs.Tab[] = await new Promise((resolve) => {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, resolve);
+    chrome.tabs.query({ active: true, currentWindow: true }, resolve);
   });
   if (!tabs.length) return;
 
@@ -39,7 +42,20 @@ async function handleTabsChanged() {
   }
 }
 
-chrome.tabs.onSelectionChanged.addListener(handleTabsChanged);
+chrome.tabs.onActivated.addListener(handleTabsActivated);
+
+function handleTabsUpdated(
+  tabId: number,
+  changeInfo: chrome.tabs.TabChangeInfo,
+  tab: chrome.tabs.Tab
+) {
+  if (tab.active && changeInfo.status === "loading") {
+    console.log(changeInfo);
+    handleTabsActivated();
+  }
+}
+
+chrome.tabs.onUpdated.addListener(handleTabsUpdated);
 
 async function handleBrowserActionClicked() {
   const tabs: chrome.tabs.Tab[] = await new Promise((resolve) => {
@@ -83,7 +99,7 @@ async function handleBrowserActionClicked() {
   if (curTab.id) {
     chrome.tabs.reload(curTab.id);
     // 改变 icon
-    handleTabsChanged();
+    handleTabsActivated();
   }
 }
 

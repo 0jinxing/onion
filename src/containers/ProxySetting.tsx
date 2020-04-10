@@ -3,7 +3,7 @@ import ProxySetting from "@/components/ProxySetting";
 import { updateProxyUrl } from "@/actions/proxy";
 
 import { Dispatch } from "redux";
-import { State } from "@/store";
+import { State } from "@/store/query-store";
 
 const mapStateToProps = (state: State) => {
   return {

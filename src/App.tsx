@@ -1,14 +1,16 @@
 import React from "react";
 import { Provider } from "react-redux";
 
-import store from "@/store";
+import queryStore from "@/store/query-store";
 import PageHeader from "@/containers/PageHeader";
 import ProxySetting from "@/containers/ProxySetting";
-import RuleTable from "@/components/RuleTable";
+import RuleTable from "@/containers/RuleTable";
 import RuleInput from "@/components/RuleInput";
 import UrlTags from "@/components/UrlTags";
 import GFWListSetting from "@/containers/GFWListSetting";
 import "./styles/app.scss";
+
+const store = queryStore();
 
 const App: React.FunctionComponent = () => {
   return (

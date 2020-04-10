@@ -1,7 +1,7 @@
 import { call, put, select } from "redux-saga/effects";
 import { ProxyAction, updateGFWList } from "@/actions/proxy";
 import fetchGFWList from "@/utils/fetch-gfwlist";
-import { State } from "@/store";
+import { State } from "@/store/query-store";
 import asyncSaga from "./utils/async-saga";
 
 function* _updateGFWListSaga(_: ProxyAction) {

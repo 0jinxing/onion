@@ -13,7 +13,7 @@
   "options_page": "index.html",
   "background": {
     "scripts": ["background.bundle.js"],
-    "persistent": false
+    "persistent": true
   },
   "content_scripts": [
     {

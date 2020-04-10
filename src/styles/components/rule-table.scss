@@ -2,14 +2,7 @@
 @import "../common/utils";
 
 @include b(rule-table) {
-  @include e(tip) {
-    margin-top: 4px;
-    margin-bottom: 24px;
-    color: rgba(0, 0, 0, 0.45);
-    font-size: 14px;
-    line-height: 1.5715;
-  }
-
+  margin-bottom: 24px;
   @include e(table) {
     .ant-table-body {
       @include utils-scroll-bar;

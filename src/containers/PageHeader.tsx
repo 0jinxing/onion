@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import PageHeader from "@/components/PageHeader";
 
-import { State } from "@/store";
+import { State } from "@/store/query-store";
 
 const mapStateToProps = (state: State) => {
   return {

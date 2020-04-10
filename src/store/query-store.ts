@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Store } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer } from "redux-persist";
 import logger from "redux-logger";
@@ -15,6 +15,7 @@ import { emitFetchGFWList } from "@/actions/proxy";
 import { LoadingState } from "@/reducers/loading";
 import ChromeLocalStorage from "@/utils/chrome-local-storage";
 import chromeProxyMiddleware from "./chrome-proxy-middleware";
+import dispatchMiddleware from "./dispatch-middleware";
 import { ErrorState } from "@/reducers/error";
 
 export type State = {
@@ -38,29 +39,35 @@ const persistedReducer = persistReducer(
 );
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
-  persistedReducer,
-  applyMiddleware(logger, chromeProxyMiddleware, sagaMiddleware)
-);
-sagaMiddleware.run(rootSaga);
 
-export const persistor = persistStore(store, null, () => {
-  window.postMessage(
-    {
-      type: "APP_RENDER",
-    },
-    location.origin
+const queryStore = (isBackground = false) => {
+  const store = createStore(
+    persistedReducer,
+    applyMiddleware.apply(
+      null,
+      isBackground
+        ? [logger, chromeProxyMiddleware, dispatchMiddleware, sagaMiddleware]
+        : [logger, dispatchMiddleware, sagaMiddleware]
+    )
   );
 
-  const state: State = store.getState();
-  // 更新 GFW List，频率 1 周
-  if (
-    state.proxy.gfwUrl &&
-    (!state.proxy.gfwList.length ||
-      +dayjs(state.proxy.updateAt).add(1, "week") < Date.now())
-  ) {
-    store.dispatch(emitFetchGFWList());
-  }
-});
+  sagaMiddleware.run(rootSaga);
 
-export default store;
+  persistStore(store, null, () => {
+    window.postMessage({ type: "APP_RENDER" }, location.origin);
+
+    const state: State = store.getState();
+    // 更新 GFW List，频率 1 周
+    if (
+      state.proxy.gfwUrl &&
+      (!state.proxy.gfwList.length ||
+        +dayjs(state.proxy.updateAt).add(1, "week") < Date.now())
+    ) {
+      store.dispatch(emitFetchGFWList());
+    }
+  });
+  
+  return store;
+};
+
+export default queryStore;
