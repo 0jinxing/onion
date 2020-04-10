@@ -1,7 +1,6 @@
 @import "../common/mixins";
 
 @include b("rule-input") {
-  margin-bottom: 24px;
   @include e("input") {
     flex: 1;
   }

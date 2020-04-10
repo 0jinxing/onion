@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 const { Column } = Table;
 
-const tableData = Array.from({ length: 10 }).map((_, ind) => ({
+const _tableData = Array.from({ length: 1 }).map((_, ind) => ({
   key: ind,
   pattern: "baidu.com",
   timestamp: "2019/01/01 00:00:00",
@@ -24,11 +24,9 @@ const RuleTable = (props: RuleTableProps) => {
     <div className="ghoo-rule-table">
       <Table
         bordered
-        dataSource={tableData}
-        pagination={false}
+        dataSource={_tableData}
         className="ghoo-rule-table__table"
         size="small"
-        scroll={{ y: 300 }}
       >
         <Column key="pattern" dataIndex="pattern" title="PATTERN" />
         <Column

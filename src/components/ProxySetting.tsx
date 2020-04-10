@@ -14,8 +14,6 @@ const ProxySetting = (props: ProxySettingProps) => {
 
   const [form] = Form.useForm();
 
-  const [proxyUrlFieldError, updateProxyUrlFieldError] = useState<string[]>([]);
-
   const [fieldData, setFieldData] = useState([
     { name: ["proxyUrl"], value: proxyUrl },
   ]);
@@ -30,29 +28,17 @@ const ProxySetting = (props: ProxySettingProps) => {
       className="ghoo-proxy-setting"
       form={form}
       onFinish={(values) => {
-        updateProxyUrlFieldError([]);
         const proxyUrl: string = values.proxyUrl;
         updateProxyUrl(proxyUrl);
-      }}
-      onFinishFailed={() => {
-        updateProxyUrlFieldError(form.getFieldError("proxyUrl"));
       }}
       fields={fieldData}
     >
       <FormItem
         name="proxyUrl"
         className="ghoo-proxy-setting__input"
-        rules={[{ type: "string", message: "请输入正确的代理地址" }]}
-        validateStatus={proxyUrlFieldError.length ? "error" : undefined}
-        help={
-          proxyUrlFieldError[0] ||
-          "输入你的代理服务器地址（eg：http://127.0.0.1:1080）"
-        }
+        rules={[{ type: "url", message: "请输入正确的代理地址" }]}
       >
         <Input
-          onBlur={() => {
-            updateProxyUrlFieldError(form.getFieldError("proxyUrl"));
-          }}
           prefix={<BulbTwoTone />}
           allowClear
           placeholder="输入你的代理地址"
