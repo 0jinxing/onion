@@ -52,7 +52,7 @@ const chromeProxyMiddleware: Middleware = (store) => {
 
     // 需要更新 chrome 代理设置
     const pacScript = createPAC(
-      `PROXY ${nextState.proxy.proxyUrl};`,
+      nextState.proxy.proxyUrl,
       nextState.proxy.gfwList,
       nextPatterns,
       state.proxy.gfwMode === GFWMode.BLOCKING

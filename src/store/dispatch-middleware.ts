@@ -8,9 +8,10 @@ import { ReportTypeEnum } from "@/actions/report";
 const passingActions = [
   RuleTypeEnum.ADD_RULE,
   RuleTypeEnum.DELETE_RULE,
+  ProxyTypeEnum.UPDATE_GFW_MODE,
   ProxyTypeEnum.UPDATE_PROXY_URL,
   ProxyTypeEnum.UPDATE_GFW_LIST,
-  ReportTypeEnum.TO_REPORT,
+  ReportTypeEnum.ADD_REPORT,
 ];
 
 // 接受和分发 action 的中间件

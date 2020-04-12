@@ -1,15 +1,23 @@
 import { Action } from "redux";
 
 export enum ReportTypeEnum {
-  TO_REPORT = "TO_REPORT"
+  ADD_REPORT = "ADD_REPORT",
+  DELETE_REPORT = "DELETE_REPORT",
 }
 
-const { TO_REPORT } = ReportTypeEnum;
+const { ADD_REPORT, DELETE_REPORT } = ReportTypeEnum;
 
 export interface ReportAction extends Action {
-  payload: string;
+  payload: {
+    hostname: string;
+    mime?: string;
+  };
 }
 
-export const toReport = (url: string) => {
-  return { type: TO_REPORT, payload: url };
-};
+export function addReport(hostname: string, mime?: string): ReportAction {
+  return { type: ADD_REPORT, payload: { hostname, mime } };
+}
+
+export function deleteReport(hostname: string): ReportAction {
+  return { type: DELETE_REPORT, payload: { hostname } };
+}

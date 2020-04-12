@@ -1,29 +1,42 @@
 import { ReportAction, ReportTypeEnum } from "@/actions/report";
 
-export type ReportState = Array<{
+export type Report = {
   hostname: string;
-  href: string;
+  mime: string;
   timestamp: number;
-}>;
+};
 
-const { TO_REPORT } = ReportTypeEnum;
+export type ReportState = Array<Report>;
+
+const { ADD_REPORT, DELETE_REPORT } = ReportTypeEnum;
 
 const ReportReducer = (state: ReportState = [], action: ReportAction) => {
   const { type, payload } = action;
+  const _state = state.slice();
 
   switch (type) {
-    case TO_REPORT:
-      const { hostname, href } = new URL(payload);
-      const _state = state.slice();
-      const lastIndex = _state.findIndex((it) => it.hostname === hostname);
-      if (lastIndex >= 0) {
-        _state[lastIndex] = {
-          hostname: hostname,
-          href: href,
-          timestamp: Date.now(),
-        };
-        return _state;
+    case ADD_REPORT: {
+      const delIndex = _state.findIndex(
+        (it) => it.hostname === payload.hostname
+      );
+
+      if (delIndex >= 0) {
+        _state.splice(delIndex, 1);
       }
+      _state.unshift({
+        hostname: payload.hostname,
+        mime: payload.mime || "*",
+        timestamp: Date.now(),
+      });
+      return _state.splice(0, 100);
+    }
+    case DELETE_REPORT: {
+      const delIndex = _state.findIndex((i) => i.hostname === payload.hostname);
+      if (delIndex >= 0) {
+        _state.splice(delIndex, 1);
+      }
+      return _state;
+    }
 
     default:
       return state;

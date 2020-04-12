@@ -1,15 +1,9 @@
 import React from "react";
 import { Table } from "antd";
-import { RuleState } from "@/reducers/rule";
+import { RuleState, Rule } from "@/reducers/rule";
 import dayjs from "dayjs";
 
 const { Column } = Table;
-
-const _tableData = Array.from({ length: 1 }).map((_, ind) => ({
-  key: ind,
-  pattern: "baidu.com",
-  timestamp: "2019/01/01 00:00:00",
-}));
 
 export type RuleTableProps = {
   rules: RuleState;
@@ -24,33 +18,25 @@ const RuleTable = (props: RuleTableProps) => {
     <div className="ghoo-rule-table">
       <Table
         bordered
-        dataSource={_tableData}
+        dataSource={tableData}
         className="ghoo-rule-table__table"
         size="small"
       >
-        <Column key="pattern" dataIndex="pattern" title="PATTERN" />
+        <Column dataIndex="pattern" title="PATTERN" />
         <Column
           width="15em"
-          key="timestamp"
           dataIndex="timestamp"
           title="TIMESTAMP"
-          render={(_, record: { pattern: string; timestamp: number }) => {
+          render={(_, record: Rule) => {
             return dayjs(record.timestamp).format();
           }}
         />
         <Column
           width="10em"
-          key="timestamp"
           title="ACTION"
-          render={(text, record: { pattern: string; timestamp: number }) => (
+          render={(_, record: Rule) => (
             <span>
-              <a
-                onClick={() => {
-                  deleteRule(record.pattern);
-                }}
-              >
-                Delete
-              </a>
+              <a onClick={() => deleteRule(record.pattern)}>Delete</a>
             </span>
           )}
         />

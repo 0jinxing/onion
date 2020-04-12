@@ -1,8 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, Button, Form } from "antd";
 import { BulbTwoTone } from "@ant-design/icons";
+import validator from "validator";
 
 const FormItem = Form.Item;
+
+function proxyUrlValidator(_: any, value: string) {
+  const isProxyURL = validator.isURL(value, {
+    protocols: ["http", "https", "socks4", "socks", "socks5", "quic"],
+    require_protocol: false,
+  });
+  if (!isProxyURL) {
+    return Promise.reject("请输入正确的代理地址");
+  }
+  return Promise.resolve();
+}
 
 export type ProxySettingProps = {
   proxyUrl: string;
@@ -36,7 +48,7 @@ const ProxySetting = (props: ProxySettingProps) => {
       <FormItem
         name="proxyUrl"
         className="ghoo-proxy-setting__input"
-        rules={[{ type: "url", message: "请输入正确的代理地址" }]}
+        rules={[{ validator: proxyUrlValidator }]}
       >
         <Input
           prefix={<BulbTwoTone />}

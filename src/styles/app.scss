@@ -4,11 +4,17 @@
 @import "components/proxy-setting";
 @import "components/rule-table";
 @import "components/rule-input";
-@import "components/url-tags";
 @import "components/gfw-list-setting";
 
-@include b(container) {
+@include b("container") {
   width: $--sm;
   margin: 0 auto;
   padding: 60px 0;
+
+  @include e("helper") {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 }
