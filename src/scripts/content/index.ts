@@ -1,6 +1,4 @@
-// 静态资源的加载失败上报
+// 各类错误资源上报
 import "./assets-report";
-// import 
-
-// fetch xhr 加载失败上报
-window.addEventListener("load", () => {});
+import "./css-report";
+import "./request-report";

@@ -1,16 +1,19 @@
-function getBgImgs(doc: Document) {
-  const srcChecker = /url\(\s*?['"]?\s*?(\S+?)\s*?["']?\s*?\)/i;
-  return Array.from(
-    Array.from(doc.querySelectorAll("*")).reduce((collection, node) => {
-      let prop = window
-        .getComputedStyle(node, null)
-        .getPropertyValue("background-image");
-      // match `url(...)`
-      let match = srcChecker.exec(prop);
-      if (match) {
-        collection.add(match[1]);
+function startCSSReport() {
+  for (let sheetIndex = 0;sheetIndex < document.styleSheets.length;sheetIndex++) {
+    const sheet = document.styleSheets[sheetIndex] as CSSStyleSheet;
+    try {
+      for (let ruleIndex = 0; ruleIndex < sheet.rules.length; ruleIndex++) {
+        const rule = sheet.rules[ruleIndex] as CSSStyleRule;
+        const [_, url] = rule.style.cssText.match(/url\(['"](.+)['"]\)/) || [];
+        if (!url || /^data/.test(url)) return;
+        if (/^font/.test(rule.cssText)) {
+          // font report
+        } else if (/^background/.test(rule.cssText)) {
+          // image report
+        }
       }
-      return collection;
-    }, new Set())
-  );
+    } catch {}
+  }
 }
+
+window.addEventListener("load", startCSSReport);
