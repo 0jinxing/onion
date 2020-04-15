@@ -919,6 +919,11 @@
   dependencies:
     "@types/filesystem" "*"
 
+"@types/css-font-loading-module@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npm.taobao.org/@types/css-font-loading-module/download/@types/css-font-loading-module-0.0.4.tgz#94a835e27d1af444c65cba88523533c174463d64"
+  integrity sha1-lKg14n0a9ETGXLqIUjUzwXRGPWQ=
+
 "@types/filesystem@*":
   version "0.0.29"
   resolved "https://registry.npm.taobao.org/@types/filesystem/download/@types/filesystem-0.0.29.tgz#ee3748eb5be140dcf980c3bd35f11aec5f7a3748"
