@@ -19,10 +19,10 @@ function resultErrorListener(ev: ErrorEvent) {
       mime = "audio/*";
       url = target.getAttribute("src");
     } else if (target instanceof HTMLScriptElement) {
-      mime = "text/plain";
+      mime = "text/javascript";
       url = target.getAttribute("src");
     } else if (target instanceof HTMLStyleElement) {
-      mime = "text/plain";
+      mime = "text/css";
       url = target.getAttribute("href");
     }
     if (url && mime) {

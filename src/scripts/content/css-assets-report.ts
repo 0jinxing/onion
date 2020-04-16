@@ -1,4 +1,7 @@
-import ReportReducer from "@/reducers/report";
+import queryStore from "@/store/query-store";
+import { addReport } from "@/actions/report";
+
+const store = queryStore();
 
 function getCSSImageURLForDoc(doc: HTMLDocument): string[] {
   const imageURLArr: string[] = [];
@@ -37,35 +40,55 @@ function getCSSImageURLForDoc(doc: HTMLDocument): string[] {
   return imageURLArr;
 }
 
-async function startCSSReport() {
-  console.log("startreport==========>");
-  const fonts = document.fonts;
-  fonts.addEventListener("loadingerror", ({ fontfaces }) => {
-    const styleSheets = document.styleSheets;
-    for (let sheetIndex = 0; sheetIndex < styleSheets.length; sheetIndex++) {
-      const sheet = styleSheets[sheetIndex] as CSSStyleSheet;
-      const rules = sheet.rules;
-      for (let ruleIndex = 0; ruleIndex < rules.length; ruleIndex++) {
-        const rule = rules[ruleIndex];
-        if (rule instanceof CSSFontFaceRule) {
-          const [_0, family] = rule.style.cssText.match(/font-family: ['"]?(.+?)['"]?;/);
-          if (fontfaces.find(f => f.family === family)) {
-            const [_1, url] = rule.style.cssText.match(/url\(['"]?(.+?)['"]?\)/);
-            console.log(url);
-          }
-        }
+function getFontFacesMap(doc: HTMLDocument) {
+  const fontFacesMap = new Map();
+  const styleSheets = doc.styleSheets;
+  for (let sheetIndex = 0; sheetIndex < styleSheets.length; sheetIndex++) {
+    const sheet = styleSheets[sheetIndex] as CSSStyleSheet;
+    const rules = sheet.rules;
+    for (let ruleIndex = 0; ruleIndex < rules.length; ruleIndex++) {
+      const rule = rules[ruleIndex];
+      if (rule instanceof CSSFontFaceRule) {
+        const [, family] = rule.style.cssText.match(/font-family: ['"]?(.+?)['"]?;/);
+        const [, url] = rule.style.cssText.match(/url\(['"]?(.+?)['"]?\)/);
+        fontFacesMap.set(family, url);
       }
     }
-    console.log("font error =====>", fontfaces);
-  });
-  const cssImageURLArr = getCSSImageURLForDoc(document);
-  for (let url of cssImageURLArr) {
-    const image = new Image();
-    image.src = url;
-    image.addEventListener("error", () => {
+  }
+  return fontFacesMap;
+}
+
+function startCSSReport() {
+  const fontFacesMap = getFontFacesMap(document);
+  document.fonts.addEventListener("loadingerror", ({ fontfaces }) => {
+    for (let font of fontfaces) {
       // report
-      console.log("image error===>", url);
-    });
+      const url = fontFacesMap.get(font.family);
+      if (url) {
+        const { hostname } = new URL(url, window.location.href);
+        store.dispatch(addReport(hostname, "font"));
+      }
+    }
+  });
+
+  const cssImageURLArr = getCSSImageURLForDoc(document);
+  if (cssImageURLArr.length) {
+    let curIndex = 0;
+    const sniffImage = new Image();
+    sniffImage.src = cssImageURLArr[curIndex];
+    sniffImage.onerror = () => {
+      const url = cssImageURLArr[curIndex];
+      if (url) {
+        const { hostname } = new URL(url, window.location.href);
+        store.dispatch(addReport(hostname, "image/*"));
+      }
+      curIndex += 1;
+      sniffImage.src = cssImageURLArr[curIndex];
+    };
+    sniffImage.onload = () => {
+      curIndex += 1;
+      sniffImage.src = cssImageURLArr[curIndex];
+    };
   }
 }
 
