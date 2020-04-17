@@ -32,11 +32,9 @@ const App: React.FunctionComponent = () => {
               </div>
               <RuleTable />
             </TabPane>
-            <TabPane tab="TIMEOUT" key="timeout-result">
+            <TabPane tab="REPORT" key="assets-report">
               <div className="ghoo-container__helper">
-                <span>
-                  加载超时的网页资源，较大可能需要配置代理，也有可能是其他网络原因导致的
-                </span>
+                <span>加载失败的网页资源，较大可能需要配置代理，也有可能是其他网络原因导致的</span>
               </div>
               <ReportTable />
             </TabPane>

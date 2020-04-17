@@ -12,9 +12,10 @@ export type RuleInputProps = {
 };
 
 function urlValidator(_: any, value: string) {
+  if (!value) return Promise.resolve();
   const isURL = validator.isURL(value, {
     protocols: ["http", "https"],
-    require_protocol: false,
+    require_protocol: false
   });
   if (!isURL) {
     return Promise.reject("请输入正确的 URL");
@@ -29,11 +30,7 @@ const RuleInput = (props: RuleInputProps) => {
 
   return (
     <Form className="ghoo-rule-input" layout="inline" form={form}>
-      <FormItem
-        name="url"
-        className="ghoo-rule-input__input"
-        rules={[{ validator: urlValidator }]}
-      >
+      <FormItem name="url" className="ghoo-rule-input__input" rules={[{ validator: urlValidator }]}>
         <Input placeholder="输入需要添加的 URL 到" />
       </FormItem>
       <FormItem className="ghoo-rule-input__whitelist">

@@ -13,12 +13,41 @@ export type ReportTableProps = {
 
 function ReportTable(props: ReportTableProps) {
   const { reports, addRule, deleteReport } = props;
-  const tableData = reports.map((i) => ({ ...i, key: i.hostname }));
+
+  const tableData = reports
+    .reduce((arr: Report[], item) => {
+      if (arr.find(i => i.hostname === item.hostname)) {
+        return arr;
+      }
+      return [...arr, item];
+    }, [])
+    .map(i => ({ hostname: i.hostname, timestamp: i.timestamp, key: i.hostname }));
+
+  const expandedRowRender = ({ hostname }: { hostname: string }) => {
+    const expandedRow = reports
+      .filter(i => i.hostname === hostname)
+      .map(i => ({ href: i.href, type: i.type, key: i.href }));
+
+    const columns = [
+      {
+        title: "HREF",
+        dataIndex: "href",
+        ellipsis: true,
+        render: (text: string, { href }: { href: string }) => (
+          <a href={href} target="__blank">
+            {text}
+          </a>
+        )
+      },
+      { title: "TYPE", dataIndex: "type", width: "10em" }
+    ];
+
+    return <Table columns={columns} dataSource={expandedRow} pagination={false} size="small" />;
+  };
 
   return (
-    <Table bordered dataSource={tableData} size="small">
+    <Table bordered dataSource={tableData} size="small" expandedRowRender={expandedRowRender}>
       <Column dataIndex="hostname" title="HOSTNAMES" />
-      <Column dataIndex="mime" title="MIME" />
       <Column
         width="15em"
         dataIndex="timestamp"

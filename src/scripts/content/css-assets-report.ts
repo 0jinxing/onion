@@ -65,8 +65,8 @@ function startCSSReport() {
       // report
       const url = fontFacesMap.get(font.family);
       if (url) {
-        const { hostname } = new URL(url, window.location.href);
-        store.dispatch(addReport(hostname, "font"));
+        const { hostname, href } = new URL(url, window.location.href);
+        store.dispatch(addReport(hostname, href, "font"));
       }
     }
   });
@@ -79,8 +79,8 @@ function startCSSReport() {
     sniffImage.onerror = () => {
       const url = cssImageURLArr[curIndex];
       if (url) {
-        const { hostname } = new URL(url, window.location.href);
-        store.dispatch(addReport(hostname, "image/*"));
+        const { hostname, href } = new URL(url, window.location.href);
+        store.dispatch(addReport(hostname, href, "image"));
       }
       curIndex += 1;
       sniffImage.src = cssImageURLArr[curIndex];

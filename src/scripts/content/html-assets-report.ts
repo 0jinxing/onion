@@ -3,31 +3,29 @@ import { addReport } from "@/actions/report";
 
 const store = queryStore();
 
+const typeMap = new WeakMap<object, string>([
+  [HTMLImageElement, "image"],
+  [HTMLVideoElement, "video"],
+  [HTMLAudioElement, "audio"],
+  [HTMLAudioElement, "audio"],
+  [HTMLScriptElement, "js"],
+  [HTMLStyleElement, "css"]
+]);
+
 function resultErrorListener(ev: ErrorEvent) {
   const target = ev.target;
   if (target) {
     let url: string | null = null;
-    let mime: string | null = null;
+    let type: string | null = null;
 
-    if (target instanceof HTMLImageElement) {
-      mime = "image/*";
+    if (target instanceof HTMLElement) {
+      type = typeMap.get(target.constructor) || "";
       url = target.getAttribute("src");
-    } else if (target instanceof HTMLVideoElement) {
-      mime = "video/*";
-      url = target.getAttribute("src");
-    } else if (target instanceof HTMLAudioElement) {
-      mime = "audio/*";
-      url = target.getAttribute("src");
-    } else if (target instanceof HTMLScriptElement) {
-      mime = "text/javascript";
-      url = target.getAttribute("src");
-    } else if (target instanceof HTMLStyleElement) {
-      mime = "text/css";
-      url = target.getAttribute("href");
     }
-    if (url && mime) {
-      const { hostname } = new URL(url, window.location.href);
-      store.dispatch(addReport(hostname, mime));
+
+    if (url && type) {
+      const { hostname, href } = new URL(url, window.location.href);
+      store.dispatch(addReport(hostname, href, type));
     }
   }
 }

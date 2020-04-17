@@ -3,6 +3,10 @@
 @include b("rule-input") {
   @include e("input") {
     flex: 1;
+    margin-bottom: 0;
+    .ant-form-item-explain {
+      position: absolute;
+    }
   }
   .ant-row:last-child {
     margin-right: 0;
