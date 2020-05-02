@@ -1,4 +1,4 @@
-@import "./common/mixins";
+@import "../partial/mixins";
 
 @include b("table-panel") {
   margin-bottom: 24px;

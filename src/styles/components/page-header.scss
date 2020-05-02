@@ -1,4 +1,4 @@
-@import "../common/mixins";
+@import "../partial/mixins";
 
 @include b("page-header") {
   display: flex;

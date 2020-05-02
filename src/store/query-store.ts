@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Store } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer, createTransform } from "redux-persist";
 import logger from "redux-logger";
@@ -45,7 +45,7 @@ const persistedReducer = persistReducer(
 
 const sagaMiddleware = createSagaMiddleware();
 
-const queryStore = (isBackground = false) => {
+const queryStore = (isBackground = false): Store<State> => {
   const store = createStore(
     persistedReducer,
     applyMiddleware.apply(

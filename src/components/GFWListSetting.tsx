@@ -36,7 +36,12 @@ const GFWListSetting = (props: GFWListSettingProps) => {
   const loadingRef = useRef(loading);
   useEffect(() => {
     if (loadingRef.current && !loading) {
-      if (!error) message.success(`${gfwMode === GFWMode.BLOCKING ? "黑名单" : "白名单"} 更新成功`);
+      if (!error)
+        message.success(
+          gfwUrl
+            ? `${gfwMode === GFWMode.BLOCKING ? "黑名单" : "白名单"} 更新成功`
+            : "保存成功，当前不使用 GFW List 资源"
+        );
       else {
         message.error(error.message);
         catchError(error);

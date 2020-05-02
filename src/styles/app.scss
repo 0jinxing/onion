@@ -1,13 +1,12 @@
-@import "common/var";
-@import "common/mixins";
+@import "partial/var";
+@import "partial/mixins";
 @import "components/page-header";
 @import "components/proxy-setting";
-@import "components/rule-table";
 @import "components/rule-input";
 @import "components/gfw-list-setting";
 @import "components/search-input";
 
-@import "table-panel";
+@import "common/table-panel";
 
 @include b("container") {
   width: $--sm;
