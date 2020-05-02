@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Input, Button, Form } from "antd";
+import React, { useState, useEffect } from "react";
+import { Input, Button, Form, message } from "antd";
 import { BulbTwoTone } from "@ant-design/icons";
 import validator from "validator";
 
@@ -8,9 +8,9 @@ const FormItem = Form.Item;
 function proxyUrlValidator(_: any, value: string) {
   const isProxyURL = validator.isURL(value, {
     protocols: ["http", "https", "socks4", "socks", "socks5", "quic"],
-    require_protocol: false,
+    require_protocol: false
   });
-  if (!isProxyURL) {
+  if (!isProxyURL && value) {
     return Promise.reject("请输入正确的代理地址");
   }
   return Promise.resolve();
@@ -26,9 +26,7 @@ const ProxySetting = (props: ProxySettingProps) => {
 
   const [form] = Form.useForm();
 
-  const [fieldData, setFieldData] = useState([
-    { name: ["proxyUrl"], value: proxyUrl },
-  ]);
+  const [fieldData, setFieldData] = useState([{ name: ["proxyUrl"], value: proxyUrl }]);
 
   useEffect(() => {
     setFieldData([{ name: ["proxyUrl"], value: proxyUrl }]);
@@ -39,9 +37,12 @@ const ProxySetting = (props: ProxySettingProps) => {
       layout="inline"
       className="ghoo-proxy-setting"
       form={form}
-      onFinish={(values) => {
+      onFinish={values => {
         const proxyUrl: string = values.proxyUrl;
         updateProxyUrl(proxyUrl);
+        message.success({
+          content: proxyUrl ? "代理地址更新成功" : "代理地址更新成功，当前使用系统代理"
+        });
       }}
       fields={fieldData}
     >

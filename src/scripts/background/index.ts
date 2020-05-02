@@ -10,7 +10,6 @@ import { addRule, deleteRule } from "@/actions/rule";
 const store = queryStore(true);
 
 async function handleTabsActivated() {
-  console.log("trigger");
   const tabs: chrome.tabs.Tab[] = await new Promise((resolve) => {
     chrome.tabs.query({ active: true, currentWindow: true }, resolve);
   });
@@ -50,7 +49,6 @@ function handleTabsUpdated(
   tab: chrome.tabs.Tab
 ) {
   if (tab.active && changeInfo.status === "loading") {
-    console.log(changeInfo);
     handleTabsActivated();
   }
 }

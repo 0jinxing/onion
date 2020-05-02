@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { createStore, applyMiddleware, Store } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, createTransform } from "redux-persist";
 import logger from "redux-logger";
 
 import rootReducer from "@/reducers";
@@ -29,11 +29,16 @@ export type State = {
 
 const storage = new ChromeLocalStorage();
 
+const emptyTransform = createTransform((inboundState: ProxyState) => inboundState, null, {
+  whitelist: ["proxy"]
+});
+
 const persistedReducer = persistReducer(
   {
     key: "_0jinxing",
     storage,
     blacklist: ["change", "error", "loading"],
+    transforms: [emptyTransform]
   },
   rootReducer
 );
@@ -60,13 +65,12 @@ const queryStore = (isBackground = false) => {
     // 更新 GFW List，频率 1 周
     if (
       state.proxy.gfwUrl &&
-      (!state.proxy.gfwList.length ||
-        +dayjs(state.proxy.updateAt).add(1, "week") < Date.now())
+      (!state.proxy.gfwList.length || +dayjs(state.proxy.updateAt).add(1, "week") < Date.now())
     ) {
       store.dispatch(emitFetchGFWList());
     }
   });
-  
+
   return store;
 };
 

@@ -4,10 +4,7 @@ const { START_LOADING, END_LOADING } = LoadingTypeEnum;
 
 export type LoadingState = { [key: string]: boolean };
 
-function loadingReducer(
-  state: LoadingState = {},
-  action: LoadingAction
-) {
+function loadingReducer(state: LoadingState = {}, action: LoadingAction) {
   const { type, payload } = action;
 
   switch (type) {

@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "antd";
 import type { ReportState, Report } from "@/reducers/report";
 import dayjs from "dayjs";
+import SearchInput from "@/components/SearchInput";
 
 const { Column } = Table;
 
@@ -46,37 +47,49 @@ function ReportTable(props: ReportTableProps) {
   };
 
   return (
-    <Table bordered dataSource={tableData} size="small" expandedRowRender={expandedRowRender}>
-      <Column dataIndex="hostname" title="HOSTNAMES" />
-      <Column
-        width="15em"
-        dataIndex="timestamp"
-        title="TIMESTAMP"
-        render={(_, record: Report) => {
-          return dayjs(record.timestamp).format();
-        }}
-      />
-      <Column
-        title="ACTION"
-        align="center"
-        render={(_, record: Report) => {
-          return (
-            <span>
-              <a
-                style={{ marginRight: 16 }}
-                onClick={() => {
-                  addRule(record.hostname);
-                  deleteReport(record.hostname);
-                }}
-              >
-                Add rule
-              </a>
-              <a onClick={() => deleteReport(record.hostname)}>Delete</a>
-            </span>
-          );
-        }}
-      />
-    </Table>
+    <div className="ghoo-table-panel">
+      <div className="ghoo-table-panel__helper">
+        <span>加载失败的资源列表</span>
+        <SearchInput />
+      </div>
+      <Table
+        className="ghoo-table-panel__table"
+        bordered
+        dataSource={tableData}
+        size="small"
+        expandedRowRender={expandedRowRender}
+      >
+        <Column dataIndex="hostname" title="HOSTNAMES" />
+        <Column
+          width="15em"
+          dataIndex="timestamp"
+          title="TIMESTAMP"
+          render={(_, record: Report) => {
+            return dayjs(record.timestamp).format();
+          }}
+        />
+        <Column
+          title="ACTION"
+          align="center"
+          render={(_, record: Report) => {
+            return (
+              <span>
+                <a
+                  style={{ marginRight: 16 }}
+                  onClick={() => {
+                    addRule(record.hostname);
+                    deleteReport(record.hostname);
+                  }}
+                >
+                  Add rule
+                </a>
+                <a onClick={() => deleteReport(record.hostname)}>Delete</a>
+              </span>
+            );
+          }}
+        />
+      </Table>
+    </div>
   );
 }
 

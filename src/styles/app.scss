@@ -5,16 +5,12 @@
 @import "components/rule-table";
 @import "components/rule-input";
 @import "components/gfw-list-setting";
+@import "components/search-input";
+
+@import "table-panel";
 
 @include b("container") {
   width: $--sm;
   margin: 0 auto;
   padding: 60px 0;
-
-  @include e("helper") {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
 }

@@ -3,21 +3,33 @@ import { addReport } from "@/actions/report";
 
 const store = queryStore();
 
+function getCSSText(styleSheet: CSSStyleSheet): string {
+  try {
+    const rules = styleSheet.cssRules;
+    return Array.from(rules).reduce((prev, cur) => prev + getCSSRuleText(cur), "");
+  } catch {
+    return "";
+  }
+}
+
+function getCSSRuleText(rule: CSSRule): string {
+  return rule instanceof CSSImportRule ? getCSSText(rule.styleSheet) : rule.cssText;
+}
+
 function getCSSImageURLForDoc(doc: HTMLDocument): string[] {
   const imageURLArr: string[] = [];
   // styleSheets
   for (let sheetIndex = 0; sheetIndex < doc.styleSheets.length; sheetIndex++) {
     const sheet = doc.styleSheets[sheetIndex] as CSSStyleSheet;
-    try {
-      for (let ruleIndex = 0; ruleIndex < sheet.rules.length; ruleIndex++) {
-        const rule = sheet.rules[ruleIndex] as CSSStyleRule;
-        const [_, url] = rule.style.cssText.match(/url\(['"](.+)['"]\)/) || [];
-        if (!url || /^data/.test(url)) continue;
-        if (/(^background)|(image)|(content)|(cursor)/.test(rule.cssText)) {
-          imageURLArr.push(url);
-        }
-      }
-    } catch {}
+    const cssText = getCSSText(sheet);
+    const matchArr = cssText.match(/url\(['"](.+)['"]\)/gi) || [];
+    const sheetURLArr = matchArr
+      .map(match => {
+        const [_, url] = match.match(/url\(['"](.+)['"]\)/);
+        return url;
+      })
+      .filter(url => !!url && !/^data:/.test(url));
+    imageURLArr.push(...sheetURLArr);
   }
 
   // inline style
@@ -76,19 +88,24 @@ function startCSSReport() {
     let curIndex = 0;
     const sniffImage = new Image();
     sniffImage.src = cssImageURLArr[curIndex];
-    sniffImage.onerror = () => {
-      const url = cssImageURLArr[curIndex];
+    sniffImage.addEventListener("error", event => {
+      const $el = event.target as HTMLImageElement;
+      const url = $el.src;
       if (url) {
         const { hostname, href } = new URL(url, window.location.href);
         store.dispatch(addReport(hostname, href, "image"));
       }
       curIndex += 1;
-      sniffImage.src = cssImageURLArr[curIndex];
-    };
-    sniffImage.onload = () => {
+      if (curIndex < cssImageURLArr.length) {
+        sniffImage.src = cssImageURLArr[curIndex];
+      }
+    });
+    sniffImage.addEventListener("load", event => {
       curIndex += 1;
-      sniffImage.src = cssImageURLArr[curIndex];
-    };
+      if (curIndex < cssImageURLArr.length) {
+        sniffImage.src = cssImageURLArr[curIndex];
+      }
+    });
   }
 }
 

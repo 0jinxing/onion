@@ -7,7 +7,6 @@ import PageHeader from "@/containers/PageHeader";
 import ProxySetting from "@/containers/ProxySetting";
 import RuleTable from "@/containers/RuleTable";
 import ReportTable from "@/containers/ReportTable";
-import RuleInput from "@/containers/RuleInput";
 import GFWListSetting from "@/containers/GFWListSetting";
 import "./styles/app.scss";
 
@@ -26,16 +25,9 @@ const App: React.FunctionComponent = () => {
           <GFWListSetting />
           <Tabs>
             <TabPane tab="RULES" key="user-rule">
-              <div className="ghoo-container__helper">
-                <span>自定义的规则列表，列表中的优先级高于 GWFList</span>
-                <RuleInput />
-              </div>
               <RuleTable />
             </TabPane>
             <TabPane tab="REPORT" key="assets-report">
-              <div className="ghoo-container__helper">
-                <span>加载失败的网页资源，较大可能需要配置代理，也有可能是其他网络原因导致的</span>
-              </div>
               <ReportTable />
             </TabPane>
           </Tabs>

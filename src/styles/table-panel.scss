@@ -1,0 +1,11 @@
+@import "./common/mixins";
+
+@include b("table-panel") {
+  margin-bottom: 24px;
+  @include e("helper") {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+}
