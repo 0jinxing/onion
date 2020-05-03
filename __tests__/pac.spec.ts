@@ -1,7 +1,7 @@
 import createPac, { transformProxy } from "@/utils/create-pac";
 
 describe("pac", () => {
-  it("transform proxy", () => {
+  test("transform proxy", () => {
     expect(transformProxy("http://baidu.com").toLowerCase()).toEqual("proxy baidu.com;");
 
     expect(transformProxy("https://baidu.com").toLowerCase()).toEqual("https baidu.com;");
@@ -10,7 +10,7 @@ describe("pac", () => {
 
     expect(transformProxy("socks5://baidu.com").toLowerCase()).toEqual("socks5 baidu.com;");
   });
-  it("create pac", () => {
+  test("create pac", () => {
     const template = createPac("http://baidu.com", [], []);
     expect(template).toMatch(/proxy baidu.com/gi);
   });

@@ -12,8 +12,5 @@
       "name": "&",
       "path": "__tests__"
     }
-  ],
-  "settings": {
-    "terminal.integrated.cwd": "${workspaceFolder}"
-  }
+  ]
 }
