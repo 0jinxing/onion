@@ -29,16 +29,11 @@ export type State = {
 
 const storage = new ChromeLocalStorage();
 
-const emptyTransform = createTransform((inboundState: ProxyState) => inboundState, null, {
-  whitelist: ["proxy"]
-});
-
 const persistedReducer = persistReducer(
   {
     key: "_0jinxing",
     storage,
-    blacklist: ["change", "error", "loading"],
-    transforms: [emptyTransform]
+    blacklist: ["change", "error", "loading"]
   },
   rootReducer
 );
