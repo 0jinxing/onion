@@ -16,5 +16,6 @@
       "name": "config",
       "path": "config"
     }
-  ]
+  ],
+  "settings": {}
 }
