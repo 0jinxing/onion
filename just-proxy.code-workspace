@@ -17,5 +17,7 @@
       "path": "config"
     }
   ],
-  "settings": {}
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder}"
+  }
 }
