@@ -5,7 +5,7 @@ declare module "*.webp";
 declare module "*.svg";
 declare module "*.gif";
 
-declare module "*.pac" {
+declare module "*.txt" {
   const content: string;
   export default content;
 }
