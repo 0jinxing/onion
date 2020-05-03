@@ -24,7 +24,7 @@ const PageHeader = (props: PageHeaderProps) => {
       <div className="ghoo-page-header__github">
         <a
           className="issue"
-          href="https://github.com/0jinxing/just-proxy/issues"
+          href="https://github.com/0jinxing/onion/issues"
           target="__blank"
         >
           <QuestionOutlined />
@@ -32,7 +32,7 @@ const PageHeader = (props: PageHeaderProps) => {
         </a>
         <a
           className="star"
-          href="https://github.com/0jinxing/just-proxy"
+          href="https://github.com/0jinxing/onion"
           target="__blank"
         >
           <HeartOutlined />
@@ -40,7 +40,7 @@ const PageHeader = (props: PageHeaderProps) => {
         </a>
         <a
           className="wiki"
-          href="https://github.com/0jinxing/just-proxy/wiki"
+          href="https://github.com/0jinxing/onion/wiki"
           target="__blank"
         >
           <FileTextOutlined />
