@@ -16,6 +16,7 @@ function getCSSRuleText(rule: CSSRule): string {
   return rule instanceof CSSImportRule ? getCSSText(rule.styleSheet) : rule.cssText;
 }
 
+// @WARN BUG
 function getCSSImageURLForDoc(doc: HTMLDocument): string[] {
   const imageURLArr: string[] = [];
   // styleSheets
