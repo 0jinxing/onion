@@ -17,7 +17,6 @@ describe("<GFWListSetting />", () => {
   );
   test("render GFWListSetting component", () => {
     const html = wrapper.find(Input).props();
-    debugger;
     expect((wrapper.find(Input).getDOMNode() as HTMLInputElement).value).toEqual(
       "https://baidu.com"
     );

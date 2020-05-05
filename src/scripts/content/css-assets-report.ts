@@ -1,5 +1,6 @@
 import queryStore from "@/store/query-store";
 import { addReport } from "@/actions/report";
+import { previewImage } from "antd/lib/upload/utils";
 
 const store = queryStore();
 
@@ -16,39 +17,75 @@ function getCSSRuleText(rule: CSSRule): string {
   return rule instanceof CSSImportRule ? getCSSText(rule.styleSheet) : rule.cssText;
 }
 
-// @WARN BUG
+const IMAGE_STYLE_PROPS = [
+  "background",
+  "background-image",
+  "list-style",
+  "list-style-image",
+  "content",
+  "cursor",
+  "border",
+  "border-image",
+  "border-image-source",
+  "mask",
+  "mask-image",
+  "symbols"
+];
+
+function toCamelCase(str: string) {
+  return str.replace(/\-(\w)/, (_, m: string) => {
+    return m.toUpperCase();
+  });
+}
+
+function isImageProp(key: string) {
+  return IMAGE_STYLE_PROPS.includes(key) || IMAGE_STYLE_PROPS.map(toCamelCase).includes(key);
+}
+
+function getURLForPropValue(propValue: string) {
+  return (propValue.match(/url\(['"]?(.+?)['"]?\)/gi) || [])
+    .map(val => val.match(/url\(['"]?(.+?)['"]?\)/i)![1])
+    .filter(url => !url.startsWith("data:"));
+}
+
+function getImageURLForStyleSheet(sheet: CSSStyleSheet): string[] {
+  const cssText = getCSSText(sheet);
+  const matchArr = cssText.match(/([a-z\-]+?):[^:]*?url\(['"]?(.+?)['"]?\)[^;]*/gi) || [];
+  return matchArr
+    .map(match => {
+      const [key, val] = match.split(":");
+      if (!isImageProp(key)) return [];
+      return getURLForPropValue(val);
+    })
+    .reduce((pre, cur) => [...pre, ...cur], [])!;
+}
+
+function getImageURLForDocInlineStyle(doc: HTMLDocument): string[] {
+  const urlNodeList = doc.querySelectorAll<HTMLElement>("[style*=url]");
+  const result = [];
+  for (let nodeIndex = 0; nodeIndex < urlNodeList.length; nodeIndex++) {
+    const node = urlNodeList[nodeIndex];
+    const inlineURLArr = IMAGE_STYLE_PROPS.map(toCamelCase)
+      .map(prop => {
+        const value: string = Reflect.get(node.style, prop);
+        return value ? getURLForPropValue(value) : [];
+      })
+      .reduce((pre, cur) => [...pre, ...cur], []);
+    result.push(...inlineURLArr);
+  }
+  return result;
+}
+
 function getCSSImageURLForDoc(doc: HTMLDocument): string[] {
   const imageURLArr: string[] = [];
   // styleSheets
   for (let sheetIndex = 0; sheetIndex < doc.styleSheets.length; sheetIndex++) {
     const sheet = doc.styleSheets[sheetIndex] as CSSStyleSheet;
-    const cssText = getCSSText(sheet);
-    const matchArr = cssText.match(/url\(['"](.+)['"]\)/gi) || [];
-    const sheetURLArr = matchArr
-      .map(match => {
-        const [_, url] = match.match(/url\(['"](.+)['"]\)/);
-        return url;
-      })
-      .filter(url => !!url && !/^data:/.test(url));
-    imageURLArr.push(...sheetURLArr);
+    imageURLArr.push(...getImageURLForStyleSheet(sheet));
   }
 
   // inline style
-  const urlNodeList = doc.querySelectorAll<HTMLElement>("[style*=url]");
-  for (let nodeIndex = 0; nodeIndex < urlNodeList.length; nodeIndex++) {
-    const node = urlNodeList[nodeIndex];
-    const imageStyleProps = ["backgroundImage", "borderImage", "maskImage", "listStyleImage"];
-    const inlineURLArr = imageStyleProps
-      .map(prop => {
-        const value: string = Reflect.get(node.style, prop);
-        if (/url\(/.test(value)) {
-          const [_, url] = value.match(/url\(['"](.+)['"]\)/) || [];
-          if (url && !/^data/.test(url)) return url;
-        }
-      })
-      .filter(url => url) as string[];
-    imageURLArr.push(...inlineURLArr);
-  }
+  imageURLArr.push(...getImageURLForDocInlineStyle(doc));
 
   return imageURLArr;
 }
@@ -58,7 +95,12 @@ function getFontFacesMap(doc: HTMLDocument) {
   const styleSheets = doc.styleSheets;
   for (let sheetIndex = 0; sheetIndex < styleSheets.length; sheetIndex++) {
     const sheet = styleSheets[sheetIndex] as CSSStyleSheet;
-    const rules = sheet.rules;
+    let rules = null;
+    try {
+      rules = sheet.cssRules;
+    } catch {
+      continue;
+    }
     for (let ruleIndex = 0; ruleIndex < rules.length; ruleIndex++) {
       const rule = rules[ruleIndex];
       if (rule instanceof CSSFontFaceRule) {
