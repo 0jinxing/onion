@@ -1,6 +1,5 @@
 import queryStore from "@/store/query-store";
 import { addReport } from "@/actions/report";
-import { previewImage } from "antd/lib/upload/utils";
 
 const store = queryStore();
 
@@ -132,6 +131,8 @@ function startCSSReport() {
     const sniffImage = new Image();
     sniffImage.src = cssImageURLArr[curIndex];
     sniffImage.addEventListener("error", event => {
+      event.preventDefault();
+      event.stopPropagation();
       const $el = event.target as HTMLImageElement;
       const url = $el.src;
       if (url) {
@@ -142,6 +143,7 @@ function startCSSReport() {
       if (curIndex < cssImageURLArr.length) {
         sniffImage.src = cssImageURLArr[curIndex];
       }
+      return false;
     });
     sniffImage.addEventListener("load", event => {
       curIndex += 1;
