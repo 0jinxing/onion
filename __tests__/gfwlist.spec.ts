@@ -8,20 +8,16 @@ import queryFilter, { genMatcher } from "@/utils/query-filter";
 const gfwUrl = "/gfwlist.txt";
 
 describe("gfwlist", () => {
-  test("请求并解析 gfw list", async () => {
-    // mock
+  it("fetch and resolve gfwlist data", async () => {
     const mock = jest.spyOn(axios, "get");
     const data = fs.readFileSync(path.resolve("__tests__/__mocks__/assets/gfwlist.txt")).toString();
     mock.mockResolvedValue({ data });
-
     const gfwList = await fetchGFWList(gfwUrl);
     expect(gfwList).toBeInstanceOf(Array);
-
     mock.mockRestore();
   });
 
-  test("不正确的 gfw list 资源", async () => {
-    // mock
+  it("resolve invalid gfwlist data", async () => {
     const mock = jest.spyOn(axios, "get");
     mock.mockResolvedValue({ data: "invalid data ===" });
     let error;
@@ -37,13 +33,13 @@ describe("gfwlist", () => {
 
   const gfwList = ["google.com", "@@baidu.com"];
 
-  test("根据 gfw list 生成 matcher", () => {
+  it("according to gfwlist generate matcher", () => {
     const matcher = genMatcher(gfwList);
     const { hostname, href } = new URL("https://www.google.com");
     expect(matcher.matchesAny(href, hostname)).toBeInstanceOf(BlockingFilter);
   });
 
-  test("根据 gfw list 检索对应的 filter", () => {
+  it("according to gfwlist search filter", () => {
     const googleFilter = queryFilter("https://www.google.com", gfwList);
     expect(googleFilter).toBeInstanceOf(BlockingFilter);
 

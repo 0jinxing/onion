@@ -4,10 +4,11 @@ import { updateProxyUrl } from "@/actions/proxy";
 
 import { Dispatch } from "redux";
 import { State } from "@/store/query-store";
+import { createChange, saveChange } from "@/actions/change";
 
 const mapStateToProps = (state: State) => {
   return {
-    proxyUrl: state.proxy.proxyUrl,
+    proxyUrl: state.proxy.proxyUrl
   };
 };
 
@@ -16,6 +17,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     updateProxyUrl: (proxyUrl: string) => {
       dispatch(updateProxyUrl(proxyUrl));
     },
+
+    createChange: () => {
+      dispatch(createChange());
+    },
+
+    saveChange: () => {
+      dispatch(saveChange());
+    }
   };
 };
 

@@ -80,8 +80,8 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "\\.(png|jpe?g|s?css|sass)$": "<rootDir>/__tests__/__mocks__/mock-file.ts",
-    "pac-template\\.txt$": "<rootDir>/__tests__/__mocks__/mock-pac.ts",
+    "\\.(png|jpe?g|s?css|sass)$": "<rootDir>/__tests__/__mocks__/file.ts",
+    "pac-template\\.txt$": "<rootDir>/__tests__/__mocks__/pac.ts",
     "@/(.*)$": "<rootDir>/src/$1"
   },
 
@@ -127,7 +127,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ["<rootDir>/__tests__/setup.ts"],
+  // setupFiles: ["<rootDir>/__tests__/setup.ts"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],

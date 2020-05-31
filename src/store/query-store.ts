@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { createStore, applyMiddleware, Store } from "redux";
+import { createStore, applyMiddleware, Store, Middleware, Reducer, Action } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer, createTransform } from "redux-persist";
+import { persistStore, persistReducer } from "redux-persist";
 import logger from "redux-logger";
 
 import rootReducer from "@/reducers";
@@ -27,29 +27,33 @@ export type State = {
   error: ErrorState;
 };
 
-const storage = new ChromeLocalStorage();
-
-const persistedReducer = persistReducer(
-  {
-    key: "_0jinxing",
-    storage,
-    blacklist: ["change", "error", "loading"]
-  },
-  rootReducer
-);
-
-const sagaMiddleware = createSagaMiddleware();
-
 const queryStore = (isBackground = false): Store<State> => {
-  const store = createStore(
-    persistedReducer,
-    applyMiddleware.apply(
-      null,
-      isBackground
-        ? [logger, chromeProxyMiddleware, dispatchMiddleware, sagaMiddleware]
-        : [logger, dispatchMiddleware, sagaMiddleware]
-    )
+  const storage = new ChromeLocalStorage(true, isBackground, true);
+  const persistedReducer = persistReducer(
+    {
+      key: "onion",
+      storage,
+      blacklist: ["change", "error", "loading"],
+      debug: process.env.NODE_ENV === "development"
+    },
+    rootReducer
   );
+
+  const sagaMiddleware = createSagaMiddleware();
+
+  const isTest = process.env.NODE_ENV === "test";
+  const isDev = process.env.NODE_ENV === "development";
+
+  const middleware: Middleware[] = [sagaMiddleware];
+
+  if (!isTest) {
+    middleware.push(dispatchMiddleware);
+    isBackground && middleware.push(chromeProxyMiddleware);
+  }
+
+  isDev && middleware.push(logger);
+
+  const store = createStore(persistedReducer, applyMiddleware.apply(null, middleware));
 
   sagaMiddleware.run(rootSaga);
 

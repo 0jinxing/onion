@@ -9,6 +9,7 @@ const RadioGroup = Radio.Group;
 export type GFWListSettingProps = {
   gfwUrl: string;
   gfwMode: GFWMode;
+  gfwList: string[];
   loading: boolean;
   error?: Error;
   updateGFWMode: (mode: GFWMode) => void;
@@ -17,7 +18,16 @@ export type GFWListSettingProps = {
 };
 
 const GFWListSetting = (props: GFWListSettingProps) => {
-  const { gfwMode, gfwUrl, loading, error, updateGFWMode, updateGFWUrl, catchError } = props;
+  const {
+    gfwMode,
+    gfwUrl,
+    loading,
+    gfwList,
+    error,
+    updateGFWMode,
+    updateGFWUrl,
+    catchError
+  } = props;
 
   const [form] = Form.useForm();
 
@@ -34,21 +44,27 @@ const GFWListSetting = (props: GFWListSettingProps) => {
   }, [gfwMode, gfwUrl]);
 
   const loadingRef = useRef(loading);
+  const gfwListRef = useRef(gfwList);
   useEffect(() => {
-    if (loadingRef.current && !loading) {
-      if (!error)
-        message.success(
-          gfwUrl
-            ? `${gfwMode === GFWMode.BLOCKING ? "黑名单" : "白名单"} 更新成功`
-            : "保存成功，当前不使用 GFW List 资源"
-        );
-      else {
-        message.error(error.message);
-        catchError(error);
-      }
+    if (error) {
+      message.error(error.message);
+      catchError(error);
+    } else if (loadingRef.current && !loading) {
+      message.success(
+        gfwUrl
+          ? `${gfwMode === GFWMode.BLOCKING ? "黑名单" : "白名单"} 更新成功`
+          : "保存成功，当前不使用 GFW List 资源"
+      );
+    } else if (gfwListRef.current.length && !gfwList.length) {
+      message.success("保存成功，当前不使用 GFW List 资源");
     }
     loadingRef.current = loading;
-  }, [loading]);
+  }, [loading, gfwList, error]);
+
+  const msgUpdateGFWMode = (mode: GFWMode) => {
+    message.success(mode === GFWMode.BLOCKING ? "黑名单模式" : "白名单模式");
+    updateGFWMode(mode);
+  };
 
   return (
     <Form
@@ -64,7 +80,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
       <FormItem className="ghoo-gfw-list-setting__radio-group" name="gfwMode">
         <RadioGroup
           onChange={({ target: { value } }) => {
-            updateGFWMode(value);
+            msgUpdateGFWMode(value);
           }}
         >
           <Radio.Button value={GFWMode.BLOCKING}>黑名单</Radio.Button>

@@ -16,6 +16,7 @@ const mapStateToProps = (state: State) => {
   return {
     gfwUrl: state.proxy.gfwUrl,
     gfwMode: state.proxy.gfwMode,
+    gfwList: state.proxy.gfwList,
     loading: state.loading[genLoadingNamespace(ProxyTypeEnum.EMIT_FETCH_GFW_LIST)],
     error: state.error[genErrorNamespace(ProxyTypeEnum.EMIT_FETCH_GFW_LIST)]
   };

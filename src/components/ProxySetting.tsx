@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Input, Button, Form, message } from "antd";
 import { BulbTwoTone } from "@ant-design/icons";
 import validator from "validator";
@@ -19,10 +19,12 @@ function proxyUrlValidator(_: any, value: string) {
 export type ProxySettingProps = {
   proxyUrl: string;
   updateProxyUrl: (proxyUrl: string) => void;
+  createChange: () => void;
+  saveChange: () => void;
 };
 
 const ProxySetting = (props: ProxySettingProps) => {
-  const { proxyUrl, updateProxyUrl } = props;
+  const { proxyUrl, updateProxyUrl, createChange, saveChange } = props;
 
   const [form] = Form.useForm();
 
@@ -32,6 +34,12 @@ const ProxySetting = (props: ProxySettingProps) => {
     setFieldData([{ name: ["proxyUrl"], value: proxyUrl }]);
   }, [proxyUrl]);
 
+  const handleInput = (event: ChangeEvent) => {
+    const { value } = event.target as HTMLInputElement;
+    if (value === proxyUrl) saveChange();
+    else createChange();
+  };
+
   return (
     <Form
       layout="inline"
@@ -40,6 +48,7 @@ const ProxySetting = (props: ProxySettingProps) => {
       onFinish={values => {
         const proxyUrl: string = values.proxyUrl;
         updateProxyUrl(proxyUrl);
+        saveChange();
         message.success({
           content: proxyUrl ? "代理地址更新成功" : "代理地址更新成功，当前使用系统代理"
         });
@@ -53,6 +62,7 @@ const ProxySetting = (props: ProxySettingProps) => {
       >
         <Input
           prefix={<BulbTwoTone />}
+          onChange={handleInput}
           allowClear
           placeholder="输入你的代理地址"
           autoComplete="off"

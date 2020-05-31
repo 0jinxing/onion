@@ -112,7 +112,7 @@ export class Matcher {
     docDomain: string,
     thirdParty: boolean,
     sitekey: string
-  ): Filter;
+  ): Filter | null;
 }
 
 export class CombinedMatcher {
@@ -135,7 +135,7 @@ export class CombinedMatcher {
     thirdParty: boolean,
     sitekey: string
   ): Filter;
-  matchesAny(location: string, docDomain: string): null | Filter;
+  matchesAny(location: string, docDomain: string): Filter | null;
 
   static maxCacheEntries: number;
 }
