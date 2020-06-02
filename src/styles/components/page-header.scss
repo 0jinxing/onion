@@ -22,11 +22,17 @@
 
   @include e("tip") {
     align-self: flex-end;
-    position: absolute;
+    flex: 1;
+    margin-left: 14px;
     left: 14.5em;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.45);
     line-height: 2;
+  }
+
+  @include e("change") {
+    position: absolute;
+    transform: translate(4px, -20%);
   }
 
   @include e("github") {

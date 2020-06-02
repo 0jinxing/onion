@@ -10,7 +10,7 @@ export type ProxyState = {
 
 const defaultState: ProxyState = {
   proxyUrl: "",
-  gfwUrl: "https://repo.or.cz/gfwlist.git/blob_plain/HEAD:/gfwlist.txt",
+  gfwUrl: "https://pagure.io/gfwlist/raw/master/f/gfwlist.txt",
   gfwMode: GFWMode.BLOCKING,
   gfwList: [],
   updateAt: 0

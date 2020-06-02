@@ -49,9 +49,7 @@ const ProxySetting = (props: ProxySettingProps) => {
         const proxyUrl: string = values.proxyUrl;
         updateProxyUrl(proxyUrl);
         saveChange();
-        message.success({
-          content: proxyUrl ? "代理地址更新成功" : "代理地址更新成功，当前使用系统代理"
-        });
+        message.success("Updated");
       }}
       fields={fieldData}
     >

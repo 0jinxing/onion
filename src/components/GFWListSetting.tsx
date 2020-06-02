@@ -44,27 +44,16 @@ const GFWListSetting = (props: GFWListSettingProps) => {
   }, [gfwMode, gfwUrl]);
 
   const loadingRef = useRef(loading);
-  const gfwListRef = useRef(gfwList);
+
   useEffect(() => {
     if (error) {
       message.error(error.message);
       catchError(error);
     } else if (loadingRef.current && !loading) {
-      message.success(
-        gfwUrl
-          ? `${gfwMode === GFWMode.BLOCKING ? "黑名单" : "白名单"} 更新成功`
-          : "保存成功，当前不使用 GFW List 资源"
-      );
-    } else if (gfwListRef.current.length && !gfwList.length) {
-      message.success("保存成功，当前不使用 GFW List 资源");
+      message.success(`${gfwMode === GFWMode.BLOCKING ? "BLOCKING" : "WHITELIST"} Updated`);
     }
     loadingRef.current = loading;
-  }, [loading, gfwList, error]);
-
-  const msgUpdateGFWMode = (mode: GFWMode) => {
-    message.success(mode === GFWMode.BLOCKING ? "黑名单模式" : "白名单模式");
-    updateGFWMode(mode);
-  };
+  }, [loading]);
 
   return (
     <Form
@@ -74,13 +63,16 @@ const GFWListSetting = (props: GFWListSettingProps) => {
       form={form}
       onFinish={values => {
         const gfwUrl: string = values.gfwUrl;
+        if (!gfwUrl) {
+          message.success("Disable GFW");
+        }
         updateGFWUrl(gfwUrl);
       }}
     >
       <FormItem className="ghoo-gfw-list-setting__radio-group" name="gfwMode">
         <RadioGroup
           onChange={({ target: { value } }) => {
-            msgUpdateGFWMode(value);
+            updateGFWMode(value);
           }}
         >
           <Radio.Button value={GFWMode.BLOCKING}>黑名单</Radio.Button>

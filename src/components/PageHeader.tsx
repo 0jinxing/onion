@@ -13,8 +13,12 @@ const PageHeader = (props: PageHeaderProps) => {
   return (
     <header className="ghoo-page-header">
       <img src={whitelistIcon} className="ghoo-page-header__icon" />
-      <h1 className="ghoo-page-header__title">OPTIONS {change ? "*" : null}</h1>
-      {!proxyUrl && (
+      <h1 className="ghoo-page-header__title">
+        OPTIONS<span className="ghoo-page-header__change">{change ? "*" : null}</span>
+      </h1>
+      {proxyUrl ? (
+        <span className="ghoo-page-header__tip">{proxyUrl.toUpperCase()}</span>
+      ) : (
         <span className="ghoo-page-header__tip">当前未填写代理地址，使用系统代理</span>
       )}
       <div className="ghoo-page-header__github">
