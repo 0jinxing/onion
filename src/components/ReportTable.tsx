@@ -1,28 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import type { ReportState, Report } from "@/reducers/report";
+import type { Report } from "@/reducers/report";
 import dayjs from "dayjs";
 import SearchInput from "@/components/SearchInput";
 
 const { Column } = Table;
 
 export type ReportTableProps = {
-  reports: ReportState;
+  reports: Report[];
   deleteReport: (hostname: string) => void;
   addRule: (pattern: string) => void;
+};
+
+export type ReportTableData = {
+  hostname: string;
+  timestamp: number;
+  key: string;
 };
 
 function ReportTable(props: ReportTableProps) {
   const { reports, addRule, deleteReport } = props;
 
-  const tableData = reports
-    .reduce((arr: Report[], item) => {
-      if (arr.find(i => i.hostname === item.hostname)) {
-        return arr;
-      }
-      return [...arr, item];
-    }, [])
-    .map(i => ({ hostname: i.hostname, timestamp: i.timestamp, key: i.hostname }));
+  const [kw, setKw] = useState("");
+
+  const [tableData, setTableData] = useState<ReportTableData[]>([]);
+
+  useEffect(() => {
+    const data: ReportTableData[] = reports
+      .reduce((arr: Report[], item) => {
+        if (arr.find(i => i.hostname === item.hostname)) {
+          return arr;
+        }
+        return [...arr, item];
+      }, [])
+      .map(i => ({ hostname: i.hostname, timestamp: i.timestamp, key: i.hostname }))
+      .filter(i => i.hostname.includes(kw || ""));
+
+    setTableData(data);
+  }, [kw, reports]);
 
   const expandedRowRender = ({ hostname }: { hostname: string }) => {
     const expandedRow = reports
@@ -50,7 +65,12 @@ function ReportTable(props: ReportTableProps) {
     <div className="ghoo-table-panel">
       <div className="ghoo-table-panel__helper">
         <span>加载失败的资源列表</span>
-        <SearchInput />
+        <SearchInput
+          onChange={ev => {
+            debugger;
+            setKw(ev.target.value);
+          }}
+        />
       </div>
       <Table
         className="ghoo-table-panel__table"

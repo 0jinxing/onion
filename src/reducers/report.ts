@@ -7,11 +7,9 @@ export type Report = {
   timestamp: number;
 };
 
-export type ReportState = Array<Report>;
-
 const { ADD_REPORT, DELETE_REPORT } = ReportTypeEnum;
 
-const ReportReducer = (state: ReportState = [], action: ReportAction) => {
+const ReportReducer = (state: Report[] = [], action: ReportAction) => {
   const { type, payload } = action;
   const _state = state.slice();
 

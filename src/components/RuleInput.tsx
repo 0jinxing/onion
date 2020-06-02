@@ -1,8 +1,6 @@
 import React from "react";
 import { Input, Button, Form } from "antd";
-import queryFilter from "@/utils/query-filter";
 import validator from "validator";
-import { WhitelistFilter, BlockingFilter } from "@/lib/adblockplus";
 
 const FormItem = Form.Item;
 
@@ -30,28 +28,48 @@ const RuleInput = (props: RuleInputProps) => {
 
   const [form] = Form.useForm();
 
+  const getPatternPair = async () => {
+    const { url } = (await form.validateFields()) as { url: string };
+    if (!url) throw new Error("Invalid url");
+    const protocolUrl = /https?:\/\//.test(url) ? url : `http://${url}`;
+    const { hostname } = new URL(protocolUrl);
+    return [hostname, rules.find(r => r.replace(/^@@/, "") === hostname)];
+  };
+
+  const completeSubmit = async () => {
+    await form.setFieldsValue({ url: "" });
+  };
+
   const handleWhitelist = async () => {
     try {
-      const { url } = (await form.validateFields()) as { url: string };
-      if (!url) return;
-      const protocolUrl = /:\/\//.test(url) ? url : `http://${url}`;
-      const { hostname } = new URL(protocolUrl);
-      const filter = queryFilter(protocolUrl, rules);
-      if (filter instanceof WhitelistFilter) {
-        return;
-      } else if (filter instanceof BlockingFilter) {
-        deleteRule(filter.text);
+      const [hostname, pattern] = (await getPatternPair()) as [string, string?];
+      if (!pattern) {
         addRule(`@@${hostname}`);
-      } else if (!filter) {
+      } else if (!pattern.startsWith("@@")) {
+        deleteRule(hostname);
         addRule(`@@${hostname}`);
       }
+      await completeSubmit();
+    } catch {}
+  };
+
+  const handleBlacklist = async () => {
+    try {
+      const [hostname, pattern] = (await getPatternPair()) as [string, string?];
+      if (!pattern) {
+        addRule(`${hostname}`);
+      } else if (pattern.startsWith("@@")) {
+        deleteRule(`@@${hostname}`);
+        addRule(hostname);
+      }
+      await completeSubmit();
     } catch {}
   };
 
   return (
     <Form className="ghoo-rule-input" layout="inline" form={form}>
       <FormItem name="url" className="ghoo-rule-input__input" rules={[{ validator: urlValidator }]}>
-        <Input autoComplete="off" placeholder="输入需要添加的 URL 到" />
+        <Input allowClear autoComplete="off" placeholder="输入需要添加的 URL 到" />
       </FormItem>
       <FormItem className="ghoo-rule-input__whitelist">
         <Button type="dashed" onClick={handleWhitelist}>
@@ -59,7 +77,7 @@ const RuleInput = (props: RuleInputProps) => {
         </Button>
       </FormItem>
       <FormItem className="ghoo-rule-input__blocking">
-        <Button>黑名单</Button>
+        <Button onClick={handleBlacklist}>黑名单</Button>
       </FormItem>
     </Form>
   );

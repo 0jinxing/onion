@@ -91,7 +91,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
         className="ghoo-gfw-list-setting__input"
         name="gfwUrl"
         validateTrigger="onBlur"
-        rules={[{ type: "url", message: "请输入正确的 URL" }]}
+        rules={[{ type: "url", message: "请输入正确的资源 URL" }]}
       >
         <Input prefix={<FireTwoTone />} autoComplete="off" allowClear placeholder="输入资源 URL" />
       </FormItem>

@@ -1,13 +1,6 @@
 @import "../partial/mixins";
 
 @include b("search-input") {
-  .ant-input-affix-wrapper {
-    padding-right: 11px + 20px;
-  }
-  .ant-input-suffix {
-    position: absolute;
-    right: 11px;
-  }
   .ant-row:last-child {
     margin-right: 0;
   }

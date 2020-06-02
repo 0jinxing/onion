@@ -8,7 +8,7 @@ import rootReducer from "@/reducers";
 import rootSaga from "@/sagas";
 
 import { ProxyState } from "@/reducers/proxy";
-import { ReportState } from "@/reducers/report";
+import { Report } from "@/reducers/report";
 import { RuleState } from "@/reducers/rule";
 
 import { emitFetchGFWList } from "@/actions/proxy";
@@ -22,7 +22,7 @@ export type State = {
   change: boolean;
   proxy: ProxyState;
   rule: RuleState;
-  report: ReportState;
+  report: Report[];
   loading: LoadingState;
   error: ErrorState;
 };
