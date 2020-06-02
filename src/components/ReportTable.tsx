@@ -91,6 +91,7 @@ function ReportTable(props: ReportTableProps) {
         <Column
           title="ACTION"
           align="center"
+          width="15em"
           render={(_, record: Report) => {
             return (
               <span>

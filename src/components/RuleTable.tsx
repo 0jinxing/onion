@@ -34,6 +34,7 @@ const RuleTable = (props: RuleTableProps) => {
         <Column
           width="10em"
           title="ACTION"
+          align="center"
           render={(_, record: Rule) => (
             <span>
               <a onClick={() => deleteRule(record.pattern)}>Delete</a>
