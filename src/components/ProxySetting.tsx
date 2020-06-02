@@ -45,13 +45,14 @@ const ProxySetting = (props: ProxySettingProps) => {
       layout="inline"
       className="ghoo-proxy-setting"
       form={form}
+      autoComplete="off"
+      fields={fieldData}
       onFinish={values => {
         const proxyUrl: string = values.proxyUrl;
         updateProxyUrl(proxyUrl);
         saveChange();
         message.success("Updated");
       }}
-      fields={fieldData}
     >
       <FormItem
         name="proxyUrl"
@@ -63,7 +64,6 @@ const ProxySetting = (props: ProxySettingProps) => {
           onChange={handleInput}
           allowClear
           placeholder="输入你的代理地址"
-          autoComplete="off"
         />
       </FormItem>
       <FormItem className="ghoo-proxy-setting__button">

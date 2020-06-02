@@ -61,6 +61,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
       layout="inline"
       fields={fieldData}
       form={form}
+      autoComplete="off"
       onFinish={values => {
         const gfwUrl: string = values.gfwUrl;
         if (!gfwUrl) {
@@ -85,7 +86,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
         validateTrigger="onBlur"
         rules={[{ type: "url", message: "请输入正确的资源 URL" }]}
       >
-        <Input prefix={<FireTwoTone />} autoComplete="off" allowClear placeholder="输入资源 URL" />
+        <Input prefix={<FireTwoTone />} allowClear placeholder="输入资源 URL" />
       </FormItem>
       <FormItem className="ghoo-gfw-list-setting__button">
         <Button type="primary" ghost htmlType="submit" loading={loading}>

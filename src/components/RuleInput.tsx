@@ -67,9 +67,9 @@ const RuleInput = (props: RuleInputProps) => {
   };
 
   return (
-    <Form className="ghoo-rule-input" layout="inline" form={form}>
+    <Form className="ghoo-rule-input" layout="inline" autoComplete="off" form={form}>
       <FormItem name="url" className="ghoo-rule-input__input" rules={[{ validator: urlValidator }]}>
-        <Input allowClear autoComplete="off" placeholder="输入需要添加的 URL 到" />
+        <Input allowClear placeholder="输入需要添加的 URL 到" />
       </FormItem>
       <FormItem className="ghoo-rule-input__whitelist">
         <Button type="dashed" onClick={handleWhitelist}>

@@ -16,7 +16,7 @@ const SearchInput = (props: SearchInputProps) => {
   const { onChange, placeholder } = props;
   return (
     <div className="ghoo-search-input">
-      <Input allowClear placeholder={placeholder} onChange={onChange} autoComplete="off" />
+      <Input allowClear placeholder={placeholder} onChange={onChange} />
     </div>
   );
 };
