@@ -7,7 +7,7 @@
 <h1 align="center">Onion</h1>
 
 <div align="center">
-  <p>一个简单好用带 Chrome 代理工具</p>
+  <p>一个简单好用的 Chrome 代理工具</p>
   <a href="https://github.com/0jinxing/just-proxy/issues">
     <img src="https://img.shields.io/github/issues/0jinxing/just-proxy.svg" alt="issues" />
   </a>
