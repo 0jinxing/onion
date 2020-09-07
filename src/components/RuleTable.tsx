@@ -24,7 +24,7 @@ const RuleTable = (props: RuleTableProps) => {
       <Table bordered dataSource={tableData} className="ghoo-table-panel__table" size="small">
         <Column dataIndex="pattern" title="PATTERN" />
         <Column
-          width="15em"
+          width="20em"
           dataIndex="timestamp"
           title="TIMESTAMP"
           render={(_, record: Rule) => {

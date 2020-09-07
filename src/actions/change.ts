@@ -1,20 +1,18 @@
 import { Action } from "redux";
 
 export enum ChangeTypeEnum {
-  CREATE_CHANGE = "CREATE_CHANGE",
-  SAVE_CHANGE = "SAVE_CHANGE",
+  CREATE_CHANGE = "change/create_change",
+  SAVE_CHANGE = "change/save_change",
 }
-
-const { CREATE_CHANGE, SAVE_CHANGE } = ChangeTypeEnum;
 
 export interface ChangeAction extends Action {
   type: ChangeTypeEnum;
 }
 
 export function createChange(): ChangeAction {
-  return { type: CREATE_CHANGE };
+  return { type: ChangeTypeEnum.CREATE_CHANGE };
 }
 
 export function saveChange(): ChangeAction {
-  return { type: SAVE_CHANGE };
+  return { type: ChangeTypeEnum.SAVE_CHANGE };
 }

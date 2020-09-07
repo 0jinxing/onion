@@ -1,11 +1,11 @@
 import { Action, ActionCreator } from "redux";
 
 export enum ProxyTypeEnum {
-  UPDATE_PROXY_URL = "UPDATE_PROXY_URL",
-  UPDATE_GFW_URL = "UPDATE_GFW_URL",
-  UPDATE_GFW_MODE = "UPDATE_GFW_MODE",
-  EMIT_FETCH_GFW_LIST = "EMIT_FETCH_GFW_LIST",
-  UPDATE_GFW_LIST = "UPDATE_GFW_LIST"
+  UPDATE_PROXY_URL = "proxy/update_proxy_url",
+  UPDATE_GFW_URL = "proxy/update_gfw_url",
+  UPDATE_GFW_MODE = "proxy/update_gfw_mode",
+  EMIT_FETCH_GFW_LIST = "proxy/emit_fetch_gfw_list",
+  UPDATE_GFW_LIST = "proxy/update_gfw_list"
 }
 
 export enum GFWMode {

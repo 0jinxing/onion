@@ -2,7 +2,6 @@ import { Action, Middleware } from "redux";
 
 import { RuleTypeEnum } from "@/actions/rule";
 import { ProxyTypeEnum } from "@/actions/proxy";
-import { ReportTypeEnum } from "@/actions/report";
 
 // 需要同步效果的 action
 const passingActions = [
@@ -11,7 +10,6 @@ const passingActions = [
   ProxyTypeEnum.UPDATE_GFW_MODE,
   ProxyTypeEnum.UPDATE_PROXY_URL,
   ProxyTypeEnum.UPDATE_GFW_LIST,
-  ReportTypeEnum.ADD_REPORT,
 ];
 
 // 接受和分发 action 的中间件

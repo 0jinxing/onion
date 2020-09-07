@@ -1,8 +1,8 @@
 import { Action } from "redux";
 
 export enum LoadingTypeEnum {
-  START_LOADING = "START_LOADING",
-  END_LOADING = "END_LOADING"
+  START_LOADING = "loading/start_loading",
+  END_LOADING = "loading/end_loading"
 }
 
 const { START_LOADING, END_LOADING } = LoadingTypeEnum;

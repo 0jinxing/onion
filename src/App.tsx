@@ -6,7 +6,6 @@ import queryStore from "@/store/query-store";
 import PageHeader from "@/containers/PageHeader";
 import ProxySetting from "@/containers/ProxySetting";
 import RuleTable from "@/containers/RuleTable";
-import ReportTable from "@/containers/ReportTable";
 import GFWListSetting from "@/containers/GFWListSetting";
 import "./styles/app.scss";
 
@@ -26,9 +25,6 @@ const App: React.FunctionComponent = () => {
           <Tabs>
             <TabPane tab="RULES" key="user-rule">
               <RuleTable />
-            </TabPane>
-            <TabPane tab="REPORT" key="assets-report">
-              <ReportTable />
             </TabPane>
           </Tabs>
         </main>

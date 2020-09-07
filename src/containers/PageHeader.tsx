@@ -7,6 +7,7 @@ const mapStateToProps = (state: State) => {
   return {
     change: state.change,
     proxyUrl: state.proxy.proxyUrl,
+    gfwMode: state.proxy.gfwMode
   };
 };
 

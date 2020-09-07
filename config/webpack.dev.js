@@ -1,16 +1,16 @@
+const path = require("path");
 const webpackMerge = require("webpack-merge");
-const WebpackExtensionPlugin = require("webpack-extension-reloader");
-
 const baseConfig = require("./webpack.base");
 
+const WriteFilePlugin = require("write-file-webpack-plugin");
+
 module.exports = webpackMerge(baseConfig, {
-  plugins: [
-    new WebpackExtensionPlugin({
-      entries: {
-        contentScript: "content",
-        background: "background",
-        extensionPage: ["options"],
-      },
-    }),
-  ],
+  devServer: {
+    contentBase: path.resolve("ext", "dev"),
+    hot: true,
+    disableHostCheck: true,
+    port: 8000,
+    headers: { "Access-Control-Allow-Headers": "*" }
+  },
+  plugins: [new WriteFilePlugin()]
 });

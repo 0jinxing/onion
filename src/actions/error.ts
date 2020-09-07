@@ -1,8 +1,8 @@
 import { Action } from "redux";
 
 export enum ErrorTypeEnum {
-  THROW_ERROR = "THROW_ERROR",
-  CATCH_ERROR = "CATCH_ERROR"
+  THROW_ERROR = "error/throw_error",
+  CATCH_ERROR = "error/catch_error"
 }
 
 interface ThrowErrorAction extends Action {

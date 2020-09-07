@@ -23,10 +23,9 @@ const rawLoader = [{ loader: "raw-loader" }];
 
 module.exports = {
   mode,
-  devtool: "inline-cheap-source-map",
+  devtool: "source-map",
 
   entry: {
-    content: path.resolve("src/scripts", "content/index.ts"),
     background: path.resolve("src/scripts", "background/index.ts"),
     options: path.resolve("src", "index.tsx")
   },
