@@ -9,25 +9,29 @@ jobs:
   upload-addon:
     runs-on: ubuntu-18.04
     steps:
-      - name: checkout
+      - name: checkout repos
         uses: actions/checkout@v1
 
-      - name: setup
+      - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: "10.x"
+
+      - name: install dependencies
         run: npm install
 
-      - name: test
+      - name: unit test
         run: npm run test
       
       - name: build
         run: npm run build
+
+      - name: zip package
         uses: montudor/action-zip@v0.1.0
         with:
           args: zip -qq -r ./prod.zip ./dist/prod
 
-      - name: upload
+      - name: upload addon
         uses: trmcnvn/chrome-addon@v1
         with:
           extension: ooinoebmmhbmhkocojcoahbkefikddch
