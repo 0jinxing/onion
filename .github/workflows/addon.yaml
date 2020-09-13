@@ -6,24 +6,37 @@ on:
       - master
 
 jobs:
-  upload:
+  checkout:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
+      
+  setup:
+    needs: checkout
+    steps:
       - uses: actions/setup-node@v1
         with:
           node-version: "10.x"
-      - run: |
-          yarn && yarn test && yarn build
-      
+      - run: npm install
+
+  test:
+    needs: setup
+    steps:
+      - run: npm run test
+
+  build:
+    needs: setup
+    steps:
+      - run: npm run build
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./prod.zip ./ext/prod
+          args: zip -qq -r ./prod.zip ./dist/prod
 
+  upload:
+    needs: [test, build]
+    steps: 
       - uses: trmcnvn/chrome-addon@v1
         with:
-          # extension is only necessary when updating an existing addon,
-          # omitting it will create a new addon
           extension: ooinoebmmhbmhkocojcoahbkefikddch
           zip: prod.zip
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
