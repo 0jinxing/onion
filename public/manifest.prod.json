@@ -3,7 +3,7 @@
   "name": "Onion",
   "description": "A simple proxy tool",
   "version": "1.0.3",
-  "permissions": ["proxy", "storage", "tabs"],
+  "permissions": ["proxy", "storage", "tabs",  "http://*/*", "https://*/*"],
   "browser_action": {
     "default_icon": "icon.png"
   },
