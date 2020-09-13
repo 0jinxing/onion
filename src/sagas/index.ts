@@ -9,7 +9,7 @@ function* watchFetchGFWList() {
 }
 
 function* rootSaga() {
-  yield all([watchFetchGFWList]);
+  yield all([fork(watchFetchGFWList)]);
 }
 
 export default rootSaga;
