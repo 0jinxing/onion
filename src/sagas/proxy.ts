@@ -8,8 +8,8 @@ export function* updateGFWListSaga(action: ProxyAction) {
   const gfwUrl = yield select((state: State) => state.proxy.gfwUrl);
   if (gfwUrl) {
     yield asyncSaga(function* () {
-      const _gfwList: string[] = yield call(fetchGFWList, gfwUrl);
-      yield put(updateGFWList(_gfwList));
+      const gfwList: string[] = yield call(fetchGFWList, gfwUrl);
+      yield put(updateGFWList(gfwList));
     })(action);
   } else {
     yield put(updateGFWList([]));

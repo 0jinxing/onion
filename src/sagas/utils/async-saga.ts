@@ -10,8 +10,8 @@ export default function asyncSaga<Fn extends (...args: any[]) => any>(
     try {
       yield put(startLoading(action.type));
       yield saga(action);
-    } catch (e) {
-      yield put(throwError(action.type, e));
+    } catch (err) {
+      yield put(throwError(action.type, err));
     } finally {
       yield put(endLoading(action.type));
     }
