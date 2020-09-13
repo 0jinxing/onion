@@ -32,28 +32,26 @@ const queryStore = (isBackground = false): Store<RootState> => {
       key: "onion",
       storage,
       blacklist: ["change", "error", "loading"],
-      debug: process.env.NODE_ENV === "development",
-      
+      debug: process.env.NODE_ENV === "development"
     },
     rootReducer
   );
 
-  const sagaMiddleware = createSagaMiddleware();
-
   const isDev = process.env.NODE_ENV === "development" || true;
+
+  const sagaMiddleware = createSagaMiddleware();
 
   const middleware: Middleware[] = [sagaMiddleware];
 
   middleware.push(dispatchMiddleware);
 
-  if (isBackground) {
-    middleware.push(chromeProxyMiddleware);
-  }
-
   if (isDev) {
     middleware.push(logger);
   }
 
+  if (isBackground) {
+    middleware.push(chromeProxyMiddleware);
+  }
   const store = createStore(persistedReducer, applyMiddleware.apply(null, middleware));
 
   sagaMiddleware.run(rootSaga);
@@ -63,6 +61,7 @@ const queryStore = (isBackground = false): Store<RootState> => {
     const state: RootState = store.getState();
     // 更新 GFW List，频率 1 周
     if (
+      isBackground &&
       state.proxy.gfwUrl &&
       (!state.proxy.gfwList.length || +dayjs(state.proxy.updateAt).add(1, "week") < Date.now())
     ) {

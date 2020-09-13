@@ -11,7 +11,7 @@ const store = queryStore(true);
 
 async function handleTabsActivated() {
   const tabs: chrome.tabs.Tab[] = await new Promise(resolve => {
-    chrome.tabs.query({ active: true, currentWindow: true }, resolve);
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, resolve);
   });
   if (!tabs.length) return;
 
