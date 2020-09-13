@@ -10,6 +10,8 @@ const passingActions = [
   
   ProxyTypeEnum.UPDATE_GFW_MODE,
   ProxyTypeEnum.UPDATE_PROXY_URL,
+  
+  ProxyTypeEnum.UPDATE_GFW_URL,
   ProxyTypeEnum.UPDATE_GFW_LIST,
 ];
 

@@ -11,7 +11,7 @@ export type ProxyState = {
 const defaultState: ProxyState = {
   proxyUrl: "",
   gfwUrl: "https://blog-ghoo-cc.oss-cn-shenzhen.aliyuncs.com/gfwlist.txt",
-  gfwMode: GFWMode.BLOCKING,
+  gfwMode: GFWMode.BLOCKLIST,
   gfwList: [],
   updateAt: 0
 };

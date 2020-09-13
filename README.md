@@ -25,11 +25,16 @@
 npm install
 npm run build
 ```
+
 ## Installation
 
 <a href="https://chrome.google.com/webstore/detail/onion/ooinoebmmhbmhkocojcoahbkefikddch">
   Download from web store
 </a>
+
+## Resources
+
+GFW List: [https://blog-ghoo-cc.oss-cn-shenzhen.aliyuncs.com/gfwlist.txt](https://blog-ghoo-cc.oss-cn-shenzhen.aliyuncs.com/gfwlist.txt)
 
 ## License
 

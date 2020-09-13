@@ -17,7 +17,7 @@ import chromeProxyMiddleware from "./chrome-proxy-middleware";
 import dispatchMiddleware from "./dispatch-middleware";
 import { ErrorState } from "@/reducers/error";
 
-export type State = {
+export type RootState = {
   change: boolean;
   proxy: ProxyState;
   rule: RuleState;
@@ -25,21 +25,22 @@ export type State = {
   error: ErrorState;
 };
 
-const queryStore = (isBackground = false): Store<State> => {
+const queryStore = (isBackground = false): Store<RootState> => {
   const storage = new ChromeLocalStorage(true, isBackground, true);
   const persistedReducer = persistReducer(
     {
       key: "onion",
       storage,
       blacklist: ["change", "error", "loading"],
-      debug: process.env.NODE_ENV === "development"
+      debug: process.env.NODE_ENV === "development",
+      
     },
     rootReducer
   );
 
   const sagaMiddleware = createSagaMiddleware();
 
-  const isDev = process.env.NODE_ENV === "development";
+  const isDev = process.env.NODE_ENV === "development" || true;
 
   const middleware: Middleware[] = [sagaMiddleware];
 
@@ -59,8 +60,7 @@ const queryStore = (isBackground = false): Store<State> => {
 
   persistStore(store, null, () => {
     window.postMessage({ type: "APP_RENDER" }, location.origin);
-
-    const state: State = store.getState();
+    const state: RootState = store.getState();
     // 更新 GFW List，频率 1 周
     if (
       state.proxy.gfwUrl &&

@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { State } from "@/store/query-store";
+import { RootState } from "@/store/query-store";
 import { deleteRule } from "@/actions/rule";
 import RuleTable from "@/components/RuleTable";
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: RootState) => {
   return { rules: state.rule };
 };
 

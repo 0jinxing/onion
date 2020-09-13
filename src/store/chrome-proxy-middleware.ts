@@ -1,7 +1,7 @@
 import { Middleware } from "redux";
 import { GFWMode } from "@/actions/proxy";
 
-import { State } from "./query-store";
+import { RootState } from "./query-store";
 
 import createPAC from "@/utils/create-pac";
 import queryFilter from "@/utils/query-filter";
@@ -13,9 +13,9 @@ const isHttpDocument = /https?/.test(document.location.protocol);
 
 const chromeProxyMiddleware: Middleware = (store) => {
   return (next) => (action) => {
-    const state: State = store.getState();
+    const state: RootState = store.getState();
     next(action);
-    const nextState: State = store.getState();
+    const nextState: RootState = store.getState();
 
     let hasProxyChange = false;
 
@@ -54,7 +54,7 @@ const chromeProxyMiddleware: Middleware = (store) => {
       nextState.proxy.proxyUrl,
       nextState.proxy.gfwList,
       nextPatterns,
-      state.proxy.gfwMode === GFWMode.BLOCKING
+      state.proxy.gfwMode === GFWMode.BLOCKLIST
     );
 
     const proxyConfig = {

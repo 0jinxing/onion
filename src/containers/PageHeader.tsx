@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import PageHeader from "@/components/PageHeader";
 
-import { State } from "@/store/query-store";
+import { RootState } from "@/store/query-store";
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: RootState) => {
   return {
     change: state.change,
     proxyUrl: state.proxy.proxyUrl,

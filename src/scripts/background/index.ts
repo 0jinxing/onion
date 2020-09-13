@@ -35,7 +35,7 @@ async function handleTabsActivated() {
     chrome.browserAction.setIcon({ path: whitelistIcon });
   } else {
     chrome.browserAction.setIcon({
-      path: state.proxy.gfwMode === GFWMode.BLOCKING ? whitelistIcon : blockingIcon
+      path: state.proxy.gfwMode === GFWMode.BLOCKLIST ? whitelistIcon : blockingIcon
     });
   }
 }
@@ -80,7 +80,7 @@ async function handleBrowserActionClicked() {
     else if (filter instanceof WhitelistFilter) store.dispatch(addRule(hostname));
     // 即不存在 用户规则 中，又不存在于 gfwlist 中
     else if (!filter) {
-      if (state.proxy.gfwMode === GFWMode.BLOCKING) store.dispatch(addRule(hostname));
+      if (state.proxy.gfwMode === GFWMode.BLOCKLIST) store.dispatch(addRule(hostname));
       else store.dispatch(addRule("@@" + hostname));
     }
   }

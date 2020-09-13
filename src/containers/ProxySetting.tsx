@@ -3,10 +3,10 @@ import ProxySetting from "@/components/ProxySetting";
 import { updateProxyUrl } from "@/actions/proxy";
 
 import { Dispatch } from "redux";
-import { State } from "@/store/query-store";
+import { RootState } from "@/store/query-store";
 import { createChange, saveChange } from "@/actions/change";
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: RootState) => {
   return {
     proxyUrl: state.proxy.proxyUrl
   };

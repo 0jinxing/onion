@@ -3,6 +3,7 @@ import { QuestionOutlined, HeartOutlined, FileTextOutlined } from "@ant-design/i
 
 import whitelistIcon from "@/assets/whitelist.png";
 import { GFWMode } from "@/actions/proxy";
+import { Tag } from "antd";
 
 export type PageHeaderProps = {
   change: boolean;
@@ -20,7 +21,9 @@ const PageHeader = (props: PageHeaderProps) => {
       </h1>
       {proxyUrl ? (
         <span className="ghoo-page-header__tip">
-          {gfwMode.toUpperCase()} {proxyUrl.toUpperCase()}
+          <Tag color={gfwMode === GFWMode.WHITELIST ? "geekblue" : "#3b5999"}>
+            {`${gfwMode}\t${proxyUrl}`.toUpperCase()}
+          </Tag>
         </span>
       ) : (
         <span className="ghoo-page-header__tip">当前未填写代理地址，使用系统代理</span>

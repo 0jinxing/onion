@@ -10,9 +10,9 @@ import { genErrorNamespace, catchError } from "@/actions/error";
 import { genLoadingNamespace } from "@/actions/loading";
 import GFWListSetting from "@/components/GFWListSetting";
 import { Dispatch } from "redux";
-import { State } from "@/store/query-store";
+import { RootState } from "@/store/query-store";
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: RootState) => {
   return {
     gfwUrl: state.proxy.gfwUrl,
     gfwMode: state.proxy.gfwMode,

@@ -50,7 +50,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
       message.error(error.message);
       catchError(error);
     } else if (loadingRef.current && !loading) {
-      message.success(`${gfwMode === GFWMode.BLOCKING ? "BLOCKING" : "WHITELIST"} Updated`);
+      message.success(`${gfwMode === GFWMode.BLOCKLIST ? "BLOCKING" : "WHITELIST"} Updated`);
     }
     loadingRef.current = loading;
   }, [loading]);
@@ -76,7 +76,7 @@ const GFWListSetting = (props: GFWListSettingProps) => {
             updateGFWMode(value);
           }}
         >
-          <Radio.Button value={GFWMode.BLOCKING}>黑名单</Radio.Button>
+          <Radio.Button value={GFWMode.BLOCKLIST}>黑名单</Radio.Button>
           <Radio.Button value={GFWMode.WHITELIST}>白名单</Radio.Button>
         </RadioGroup>
       </FormItem>
