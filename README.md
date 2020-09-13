@@ -8,21 +8,29 @@
 
 <div align="center">
   <p>一个简单好用的 Chrome 代理工具</p>
-  <a href="https://github.com/0jinxing/just-proxy/issues">
-    <img src="https://img.shields.io/github/issues/0jinxing/just-proxy.svg" alt="issues" />
+  <a href="https://github.com/0jinxing/onion/issues">
+    <img src="https://img.shields.io/github/issues/0jinxing/onion.svg" alt="issues" />
   </a>
-  <a href="https://github.com/0jinxing/just-proxy/network">
-    <img src="https://img.shields.io/github/forks/0jinxing/just-proxy.svg" alt="forks" />
+  <a href="https://github.com/0jinxing/onion/network">
+    <img src="https://img.shields.io/github/forks/0jinxing/onion.svg" alt="forks" />
   </a>
-  <a href="https://github.com/0jinxing/just-proxy/stargazers">
-    <img src="https://img.shields.io/github/stars/0jinxing/just-proxy.svg" alt="stars" />
+  <a href="https://github.com/0jinxing/onion/stargazers">
+    <img src="https://img.shields.io/github/stars/0jinxing/onion.svg" alt="stars" />
   </a>
 </div>
 
-## Usage
+## Build
 
-TODO
+```bash
+npm install
+npm run build
+```
+## Installation
+
+<a href="https://chrome.google.com/webstore/detail/onion/ooinoebmmhbmhkocojcoahbkefikddch">
+  Download from web store
+</a>
 
 ## License
 
-The code is available under the [MIT license](https://github.com/0jinxing/just-proxy/blob/master/LICENSE)
+The code is available under the [996.icu license](https://github.com/0jinxing/onion/blob/master/LICENSE)

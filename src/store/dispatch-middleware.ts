@@ -7,6 +7,7 @@ import { ProxyTypeEnum } from "@/actions/proxy";
 const passingActions = [
   RuleTypeEnum.ADD_RULE,
   RuleTypeEnum.DELETE_RULE,
+  
   ProxyTypeEnum.UPDATE_GFW_MODE,
   ProxyTypeEnum.UPDATE_PROXY_URL,
   ProxyTypeEnum.UPDATE_GFW_LIST,

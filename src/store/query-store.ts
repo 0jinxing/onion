@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { createStore, applyMiddleware, Store, Middleware, Reducer, Action } from "redux";
+import { createStore, applyMiddleware, Store, Middleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer } from "redux-persist";
 import logger from "redux-logger";
@@ -39,17 +39,19 @@ const queryStore = (isBackground = false): Store<State> => {
 
   const sagaMiddleware = createSagaMiddleware();
 
-  const isTest = process.env.NODE_ENV === "test";
   const isDev = process.env.NODE_ENV === "development";
 
   const middleware: Middleware[] = [sagaMiddleware];
 
-  if (!isTest) {
-    middleware.push(dispatchMiddleware);
-    isBackground && middleware.push(chromeProxyMiddleware);
+  middleware.push(dispatchMiddleware);
+
+  if (isBackground) {
+    middleware.push(chromeProxyMiddleware);
   }
 
-  isDev && middleware.push(logger);
+  if (isDev) {
+    middleware.push(logger);
+  }
 
   const store = createStore(persistedReducer, applyMiddleware.apply(null, middleware));
 

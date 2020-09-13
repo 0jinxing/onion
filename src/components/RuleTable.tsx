@@ -18,7 +18,7 @@ const RuleTable = (props: RuleTableProps) => {
   return (
     <div className="ghoo-table-panel">
       <div className="ghoo-table-panel__helper">
-        <span>自定义的规则列表，列表中的优先级高于 GWFList</span>
+        <span>自定义的规则列表，优先级高于 GWFList</span>
         <RuleInput />
       </div>
       <Table bordered dataSource={tableData} className="ghoo-table-panel__table" size="small">

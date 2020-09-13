@@ -1,5 +1,4 @@
-import { Middleware, Action } from "redux";
-
+import { Middleware } from "redux";
 import { GFWMode } from "@/actions/proxy";
 
 import { State } from "./query-store";
